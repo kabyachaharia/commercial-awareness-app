@@ -38,7 +38,7 @@ export function GenerateButton({ materialId, target }: { materialId: string; tar
       }
 
       if (!response.ok) {
-        setErrorMessage(data?.error ?? raw || `Generation failed (${response.status}).`);
+        setErrorMessage((data?.error ?? raw) || `Generation failed (${response.status}).`);
         return;
       }
 
