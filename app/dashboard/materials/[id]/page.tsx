@@ -38,15 +38,13 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
     .from("quizzes")
     .select("id")
     .eq("material_id", material.id)
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: true });
+    .limit(1);
 
   const { data: flashcardRows } = await supabase
     .from("flashcards")
     .select("id")
     .eq("material_id", material.id)
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: true });
+    .limit(1);
 
   const quizzes = quizRows ?? [];
   const flashcards = flashcardRows ?? [];
