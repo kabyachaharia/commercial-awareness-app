@@ -26,15 +26,25 @@ export function GenerateButton({ materialId, target }: { materialId: string; tar
         body: JSON.stringify({ material_id: materialId }),
       });
 
-      const data = (await response.json()) as { error?: string };
+      const raw = await response.text();
+      let data: { error?: string } | null = null;
+
+      if (raw) {
+        try {
+          data = JSON.parse(raw) as { error?: string };
+        } catch {
+          data = null;
+        }
+      }
+
       if (!response.ok) {
-        setErrorMessage(data.error ?? "Generation failed.");
+        setErrorMessage(data?.error ?? raw || `Generation failed (${response.status}).`);
         return;
       }
 
       router.refresh();
-    } catch {
-      setErrorMessage("Something went wrong. Please try again.");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

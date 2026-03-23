@@ -11,21 +11,6 @@ type MaterialDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-type QuizRecord = {
-  id: string;
-  question: string;
-  type: string;
-  options: string[] | null;
-  correct_answer: string;
-  explanation: string;
-};
-
-type FlashcardRecord = {
-  id: string;
-  front: string;
-  back: string;
-};
-
 export default async function MaterialDetailPage({ params }: MaterialDetailPageProps) {
   const { id } = await params;
   const supabase = await createClient();
@@ -51,20 +36,20 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
 
   const { data: quizRows } = await supabase
     .from("quizzes")
-    .select("id, question, type, options, correct_answer, explanation")
+    .select("id")
     .eq("material_id", material.id)
     .eq("user_id", user.id)
     .order("created_at", { ascending: true });
 
   const { data: flashcardRows } = await supabase
     .from("flashcards")
-    .select("id, front, back")
+    .select("id")
     .eq("material_id", material.id)
     .eq("user_id", user.id)
     .order("created_at", { ascending: true });
 
-  const quizzes = (quizRows ?? []) as QuizRecord[];
-  const flashcards = (flashcardRows ?? []) as FlashcardRecord[];
+  const quizzes = quizRows ?? [];
+  const flashcards = flashcardRows ?? [];
   const uploadDate = material.created_at ? new Date(material.created_at).toLocaleDateString() : "Unknown";
 
   return (
@@ -97,9 +82,7 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
           <CardContent className="space-y-4">
             {quizzes.length > 0 ? (
               <div className="space-y-3">
-                <p className="text-sm text-slate-700">
-                  {quizzes.length} questions are ready. Continue to the quiz interface to attempt them.
-                </p>
+                <p className="text-sm text-slate-700">A quiz is already generated for this material.</p>
                 <Button asChild>
                   <Link href={`/dashboard/materials/${material.id}/quiz`}>Take Quiz</Link>
                 </Button>
@@ -118,7 +101,7 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
           <CardContent className="space-y-4">
             {flashcards.length > 0 ? (
               <div className="space-y-3">
-                <p className="text-sm text-slate-700">{flashcards.length} flashcards are ready for revision.</p>
+                <p className="text-sm text-slate-700">Flashcards are already generated for this material.</p>
                 <Button asChild>
                   <Link href={`/dashboard/materials/${material.id}/flashcards`}>Study Flashcards</Link>
                 </Button>
