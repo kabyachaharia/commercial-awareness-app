@@ -8,11 +8,11 @@ import { createClient } from "@/lib/supabase/server";
 import { GenerateButton } from "./generate-button";
 
 type MaterialDetailPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function MaterialDetailPage({ params }: MaterialDetailPageProps) {
-  const { id } = params;
+  const { id } = await params;
   const supabase = await createClient();
 
   const { data: material } = await supabase.from("materials").select("id, title, summary, created_at").eq("id", id).single();
