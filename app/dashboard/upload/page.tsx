@@ -24,6 +24,7 @@ export default function UploadPage() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHoveringDrop, setIsHoveringDrop] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -126,24 +127,32 @@ export default function UploadPage() {
     }
   }
 
+  const dropZoneInteractive = isDragging || isHoveringDrop;
+
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-6">
+    <section className="mx-auto w-full max-w-3xl space-y-8">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-slate-900">Upload study material</h1>
-        <p className="text-sm text-slate-600">
+        <h1 className="[font-family:var(--font-sora)] text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Upload study material
+        </h1>
+        <p className="text-base text-slate-600">
           Add an article, report, or notes file and generate summaries, quizzes, and flashcards automatically.
         </p>
       </div>
 
-      <Card className="border-slate-200 bg-white">
-        <CardHeader>
-          <CardTitle>New Material</CardTitle>
-          <CardDescription>Supported formats: PDF, DOCX, TXT (max 10MB).</CardDescription>
+      <Card className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <CardHeader className="space-y-1">
+          <CardTitle className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">New material</CardTitle>
+          <CardDescription className="text-slate-600">
+            Supported formats: PDF, DOCX, TXT (max 10MB).
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title" className="text-slate-700">
+                Title
+              </Label>
               <Input
                 id="title"
                 placeholder="e.g. UK Banking Sector Update Q1"
@@ -151,22 +160,35 @@ export default function UploadPage() {
                 onChange={(event) => setTitle(event.target.value)}
                 disabled={isUploading}
                 required
+                className="rounded-lg border-slate-200"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="file-upload">File</Label>
+              <Label htmlFor="file-upload" className="text-slate-700">
+                File
+              </Label>
               <label
                 htmlFor="file-upload"
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center transition ${
-                  isDragging ? "border-blue-500 bg-blue-50" : "border-slate-300 bg-slate-50 hover:bg-slate-100"
+                onMouseEnter={() => setIsHoveringDrop(true)}
+                onMouseLeave={() => setIsHoveringDrop(false)}
+                className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-10 text-center transition-all duration-300 ${
+                  isDragging
+                    ? "border-solid border-indigo-500 bg-indigo-50/90 shadow-inner"
+                    : dropZoneInteractive
+                      ? "border-solid border-indigo-500 bg-indigo-50/50 shadow-sm"
+                      : "border-dashed border-indigo-300/80 bg-slate-50/80 hover:border-solid hover:border-indigo-500 hover:bg-indigo-50/40"
                 }`}
               >
-                <UploadCloud className="mb-3 size-8 text-slate-500" />
-                <p className="text-sm font-medium text-slate-700">{fileLabel}</p>
+                <UploadCloud
+                  className={`mb-3 size-10 ${
+                    dropZoneInteractive ? "text-indigo-600" : "text-indigo-500/90"
+                  }`}
+                />
+                <p className="text-sm font-medium text-slate-800">{fileLabel}</p>
                 <p className="mt-1 text-xs text-slate-500">PDF, DOCX, TXT up to 10MB</p>
                 <input
                   id="file-upload"
@@ -181,15 +203,20 @@ export default function UploadPage() {
 
             {file ? (
               <div className="flex">
-                <Badge variant="secondary" className="bg-slate-100 text-slate-700">
+                <Badge variant="secondary" className="rounded-full border-0 bg-indigo-100 text-indigo-900">
                   Ready: {file.name}
                 </Badge>
               </div>
             ) : null}
 
-            {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
+            {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
 
-            <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-500" disabled={isUploading}>
+            <Button
+              type="submit"
+              size="lg"
+              className="h-12 w-full rounded-lg bg-indigo-500 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400"
+              disabled={isUploading}
+            >
               {isUploading ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />

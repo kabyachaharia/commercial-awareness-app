@@ -11,6 +11,9 @@ type GenerateButtonProps = {
   label: string;
 };
 
+const ctaClassName =
+  "rounded-lg bg-indigo-500 px-6 font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400";
+
 export function GenerateButton({ materialId, type, label }: GenerateButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,11 +45,10 @@ export function GenerateButton({ materialId, type, label }: GenerateButtonProps)
 
   return (
     <div className="space-y-2">
-      <Button onClick={onClick} disabled={isLoading}>
+      <Button onClick={onClick} disabled={isLoading} className={ctaClassName}>
         {isLoading ? "Generating…" : label}
       </Button>
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </div>
   );
 }
-
