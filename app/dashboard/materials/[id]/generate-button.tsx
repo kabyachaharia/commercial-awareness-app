@@ -24,7 +24,7 @@ export function GenerateButton({ materialId, type, label }: GenerateButtonProps)
       const res = await fetch(`/api/generate/${type}`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ materialId }),
+        body: JSON.stringify({ material_id: materialId }),
       });
 
       if (!res.ok) {
