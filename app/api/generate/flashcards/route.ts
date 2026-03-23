@@ -79,12 +79,11 @@ export async function POST(request: Request) {
 
     const flashcards = parseFlashcardsPayload(rawContent);
 
-    await supabase.from("flashcards").delete().eq("material_id", material.id).eq("user_id", user.id);
+    await supabase.from("flashcards").delete().eq("material_id", material.id);
 
     const { data: savedFlashcards, error: insertError } = await supabase
       .from("flashcards")
       .insert({
-        user_id: user.id,
         material_id: material.id,
         cards: flashcards,
       })
