@@ -84,17 +84,14 @@ export async function POST(request: Request) {
 
     await supabase.from("quizzes").delete().eq("material_id", material.id).eq("user_id", user.id);
 
-    const records = quiz.map((item) => ({
-      user_id: user.id,
-      material_id: material.id,
-      question: item.question,
-      type: item.type,
-      options: item.options,
-      correct_answer: item.correct_answer,
-      explanation: item.explanation,
-    }));
-
-    const { data: savedQuiz, error: insertError } = await supabase.from("quizzes").insert(records).select("*");
+    const { data: savedQuiz, error: insertError } = await supabase
+      .from("quizzes")
+      .insert({
+        user_id: user.id,
+        material_id: material.id,
+        questions: quiz,
+      })
+      .select("*");
 
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });

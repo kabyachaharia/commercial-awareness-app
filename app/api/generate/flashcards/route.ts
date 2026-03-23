@@ -81,16 +81,13 @@ export async function POST(request: Request) {
 
     await supabase.from("flashcards").delete().eq("material_id", material.id).eq("user_id", user.id);
 
-    const records = flashcards.map((item) => ({
-      user_id: user.id,
-      material_id: material.id,
-      front: item.front,
-      back: item.back,
-    }));
-
     const { data: savedFlashcards, error: insertError } = await supabase
       .from("flashcards")
-      .insert(records)
+      .insert({
+        user_id: user.id,
+        material_id: material.id,
+        cards: flashcards,
+      })
       .select("*");
 
     if (insertError) {
