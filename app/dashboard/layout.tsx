@@ -69,7 +69,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
               href="/dashboard"
               className="ml-3 [font-family:var(--font-sora)] text-base font-bold tracking-tight text-slate-900"
             >
-              CommAware
+              Commercial Awareness
             </Link>
           </header>
 

@@ -18,8 +18,8 @@ export function DashboardSidebarContent({ email }: { email: string }) {
     <div className="flex h-full flex-col bg-slate-900 text-white">
       <div className="border-b border-slate-700/80 px-5 py-6">
         <Link href="/dashboard" className="block">
-          <span className="[font-family:var(--font-sora)] text-xl font-bold tracking-tight text-white">
-            CommAware
+          <span className="[font-family:var(--font-sora)] text-lg font-bold leading-tight tracking-tight text-white sm:text-xl">
+            Commercial Awareness
           </span>
         </Link>
       </div>

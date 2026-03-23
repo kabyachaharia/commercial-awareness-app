@@ -128,3 +128,43 @@
     @apply font-sans;
   }
 }
+
+@keyframes landing-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-landing-in {
+    animation: landing-fade-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-landing-delay-1 {
+    animation-delay: 0.08s;
+  }
+  .animate-landing-delay-2 {
+    animation-delay: 0.16s;
+  }
+  .animate-landing-delay-3 {
+    animation-delay: 0.24s;
+  }
+  .animate-landing-delay-4 {
+    animation-delay: 0.32s;
+  }
+  .animate-landing-delay-5 {
+    animation-delay: 0.4s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-landing-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

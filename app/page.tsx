@@ -1,157 +1,142 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { Inter, Sora } from "next/font/google";
-import {
-  Award,
-  BrainCircuit,
-  BriefcaseBusiness,
-  Building2,
-  GraduationCap,
-  Scale,
-  Sparkles,
-  Upload,
-} from "lucide-react";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import { ArrowRight, Sparkles, Trophy, Upload } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-});
-
-const steps = [
-  {
-    number: "1",
-    icon: Upload,
-    title: "Upload Your Materials",
-    description: "Drop in any PDF, article, or notes document",
-  },
-  {
-    number: "2",
-    icon: Sparkles,
-    title: "AI Does the Work",
-    description: "Our AI reads your content and generates study materials instantly",
-  },
-  {
-    number: "3",
-    icon: Award,
-    title: "Learn & Ace Interviews",
-    description: "Study with quizzes and flashcards tailored to your content",
-  },
-];
-
-const features = [
-  {
-    icon: BrainCircuit,
-    title: "Smart Summaries",
-    description:
-      "Key insights extracted and organised so you understand what matters for commercial awareness",
-  },
-  {
-    icon: Sparkles,
-    title: "AI-Generated Quizzes",
-    description:
-      "Multiple choice and true/false questions that test your understanding, not just recall",
-  },
-  {
-    icon: GraduationCap,
-    title: "Flashcard Decks",
-    description:
-      "Flip-card study sessions to memorise key facts, figures, and industry implications",
-  },
-];
-
-const audiences = [
-  {
-    icon: Scale,
-    title: "Law Students",
-    description: "TC applications and vacation scheme interviews",
-  },
-  {
-    icon: Building2,
-    title: "Finance Applicants",
-    description: "Investment banking and asset management prep",
-  },
-  {
-    icon: BriefcaseBusiness,
-    title: "Consulting Candidates",
-    description: "Case interviews and market awareness",
-  },
-  {
-    icon: GraduationCap,
-    title: "Business Students",
-    description: "Exam prep and coursework research",
-  },
-];
+function Badge({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-500/20">
+      {children}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
-    <main
-      className={`${inter.variable} ${sora.variable} scroll-smooth bg-white text-slate-900 [font-family:var(--font-inter)]`}
+    <div
+      className={`${jakarta.variable} min-h-screen scroll-smooth bg-[#FFFBEB] text-[#1A1A1A] [font-family:var(--font-jakarta)]`}
     >
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 px-4 pb-20 pt-20 text-white sm:px-6 lg:px-8">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-20 top-10 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
-          <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" />
-          <div className="absolute left-1/2 top-1/3 h-56 w-56 -translate-x-1/2 rounded-full bg-violet-400/10 blur-3xl" />
-        </div>
+      {/* Subtle grid */}
+      <div
+        className="pointer-events-none fixed inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgb(0 0 0 / 0.04) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(0 0 0 / 0.04) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+        aria-hidden
+      />
 
-        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="space-y-8">
-            <p className="inline-flex rounded-full border border-white/20 bg-white/5 px-4 py-1 text-sm text-slate-200 backdrop-blur">
-              Commercial awareness, accelerated with AI
-            </p>
-            <h1 className="[font-family:var(--font-sora)] text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Master Commercial Awareness with AI
+      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#FFFBEB]/90 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:px-6 md:h-16 md:flex-row md:items-center md:justify-between md:gap-6 md:py-0 lg:px-8">
+          <div className="flex items-center justify-between md:contents">
+            <Link
+              href="/"
+              className="min-w-0 text-base font-bold tracking-tight text-[#1A1A1A] sm:text-lg"
+            >
+              Commercial Awareness
+            </Link>
+            <Link
+              href="/signup"
+              className="shrink-0 rounded-full bg-[#1A1A1A] px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-[0.98] md:hidden sm:px-5 sm:py-2.5"
+            >
+              Get Started
+            </Link>
+          </div>
+          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-black/[0.06] pt-3 text-sm font-semibold text-gray-600 md:flex-1 md:border-t-0 md:pt-0">
+            <a className="transition-colors hover:text-[#1A1A1A]" href="#benefits">
+              Benefits
+            </a>
+            <a className="transition-colors hover:text-[#1A1A1A]" href="#how-it-works">
+              How it works
+            </a>
+            <a className="transition-colors hover:text-[#1A1A1A]" href="#features">
+              Features
+            </a>
+          </nav>
+          <Link
+            href="/signup"
+            className="hidden shrink-0 rounded-full bg-[#1A1A1A] px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-[0.98] md:inline-flex"
+          >
+            Get Started
+          </Link>
+        </div>
+      </header>
+
+      <main className="relative">
+        {/* Hero */}
+        <section className="relative px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="animate-landing-in flex justify-center">
+              <Badge>Trusted by law students across the UK</Badge>
+            </div>
+            <h1 className="animate-landing-in animate-landing-delay-1 mt-6 text-4xl font-bold uppercase leading-[1.1] tracking-wide text-[#1A1A1A] sm:text-5xl md:text-6xl lg:text-[3.5rem] lg:leading-[1.08]">
+              Master commercial awareness with ease
             </h1>
-            <p className="max-w-xl text-base text-slate-200 sm:text-lg">
-              Upload articles, reports, and notes. Get AI-powered summaries, quizzes, and
-              flashcards in seconds. Perfect for law, finance, and consulting interview prep.
+            <p className="animate-landing-in animate-landing-delay-2 mx-auto mt-6 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+              Everything you need to ace your training contract and vacation scheme interviews.
+              Upload your materials, and let AI create summaries, quizzes, and flashcards so you
+              can focus on learning.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="h-12 rounded-lg bg-indigo-500 px-8 text-base font-semibold text-white transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400"
+            <div className="animate-landing-in animate-landing-delay-3 mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              <Link
+                href="/signup"
+                className="inline-flex h-12 min-w-[200px] items-center justify-center rounded-full bg-[#1A1A1A] px-8 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Link href="/signup">Get Started Free</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-12 rounded-lg border-white/30 bg-transparent px-8 text-base font-semibold text-white transition-all duration-300 hover:translate-y-[-1px] hover:bg-white/10"
+                Get Started Free
+              </Link>
+              <a
+                href="#how-it-works"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-[#1A1A1A] underline-offset-4 transition-colors hover:underline"
               >
-                <a href="#how-it-works">See How It Works</a>
-              </Button>
+                See how it works
+                <ArrowRight className="size-4" aria-hidden />
+              </a>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/15 bg-slate-900/60 p-4 shadow-2xl backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-indigo-500/20">
-            <div className="overflow-hidden rounded-xl border border-white/10 bg-slate-950/70 p-4">
-              <div className="mb-4 flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-rose-400/80" />
-                <span className="h-3 w-3 rounded-full bg-amber-300/80" />
-                <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+          <div
+            id="features"
+            className="animate-landing-in animate-landing-delay-4 mx-auto mt-14 max-w-5xl scroll-mt-28"
+          >
+            <div className="rounded-2xl border border-black/[0.06] bg-white p-4 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.12)] sm:p-6 md:p-8">
+              <div className="mb-4 flex gap-2 sm:mb-6">
+                <span className="size-3 rounded-full bg-red-400/90" />
+                <span className="size-3 rounded-full bg-amber-300/90" />
+                <span className="size-3 rounded-full bg-emerald-400/90" />
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-lg border border-indigo-300/20 bg-slate-900/70 p-3">
-                  <p className="text-xs text-slate-300">Today&apos;s Summary</p>
-                  <p className="mt-2 text-sm font-semibold text-white">M&A trends in tech sector</p>
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="rounded-xl border border-gray-100 bg-amber-50/50 p-4 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Today&apos;s summary
+                  </p>
+                  <p className="mt-2 text-sm font-bold text-[#1A1A1A] sm:text-base">
+                    M&amp;A trends in tech sector
+                  </p>
                 </div>
-                <div className="rounded-lg border border-cyan-300/20 bg-slate-900/70 p-3">
-                  <p className="text-xs text-slate-300">Quiz Progress</p>
-                  <p className="mt-2 text-sm font-semibold text-white">8/10 correct</p>
+                <div className="rounded-xl border border-gray-100 bg-emerald-50/50 p-4 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Quiz progress
+                  </p>
+                  <p className="mt-2 text-sm font-bold text-[#1A1A1A] sm:text-base">
+                    8/10 correct
+                  </p>
                 </div>
-                <div className="sm:col-span-2 rounded-lg border border-violet-300/20 bg-slate-900/70 p-3">
-                  <p className="text-xs text-slate-300">Flashcard Deck</p>
-                  <div className="mt-2 flex items-center justify-between">
-                    <p className="text-sm font-semibold text-white">Bank of England policy updates</p>
-                    <span className="rounded bg-indigo-500/20 px-2 py-1 text-xs text-indigo-200">
+                <div className="rounded-xl border border-gray-100 bg-sky-50/40 p-4 sm:col-span-2 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Flashcard deck
+                  </p>
+                  <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm font-bold text-[#1A1A1A] sm:text-base">
+                      Bank of England policy updates
+                    </p>
+                    <span className="w-fit rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-700">
                       24 cards
                     </span>
                   </div>
@@ -159,114 +144,220 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="how-it-works" className="scroll-mt-24 bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto w-full max-w-6xl">
-          <h2 className="[font-family:var(--font-sora)] text-center text-3xl font-bold text-slate-900 sm:text-4xl">
-            How It Works
-          </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {steps.map((step) => (
-              <article
-                key={step.title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">
-                    {step.number}
+        {/* How it works */}
+        <section
+          id="how-it-works"
+          className="scroll-mt-24 border-t border-black/[0.04] bg-white px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="flex justify-center">
+                <Badge>How it works</Badge>
+              </div>
+              <h2 className="mt-6 text-3xl font-bold uppercase tracking-wide text-[#1A1A1A] sm:text-4xl md:text-[2.5rem]">
+                Get started in three simple steps
+              </h2>
+              <p className="mt-4 text-gray-600 sm:text-lg">
+                From upload to interview-ready in minutes
+              </p>
+            </div>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  icon: Upload,
+                  iconBg: "bg-amber-100 text-amber-700 ring-amber-200/80",
+                  title: "Upload your materials",
+                  body: "Drop in any PDF, article, report or lecture notes. We handle the rest.",
+                },
+                {
+                  icon: Sparkles,
+                  iconBg: "bg-sky-100 text-sky-700 ring-sky-200/80",
+                  title: "AI creates study tools",
+                  body: "Our AI reads your content and generates summaries, quizzes and flashcards instantly.",
+                },
+                {
+                  icon: Trophy,
+                  iconBg: "bg-emerald-100 text-emerald-700 ring-emerald-200/80",
+                  title: "Ace your interviews",
+                  body: "Study smarter with tailored materials. Build confidence for TCs and vacation schemes.",
+                },
+              ].map((card) => (
+                <article
+                  key={card.title}
+                  className="rounded-2xl border border-black/[0.06] bg-white p-6 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.1)] transition-shadow hover:shadow-[0_20px_50px_-16px_rgba(0,0,0,0.12)] sm:p-8"
+                >
+                  <div
+                    className={`inline-flex size-12 items-center justify-center rounded-2xl ring-2 ${card.iconBg}`}
+                  >
+                    <card.icon className="size-6" strokeWidth={2} aria-hidden />
+                  </div>
+                  <h3 className="mt-6 text-lg font-bold uppercase tracking-wide text-[#1A1A1A]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-gray-600">{card.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits / features grid */}
+        <section
+          id="benefits"
+          className="scroll-mt-24 border-t border-black/[0.04] bg-[#FFFBEB] px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="flex justify-center">
+                <Badge>Benefits</Badge>
+              </div>
+              <h2 className="mt-6 text-3xl font-bold uppercase tracking-wide text-[#1A1A1A] sm:text-4xl md:text-[2.5rem]">
+                Everything is built to help you learn better
+              </h2>
+              <p className="mt-4 text-gray-600 sm:text-lg">
+                From uploading content to testing your knowledge, the platform simplifies your
+                commercial awareness prep.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              {[
+                {
+                  title: "Smart summaries that work",
+                  body: "Key insights extracted and organised so you understand what actually matters for commercial awareness interviews.",
+                },
+                {
+                  title: "AI-generated quizzes",
+                  body: "Multiple choice and true/false questions that test understanding, not just recall. With explanations for every answer.",
+                },
+                {
+                  title: "Flashcard decks",
+                  body: "Flip-card study sessions to memorise key facts, figures and industry implications.",
+                },
+                {
+                  title: "Track your progress",
+                  body: "See how you're improving over time with quiz scores and study streaks.",
+                  soon: true,
+                },
+              ].map((item) => (
+                <article
+                  key={item.title}
+                  className="relative rounded-2xl border border-black/[0.06] bg-white p-6 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.08)] sm:p-8"
+                >
+                  {item.soon ? (
+                    <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-500/20">
+                      Coming soon
+                    </span>
+                  ) : null}
+                  <h3 className="pr-24 text-lg font-bold uppercase tracking-wide text-[#1A1A1A] sm:pr-0">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-gray-600">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Use cases */}
+        <section className="scroll-mt-24 border-t border-black/[0.04] bg-white px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="flex justify-center">
+                <Badge>Built for law students</Badge>
+              </div>
+              <h2 className="mt-6 text-3xl font-bold uppercase tracking-wide text-[#1A1A1A] sm:text-4xl md:text-[2.5rem]">
+                Your secret weapon for applications
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  emoji: "⚖️",
+                  title: "Training contract prep",
+                  body: "Stay on top of business news and market trends that firms ask about in interviews",
+                },
+                {
+                  emoji: "📅",
+                  title: "Vacation scheme interviews",
+                  body: "Quickly digest firm-specific commercial updates before your assessment days",
+                },
+                {
+                  emoji: "📚",
+                  title: "Commercial law modules",
+                  body: "Turn lecture notes and textbooks into bite-sized study materials",
+                },
+                {
+                  emoji: "🤝",
+                  title: "Pro bono & mooting",
+                  body: "Understand the commercial context behind the cases you work on",
+                },
+              ].map((u) => (
+                <article
+                  key={u.title}
+                  className="rounded-2xl border border-black/[0.06] bg-[#FFFBEB]/40 p-6 text-center shadow-sm transition-shadow hover:shadow-md sm:p-7"
+                >
+                  <span className="text-4xl" role="img" aria-hidden>
+                    {u.emoji}
                   </span>
-                  <step.icon className="size-5 text-indigo-600" />
-                </div>
-                <h3 className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-slate-600">{step.description}</p>
-              </article>
-            ))}
+                  <h3 className="mt-4 text-sm font-bold uppercase tracking-wide text-[#1A1A1A]">
+                    {u.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{u.body}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="bg-slate-50 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto w-full max-w-6xl">
-          <h2 className="[font-family:var(--font-sora)] text-center text-3xl font-bold text-slate-900 sm:text-4xl">
-            Everything You Need to Prepare
-          </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {features.map((feature) => (
-              <article
-                key={feature.title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <feature.icon className="size-6 text-indigo-600" />
-                <h3 className="[font-family:var(--font-sora)] mt-4 text-xl font-semibold text-slate-900">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-slate-600">{feature.description}</p>
-              </article>
-            ))}
+        {/* Final CTA */}
+        <section className="border-t border-black/[0.04] bg-[#FFFBEB] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold uppercase tracking-wide text-[#1A1A1A] sm:text-4xl">
+              Start learning smarter today
+            </h2>
+            <p className="mt-4 text-gray-600 sm:text-lg">
+              100% free. Upload your first document in 30 seconds.
+            </p>
+            <Link
+              href="/signup"
+              className="mt-8 inline-flex h-14 min-w-[220px] items-center justify-center rounded-full bg-[#1A1A1A] px-10 text-base font-semibold text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Get Started Free
+            </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto w-full max-w-6xl">
-          <h2 className="[font-family:var(--font-sora)] text-center text-3xl font-bold text-slate-900 sm:text-4xl">
-            Built for Ambitious Students
-          </h2>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            {audiences.map((audience) => (
-              <article
-                key={audience.title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <audience.icon className="size-6 text-indigo-600" />
-                <h3 className="[font-family:var(--font-sora)] mt-4 text-xl font-semibold text-slate-900">
-                  {audience.title}
-                </h3>
-                <p className="mt-2 text-slate-600">{audience.description}</p>
-              </article>
-            ))}
+        {/* Footer */}
+        <footer className="border-t border-white/10 bg-[#1A1A1A] px-4 py-12 text-sm text-gray-400 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-6xl flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-base font-bold text-white">Commercial Awareness</p>
+              <p className="mt-4 text-gray-500">
+                © 2026 Commercial Awareness. All rights reserved.
+              </p>
+            </div>
+            <nav className="flex flex-wrap gap-x-8 gap-y-3">
+              {[
+                ["Features", "#features"],
+                ["How it works", "#how-it-works"],
+                ["About", "#"],
+                ["Privacy", "#"],
+                ["Terms", "#"],
+              ].map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  className="font-medium text-gray-400 transition-colors hover:text-white"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-slate-950 px-4 py-20 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center text-center">
-          <h2 className="[font-family:var(--font-sora)] text-3xl font-bold sm:text-4xl">
-            Start Learning Smarter Today
-          </h2>
-          <p className="mt-4 text-slate-300">
-            Join for free and upload your first document in 30 seconds.
-          </p>
-          <Button
-            asChild
-            size="lg"
-            className="mt-8 h-12 rounded-lg bg-indigo-500 px-8 text-base font-semibold text-white transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400"
-          >
-            <Link href="/signup">Get Started Free</Link>
-          </Button>
-        </div>
-      </section>
-
-      <footer className="border-t border-slate-200 bg-white px-4 py-8 text-sm text-slate-600 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <p>© 2026 CommAware. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <a className="transition-colors hover:text-slate-900" href="#">
-              About
-            </a>
-            <a className="transition-colors hover:text-slate-900" href="#">
-              Privacy
-            </a>
-            <a className="transition-colors hover:text-slate-900" href="#">
-              Terms
-            </a>
-          </div>
-        </div>
-      </footer>
-    </main>
+        </footer>
+      </main>
+    </div>
   );
 }
