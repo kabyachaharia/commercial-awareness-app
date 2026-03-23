@@ -1,5 +1,4 @@
 import mammoth from "mammoth";
-
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
   "application/pdf",
@@ -52,7 +51,9 @@ export async function extractTextFromFile(file: File) {
   const buffer = Buffer.from(arrayBuffer);
 
   if (extension === "pdf" || file.type === "application/pdf") {
-    const pdfParse = require("pdf-parse") as (dataBuffer: Buffer) => Promise<{ text: string }>;
+    const pdfParse = require("pdf-parse/lib/pdf-parse.js") as (
+      dataBuffer: Buffer,
+    ) => Promise<{ text: string }>;
     const parsed = await pdfParse(buffer);
     return parsed.text.trim();
   }
