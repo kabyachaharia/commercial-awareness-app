@@ -11,6 +11,13 @@ type CollapsibleSummaryProps = {
 
 export function CollapsibleSummary({ summary }: CollapsibleSummaryProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const normalizedSummary = summary.trim().replace(/\s+/g, " ");
+  const sentenceMatches = normalizedSummary.match(/[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g) ?? [normalizedSummary];
+  const sentencePreview = sentenceMatches.slice(0, 3).join(" ").trim();
+  const previewBase = sentencePreview || normalizedSummary;
+  const maxPreviewLength = 180;
+  const previewText =
+    previewBase.length > maxPreviewLength ? `${previewBase.slice(0, maxPreviewLength).trimEnd()}...` : `${previewBase}...`;
 
   return (
     <Card className="overflow-hidden rounded-xl bg-white">
@@ -45,17 +52,31 @@ export function CollapsibleSummary({ summary }: CollapsibleSummaryProps) {
       </CardHeader>
 
       <CardContent className="p-4 pt-3">
-        <div
-          className={`grid transition-all duration-300 ease-in-out ${
-            isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-          }`}
-        >
-          <div className="overflow-hidden">
+        {isExpanded ? (
+          <div className="space-y-3">
             <article className="whitespace-pre-wrap rounded-xl border-2 border-black bg-white px-5 py-5 text-[15px] leading-relaxed text-gray-800">
               {summary}
             </article>
+            <button
+              type="button"
+              onClick={() => setIsExpanded(false)}
+              className="text-sm font-medium text-[#4F46E5] transition-colors hover:text-[#4338CA]"
+            >
+              Hide summary ↑
+            </button>
           </div>
-        </div>
+        ) : (
+          <div className="space-y-3 rounded-xl border-2 border-black bg-white px-5 py-5">
+            <p className="text-sm text-gray-600">{previewText}</p>
+            <button
+              type="button"
+              onClick={() => setIsExpanded(true)}
+              className="text-sm font-medium text-[#4F46E5] transition-colors hover:text-[#4338CA]"
+            >
+              See full summary →
+            </button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
