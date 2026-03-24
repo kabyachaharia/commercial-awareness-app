@@ -81,7 +81,7 @@ export default function Home() {
               From uploading content to testing your knowledge, the platform simplifies your prep
               and improves results.
             </p>
-            <div className="mx-auto mt-10 max-w-5xl px-8">
+            <div className="mt-10 max-w-5xl">
               <div className="grid gap-4 md:grid-cols-5">
                 <article className="rounded-xl border-2 border-black bg-[#FEF08A] p-5 shadow-[6px_6px_0_0_#000] md:col-span-3">
                 <h3 className="text-2xl font-black uppercase">Smart Summaries That Work</h3>
