@@ -24,8 +24,8 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1200px] text-center">
+        <section className="min-h-screen px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-6xl flex-col justify-center text-center">
             <span className="mb-4 inline-flex rounded-full border-2 border-black bg-black px-4 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
               Trusted by law students across the UK
             </span>
@@ -48,7 +48,10 @@ export default function Home() {
               </a>
             </div>
 
-            <div id="features" className="mt-8 rounded-xl border-[3px] border-black bg-[#FEF08A] p-6 shadow-[8px_8px_0_0_#000]">
+            <div
+              id="features"
+              className="mx-auto mt-12 w-full max-w-3xl rounded-xl border-[3px] border-black bg-[#FEF08A] p-6 shadow-[8px_8px_0_0_#000]"
+            >
               <div className="grid gap-5 md:grid-cols-3">
                 <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Today&apos;s Summary</p>
@@ -67,8 +70,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="benefits" className="border-t-2 border-black bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1200px]">
+        <section id="benefits" className="border-t-2 border-black bg-white px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
             <h2 className="mb-4 max-w-3xl text-3xl font-black uppercase leading-tight sm:text-5xl">
               Everything Is Built To Help You Learn Better
             </h2>
@@ -76,8 +79,9 @@ export default function Home() {
               From uploading content to testing your knowledge, the platform simplifies your prep
               and improves results.
             </p>
-            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              <article className="rounded-xl border-2 border-black bg-[#FEF08A] p-6 shadow-[6px_6px_0_0_#000] md:col-span-2">
+            <div className="mx-auto mt-10 max-w-5xl px-8">
+              <div className="grid gap-4 md:grid-cols-5">
+                <article className="rounded-xl border-2 border-black bg-[#FEF08A] p-5 shadow-[6px_6px_0_0_#000] md:col-span-3">
                 <h3 className="text-2xl font-black uppercase">Smart Summaries That Work</h3>
                 <p className="mt-3 max-w-2xl text-gray-700">
                   Key insights extracted and organised so you understand what matters for commercial
@@ -87,19 +91,19 @@ export default function Home() {
                   <p className="text-sm font-bold uppercase">Summary Preview</p>
                 </div>
               </article>
-              <article className="rounded-xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000]">
+                <article className="rounded-xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000] md:col-span-2">
                 <h3 className="text-xl font-black uppercase">AI-Generated Quizzes</h3>
                 <p className="mt-3 text-gray-700">
                   Multiple choice and true/false questions that test understanding, not just recall.
                 </p>
               </article>
-              <article className="rounded-xl border-2 border-black bg-[#D1FAE5] p-6 shadow-[6px_6px_0_0_#000]">
+                <article className="rounded-xl border-2 border-black bg-[#D1FAE5] p-5 shadow-[6px_6px_0_0_#000] md:col-span-2">
                 <h3 className="text-xl font-black uppercase">Flashcard Decks</h3>
                 <p className="mt-3 text-gray-700">
                   Flip-card study sessions to memorise key facts, figures and industry implications.
                 </p>
               </article>
-              <article className="relative rounded-xl border-2 border-black bg-[#FED7AA] p-6 shadow-[6px_6px_0_0_#000] lg:col-span-1">
+                <article className="relative rounded-xl border-2 border-black bg-[#FED7AA] p-5 shadow-[6px_6px_0_0_#000] md:col-span-3">
                 <span className="absolute right-4 top-4 rounded-full border-2 border-black bg-black px-2.5 py-1 text-[10px] font-bold uppercase text-white">
                   Coming soon
                 </span>
@@ -111,23 +115,27 @@ export default function Home() {
                   <div className="h-3 w-2/3 rounded-full bg-[#FACC15]" />
                 </div>
               </article>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="how-it-works" className="border-t-2 border-black bg-[#F5F5F5] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1200px]">
+        <section id="how-it-works" className="border-t-2 border-black bg-[#F5F5F5] px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
             <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Get Started In Three Simple Steps</h2>
             <p className="max-w-3xl text-gray-600">
               Upload, generate, and revise in one streamlined workflow built for focused daily prep.
             </p>
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <div className="mx-auto mt-10 grid max-w-4xl gap-4 md:grid-cols-3">
               {[
-                ["01 Upload", "Drop in any PDF, article, or lecture notes"],
-                ["02 Generate", "AI creates summaries, quizzes and flashcards"],
-                ["03 Learn", "Study smarter and ace your interviews"],
-              ].map(([title, text]) => (
-                <article key={title} className="rounded-xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000]">
+                ["01 Upload", "Drop in any PDF, article, or lecture notes", "bg-[#FEF9C3]"],
+                ["02 Generate", "AI creates summaries, quizzes and flashcards", "bg-[#D1FAE5]"],
+                ["03 Learn", "Study smarter and ace your interviews", "bg-[#FED7AA]"],
+              ].map(([title, text, background]) => (
+                <article
+                  key={title}
+                  className={`rounded-xl border-2 border-black p-5 shadow-[6px_6px_0_0_#000] ${background}`}
+                >
                   <h3 className="text-lg font-black uppercase">{title}</h3>
                   <p className="mt-3 text-gray-600">{text}</p>
                 </article>
@@ -136,32 +144,39 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t-2 border-black bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1200px]">
+        <section className="border-t-2 border-black bg-white px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
             <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Your Secret Weapon For Law Applications</h2>
             <p className="max-w-3xl text-gray-600">
               Designed for the contexts where commercial-awareness depth makes the difference.
             </p>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 [
                   "Training Contract Prep",
                   "Stay on top of business news and market trends that firms ask about",
+                  "bg-[#FEF9C3]",
                 ],
                 [
                   "Vacation Scheme Interviews",
                   "Quickly digest firm-specific commercial updates before assessment days",
+                  "bg-[#D1FAE5]",
                 ],
                 [
                   "Commercial Law Modules",
                   "Turn lecture notes and textbooks into bite-sized study materials",
+                  "bg-[#FED7AA]",
                 ],
                 [
-                  "Pro Bono and Mooting",
-                  "Understand the commercial context behind the cases you work on",
+                  "Open Day & Insight Events",
+                  "Impress at law firm events with confident, up-to-date commercial knowledge",
+                  "bg-[#DBEAFE]",
                 ],
-              ].map(([title, text]) => (
-                <article key={title} className="rounded-xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000]">
+              ].map(([title, text, background]) => (
+                <article
+                  key={title}
+                  className={`rounded-xl border-2 border-black p-5 shadow-[6px_6px_0_0_#000] ${background}`}
+                >
                   <h3 className="text-base font-black uppercase">{title}</h3>
                   <p className="mt-3 text-sm text-gray-600">{text}</p>
                 </article>
@@ -170,8 +185,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t-2 border-black bg-[#FED7AA] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1200px] text-center">
+        <section className="border-t-2 border-black bg-[#FED7AA] px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-3xl font-black uppercase sm:text-5xl">Start Learning Smarter Today</h2>
             <p className="mt-4 text-gray-700">100% free. Upload your first document in 30 seconds.</p>
             <Link
