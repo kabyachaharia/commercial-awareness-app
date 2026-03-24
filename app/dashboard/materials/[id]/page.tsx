@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
+import { CollapsibleSummary } from "./collapsible-summary";
 import { GenerateButton } from "./generate-actions";
 
 const ctaClassName = "px-6 text-sm";
@@ -46,30 +47,28 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
       </header>
 
       <div className="grid gap-4">
-        <Card className="overflow-hidden rounded-xl bg-white">
-          <CardHeader className="space-y-2 border-b-2 border-black bg-[#FEF08A]/40 p-4 pb-2">
-            <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
-                <FileText className="size-5" aria-hidden />
-              </span>
-              <div className="min-w-0 space-y-1">
-                <CardTitle className="text-lg font-bold uppercase">Summary</CardTitle>
-                <CardDescription className="text-sm text-gray-500">
-                  Quick commercial-awareness focused overview.
-                </CardDescription>
+        {material.summary ? (
+          <CollapsibleSummary summary={material.summary} />
+        ) : (
+          <Card className="overflow-hidden rounded-xl bg-white">
+            <CardHeader className="space-y-2 border-b-2 border-black bg-[#FEF08A]/40 p-4 pb-2">
+              <div className="flex items-start gap-4">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
+                  <FileText className="size-5" aria-hidden />
+                </span>
+                <div className="min-w-0 space-y-1">
+                  <CardTitle className="text-lg font-bold uppercase">Summary</CardTitle>
+                  <CardDescription className="text-sm text-gray-500">
+                    Quick commercial-awareness focused overview.
+                  </CardDescription>
+                </div>
               </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3 p-4 pt-3">
-            {material.summary ? (
-              <article className="whitespace-pre-wrap rounded-xl border-2 border-black bg-white px-5 py-5 text-[15px] leading-relaxed text-gray-800">
-                {material.summary}
-              </article>
-            ) : (
+            </CardHeader>
+            <CardContent className="space-y-3 p-4 pt-3">
               <GenerateButton materialId={material.id} target="summary" />
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
 
         <Card className="overflow-hidden rounded-xl bg-white">
           <CardHeader className="space-y-2 border-b-2 border-black bg-[#D1FAE5]/40 p-4 pb-2">
