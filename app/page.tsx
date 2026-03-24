@@ -148,11 +148,11 @@ export default function Home() {
 
         <section className="border-t-2 border-black bg-white px-4 pb-16 pt-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <h2 className="mb-4 text-3xl font-black uppercase sm:text-4xl">Your Secret Weapon For Law Applications</h2>
-            <p className="max-w-3xl text-gray-600">
+            <h2 className="mb-4 text-center text-3xl font-black uppercase sm:text-4xl">Your Secret Weapon For Law Applications</h2>
+            <p className="mx-auto max-w-3xl text-center text-gray-600">
               Designed for the contexts where commercial-awareness depth makes the difference.
             </p>
-            <div className="mt-10 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto mt-10 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 [
                   "Training Contract Prep",
