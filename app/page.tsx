@@ -124,19 +124,19 @@ export default function Home() {
 
         <section id="how-it-works" className="border-t-2 border-black bg-[#F5F5F5] px-4 pb-16 pt-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Get Started In Three Simple Steps</h2>
-            <p className="max-w-3xl text-gray-600">
+            <h2 className="mb-4 text-center text-3xl font-black uppercase sm:text-4xl">Get Started In Three Simple Steps</h2>
+            <p className="mx-auto max-w-3xl text-center text-gray-600">
               Upload, generate, and revise in one streamlined workflow built for focused daily prep.
             </p>
             <div className="mx-auto mt-10 grid max-w-4xl gap-4 md:grid-cols-3">
               {[
-                ["01 Upload", "Drop in any PDF, article, or lecture notes", "bg-[#FEF9C3]"],
-                ["02 Generate", "AI creates summaries, quizzes and flashcards", "bg-[#D1FAE5]"],
-                ["03 Learn", "Study smarter and ace your interviews", "bg-[#FED7AA]"],
-              ].map(([title, text, background]) => (
+                ["01 Upload", "Drop in any PDF, article, or lecture notes"],
+                ["02 Generate", "AI creates summaries, quizzes and flashcards"],
+                ["03 Learn", "Study smarter and ace your interviews"],
+              ].map(([title, text]) => (
                 <article
                   key={title}
-                  className={`rounded-xl border-2 border-black p-5 shadow-[6px_6px_0_0_#000] ${background}`}
+                  className="rounded-xl border-2 border-black bg-white p-5 text-center shadow-[6px_6px_0_0_#000]"
                 >
                   <h3 className="text-lg font-black uppercase">{title}</h3>
                   <p className="mt-3 text-gray-600">{text}</p>
