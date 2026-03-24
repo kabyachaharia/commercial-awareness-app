@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 
 import { QuizPlayer, type QuizQuestion } from "./quiz-player";
 
+export const dynamic = 'force-dynamic';
+
 type QuizPageProps = {
   params: Promise<{ id: string }>;
 };

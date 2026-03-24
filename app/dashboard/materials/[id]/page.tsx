@@ -9,6 +9,8 @@ import { createClient } from "@/lib/supabase/server";
 import { CollapsibleSummary } from "./collapsible-summary";
 import { GenerateButton } from "./generate-actions";
 
+export const dynamic = 'force-dynamic';
+
 const ctaClassName = "px-6 text-sm";
 
 type MaterialDetailPageProps = {

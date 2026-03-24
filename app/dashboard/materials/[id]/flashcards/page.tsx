@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 
 import { FlashcardDeck, type Flashcard } from "./flashcard-deck";
 
+export const dynamic = 'force-dynamic';
+
 type FlashcardsPageProps = {
   params: Promise<{ id: string }>;
 };

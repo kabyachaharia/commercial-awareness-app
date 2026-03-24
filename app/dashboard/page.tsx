@@ -5,6 +5,8 @@ import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 
+export const dynamic = 'force-dynamic';
+
 function formatDate(iso: string | null) {
   if (!iso) {
     return "Unknown date";
