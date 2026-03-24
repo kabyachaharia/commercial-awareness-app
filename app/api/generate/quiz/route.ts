@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "You are an expert commercial awareness tutor. Generate exactly 10 quiz questions based on the material. Mix multiple choice and true/false. Respond only as valid JSON with the shape: {\"quiz\":[{\"question\":\"\",\"type\":\"multiple_choice|true_false\",\"options\":[\"\"],\"correct_answer\":\"\",\"explanation\":\"\"}]}.",
+            "You are an expert commercial awareness tutor. Generate exactly 30 quiz questions based on the material. Mix multiple choice and true/false. Respond only as valid JSON with the shape: {\"quiz\":[{\"question\":\"\",\"type\":\"multiple_choice|true_false\",\"options\":[\"\"],\"correct_answer\":\"\",\"explanation\":\"\"}]}.",
         },
         {
           role: "user",

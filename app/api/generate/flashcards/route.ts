@@ -63,7 +63,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "You are an expert commercial awareness tutor. Create 15 to 20 concise flashcards from the material. Respond only as valid JSON in this shape: {\"flashcards\":[{\"front\":\"\",\"back\":\"\"}]}.",
+            "You are an expert commercial awareness tutor. Create 20 concise flashcards from the material. Respond only as valid JSON in this shape: {\"flashcards\":[{\"front\":\"\",\"back\":\"\"}]}.",
         },
         {
           role: "user",
