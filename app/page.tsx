@@ -74,7 +74,7 @@ export default function Home() {
 
         <section id="benefits" className="border-t-2 border-black bg-white px-4 pb-16 pt-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <h2 className="mb-4 max-w-3xl text-3xl font-black uppercase leading-tight sm:text-5xl">
+            <h2 className="mb-4 max-w-3xl text-3xl font-black uppercase leading-tight sm:text-4xl">
               Everything Is Built To Help You Learn Better
             </h2>
             <p className="max-w-3xl text-gray-600">
@@ -84,8 +84,8 @@ export default function Home() {
             <div className="mt-10 max-w-5xl">
               <div className="grid gap-4 md:grid-cols-5">
                 <article className="rounded-xl border-2 border-black bg-[#FEF08A] p-5 shadow-[6px_6px_0_0_#000] md:col-span-3">
-                <h3 className="text-2xl font-black uppercase">Smart Summaries That Work</h3>
-                <p className="mt-3 max-w-2xl text-gray-700">
+                <h3 className="text-lg font-black uppercase">Smart Summaries That Work</h3>
+                <p className="mt-3 max-w-2xl text-sm text-gray-700">
                   Key insights extracted and organised so you understand what matters for commercial
                   awareness.
                 </p>
@@ -94,14 +94,14 @@ export default function Home() {
                 </div>
               </article>
                 <article className="rounded-xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000] md:col-span-2">
-                <h3 className="text-xl font-black uppercase">AI-Generated Quizzes</h3>
-                <p className="mt-3 text-gray-700">
+                <h3 className="text-lg font-black uppercase">AI-Generated Quizzes</h3>
+                <p className="mt-3 text-sm text-gray-700">
                   Multiple choice and true/false questions that test understanding, not just recall.
                 </p>
               </article>
                 <article className="rounded-xl border-2 border-black bg-[#D1FAE5] p-5 shadow-[6px_6px_0_0_#000] md:col-span-2">
-                <h3 className="text-xl font-black uppercase">Flashcard Decks</h3>
-                <p className="mt-3 text-gray-700">
+                <h3 className="text-lg font-black uppercase">Flashcard Decks</h3>
+                <p className="mt-3 text-sm text-gray-700">
                   Flip-card study sessions to memorise key facts, figures and industry implications.
                 </p>
               </article>
@@ -109,8 +109,8 @@ export default function Home() {
                 <span className="absolute right-4 top-4 rounded-full border-2 border-black bg-black px-2.5 py-1 text-[10px] font-bold uppercase text-white">
                   Coming soon
                 </span>
-                <h3 className="text-2xl font-black uppercase">Track Your Progress</h3>
-                <p className="mt-3 max-w-2xl text-gray-700">
+                <h3 className="text-lg font-black uppercase">Track Your Progress</h3>
+                <p className="mt-3 max-w-2xl text-sm text-gray-700">
                   See how you&apos;re improving over time with quiz scores and study streaks.
                 </p>
                 <div className="mt-5 rounded-lg border-2 border-black bg-white p-4">
