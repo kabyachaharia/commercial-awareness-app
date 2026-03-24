@@ -58,7 +58,7 @@ export function GenerateButton({ materialId, target }: { materialId: string; tar
 
   return (
     <div className="space-y-2">
-      <Button onClick={handleGenerate} disabled={loading}>
+      <Button onClick={handleGenerate} disabled={loading} className="text-sm">
         {loading ? (
           <>
             <Loader2 className="mr-2 size-4 animate-spin" />
