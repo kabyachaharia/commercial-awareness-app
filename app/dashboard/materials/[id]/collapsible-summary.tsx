@@ -9,6 +9,20 @@ type CollapsibleSummaryProps = {
   summary: string;
 };
 
+function stripMarkdownForPreview(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    .replace(/^\s{0,3}>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/\*\*|__/g, "")
+    .replace(/\*|_/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function renderInlineBoldText(text: string): ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
 
@@ -60,9 +74,10 @@ function renderFormattedSummary(summary: string): ReactNode[] {
 export function CollapsibleSummary({ summary }: CollapsibleSummaryProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const normalizedSummary = summary.trim().replace(/\s+/g, " ");
+  const plainSummaryPreview = stripMarkdownForPreview(summary);
   const sentenceMatches = normalizedSummary.match(/[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g) ?? [normalizedSummary];
-  const sentencePreview = sentenceMatches.slice(0, 3).join(" ").trim();
-  const previewBase = sentencePreview || normalizedSummary;
+  const sentencePreview = stripMarkdownForPreview(sentenceMatches.slice(0, 3).join(" ")).trim();
+  const previewBase = sentencePreview || plainSummaryPreview;
   const maxPreviewLength = 180;
   const previewText =
     previewBase.length > maxPreviewLength ? `${previewBase.slice(0, maxPreviewLength).trimEnd()}...` : `${previewBase}...`;
