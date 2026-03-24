@@ -26,7 +26,7 @@ export default function Home() {
       <main>
         <section className="min-h-screen px-4 py-24 sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-6xl flex-col justify-center text-center">
-            <span className="mb-4 inline-flex rounded-full border-2 border-black bg-black px-4 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+            <span className="mb-8 inline-block w-auto rounded-full border-2 border-black bg-orange-200 px-4 py-1.5 text-sm font-bold uppercase tracking-wide text-black">
               Trusted by law students across the UK
             </span>
             <h1 className="mx-auto mb-4 max-w-4xl text-5xl font-black uppercase leading-[1.05]">
@@ -50,18 +50,18 @@ export default function Home() {
 
             <div
               id="features"
-              className="mx-auto mt-12 w-full max-w-3xl rounded-xl border-[3px] border-black bg-[#FEF08A] p-6 shadow-[8px_8px_0_0_#000]"
+              className="mx-auto mt-12 w-full max-w-4xl rounded-xl border-[3px] border-black bg-[#FEF08A] p-6 shadow-[8px_8px_0_0_#000]"
             >
-              <div className="grid gap-5 md:grid-cols-3">
-                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="flex-1 rounded-xl border-2 border-black bg-white p-4 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Today&apos;s Summary</p>
                   <p className="mt-2 text-lg font-black uppercase">FTSE and Inflation Update</p>
                 </div>
-                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
+                <div className="flex-1 rounded-xl border-2 border-black bg-white p-4 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Quiz Score</p>
                   <p className="mt-2 text-lg font-black uppercase">8/10 Correct</p>
                 </div>
-                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
+                <div className="flex-1 rounded-xl border-2 border-black bg-white p-4 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Flashcards</p>
                   <p className="mt-2 text-lg font-black uppercase">24 Cards Ready</p>
                 </div>
