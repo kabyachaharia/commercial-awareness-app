@@ -132,25 +132,25 @@ export default function UploadPage() {
   return (
     <section className="mx-auto w-full max-w-3xl space-y-8">
       <div className="space-y-2">
-        <h1 className="[font-family:var(--font-sora)] text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           Upload study material
         </h1>
-        <p className="text-base text-slate-600">
+        <p className="text-base text-gray-600">
           Add an article, report, or notes file and generate summaries, quizzes, and flashcards automatically.
         </p>
       </div>
 
-      <Card className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <Card className="bg-white">
         <CardHeader className="space-y-1">
-          <CardTitle className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">New material</CardTitle>
-          <CardDescription className="text-slate-600">
+          <CardTitle className="text-xl">New material</CardTitle>
+          <CardDescription className="text-gray-600">
             Supported formats: PDF, DOCX, TXT (max 10MB).
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-slate-700">
+              <Label htmlFor="title" className="text-black">
                 Title
               </Label>
               <Input
@@ -160,12 +160,12 @@ export default function UploadPage() {
                 onChange={(event) => setTitle(event.target.value)}
                 disabled={isUploading}
                 required
-                className="rounded-lg border-slate-200"
+                className="bg-white"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="file-upload" className="text-slate-700">
+              <Label htmlFor="file-upload" className="text-black">
                 File
               </Label>
               <label
@@ -177,19 +177,19 @@ export default function UploadPage() {
                 onMouseLeave={() => setIsHoveringDrop(false)}
                 className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-10 text-center transition-all duration-300 ${
                   isDragging
-                    ? "border-solid border-indigo-500 bg-indigo-50/90 shadow-inner"
+                    ? "border-solid border-black bg-[#FEF08A] shadow-inner"
                     : dropZoneInteractive
-                      ? "border-solid border-indigo-500 bg-indigo-50/50 shadow-sm"
-                      : "border-dashed border-indigo-300/80 bg-slate-50/80 hover:border-solid hover:border-indigo-500 hover:bg-indigo-50/40"
+                      ? "border-solid border-black bg-[#FEF08A]/70 shadow-sm"
+                      : "border-dashed border-black bg-white hover:border-solid hover:bg-[#FEF08A]/50"
                 }`}
               >
                 <UploadCloud
                   className={`mb-3 size-10 ${
-                    dropZoneInteractive ? "text-indigo-600" : "text-indigo-500/90"
+                    dropZoneInteractive ? "text-black" : "text-gray-700"
                   }`}
                 />
-                <p className="text-sm font-medium text-slate-800">{fileLabel}</p>
-                <p className="mt-1 text-xs text-slate-500">PDF, DOCX, TXT up to 10MB</p>
+                <p className="text-sm font-bold text-black">{fileLabel}</p>
+                <p className="mt-1 text-xs text-gray-500">PDF, DOCX, TXT up to 10MB</p>
                 <input
                   id="file-upload"
                   type="file"
@@ -203,7 +203,7 @@ export default function UploadPage() {
 
             {file ? (
               <div className="flex">
-                <Badge variant="secondary" className="rounded-full border-0 bg-indigo-100 text-indigo-900">
+                <Badge variant="secondary">
                   Ready: {file.name}
                 </Badge>
               </div>
@@ -214,7 +214,7 @@ export default function UploadPage() {
             <Button
               type="submit"
               size="lg"
-              className="h-12 w-full rounded-lg bg-indigo-500 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400"
+              className="h-12 w-full text-base"
               disabled={isUploading}
             >
               {isUploading ? (

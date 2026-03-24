@@ -44,11 +44,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5] px-4">
+      <Card className="w-full max-w-md bg-white">
         <CardHeader className="space-y-2">
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Enter your email and password to continue.</CardDescription>
+          <CardTitle className="text-2xl">Sign in</CardTitle>
+          <CardDescription className="text-gray-600">Enter your email and password to continue.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -75,16 +75,16 @@ export default function LoginPage() {
               />
             </div>
 
-            {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
+            {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-4 text-center text-sm text-gray-600">
             Don&apos;t have an account?{" "}
-            <Link className="font-medium text-primary hover:underline" href="/signup">
+            <Link className="font-bold text-black hover:underline" href="/signup">
               Sign up
             </Link>
           </p>

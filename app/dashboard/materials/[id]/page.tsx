@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
-import { GenerateButton } from "./generate-button";
+import { GenerateButton } from "./generate-actions";
 
-const ctaClassName =
-  "rounded-lg bg-indigo-500 px-6 font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400";
+const ctaClassName = "px-6";
 
 type MaterialDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -39,23 +38,23 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-10">
-      <header className="space-y-2 border-b border-slate-200/80 pb-8">
-        <h1 className="[font-family:var(--font-sora)] text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+      <header className="space-y-2 border-b-2 border-black pb-8">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           {material.title}
         </h1>
-        <p className="text-sm text-slate-500">Uploaded on {uploadDate}</p>
+        <p className="text-sm text-gray-500">Uploaded on {uploadDate}</p>
       </header>
 
       <div className="grid gap-6">
-        <Card className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-          <CardHeader className="space-y-3 border-b border-slate-100 bg-slate-50/50 pb-4">
+        <Card className="overflow-hidden bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FEF08A]/40 pb-4">
             <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <FileText className="size-5" aria-hidden />
               </span>
               <div className="min-w-0 space-y-1">
-                <CardTitle className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">Summary</CardTitle>
-                <CardDescription className="text-base text-slate-600">
+                <CardTitle className="text-xl">Summary</CardTitle>
+                <CardDescription className="text-base text-gray-600">
                   Quick commercial-awareness focused overview.
                 </CardDescription>
               </div>
@@ -63,24 +62,24 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
           </CardHeader>
           <CardContent className="space-y-4 pt-6">
             {material.summary ? (
-              <article className="rounded-xl border border-slate-100 bg-slate-50/80 px-5 py-6 text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">
+              <article className="rounded-xl border-2 border-black bg-white px-5 py-6 text-[15px] leading-relaxed text-gray-800 whitespace-pre-wrap">
                 {material.summary}
               </article>
             ) : (
-              <GenerateButton materialId={material.id} type="summary" label="Generate Summary" />
+              <GenerateButton materialId={material.id} target="summary" />
             )}
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-          <CardHeader className="space-y-3 border-b border-slate-100 bg-slate-50/50 pb-4">
+        <Card className="overflow-hidden bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#D1FAE5]/40 pb-4">
             <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <ListChecks className="size-5" aria-hidden />
               </span>
               <div className="min-w-0 space-y-1">
-                <CardTitle className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">Quiz</CardTitle>
-                <CardDescription className="text-base text-slate-600">
+                <CardTitle className="text-xl">Quiz</CardTitle>
+                <CardDescription className="text-base text-gray-600">
                   Test your understanding with AI-generated questions.
                 </CardDescription>
               </div>
@@ -92,20 +91,20 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
                 <Link href={`/dashboard/materials/${material.id}/quiz`}>Take Quiz</Link>
               </Button>
             ) : (
-              <GenerateButton materialId={material.id} type="quiz" label="Generate Quiz" />
+              <GenerateButton materialId={material.id} target="quiz" />
             )}
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-          <CardHeader className="space-y-3 border-b border-slate-100 bg-slate-50/50 pb-4">
+        <Card className="overflow-hidden bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FED7AA]/40 pb-4">
             <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <Layers className="size-5" aria-hidden />
               </span>
               <div className="min-w-0 space-y-1">
-                <CardTitle className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">Flashcards</CardTitle>
-                <CardDescription className="text-base text-slate-600">
+                <CardTitle className="text-xl">Flashcards</CardTitle>
+                <CardDescription className="text-base text-gray-600">
                   Practice key ideas with rapid recall prompts.
                 </CardDescription>
               </div>
@@ -117,7 +116,7 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
                 <Link href={`/dashboard/materials/${material.id}/flashcards`}>Study Flashcards</Link>
               </Button>
             ) : (
-              <GenerateButton materialId={material.id} type="flashcards" label="Generate Flashcards" />
+              <GenerateButton materialId={material.id} target="flashcards" />
             )}
           </CardContent>
         </Card>

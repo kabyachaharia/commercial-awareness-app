@@ -60,11 +60,11 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5] px-4">
+      <Card className="w-full max-w-md bg-white">
         <CardHeader className="space-y-2">
-          <CardTitle>Create account</CardTitle>
-          <CardDescription>Sign up with your details to get started.</CardDescription>
+          <CardTitle className="text-2xl">Create account</CardTitle>
+          <CardDescription className="text-gray-600">Sign up with your details to get started.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -103,17 +103,17 @@ export default function SignupPage() {
               />
             </div>
 
-            {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
-            {infoMessage ? <p className="text-sm text-muted-foreground">{infoMessage}</p> : null}
+            {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
+            {infoMessage ? <p className="text-sm text-gray-600">{infoMessage}</p> : null}
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Creating account..." : "Sign Up"}
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-4 text-center text-sm text-gray-600">
             Already have an account?{" "}
-            <Link className="font-medium text-primary hover:underline" href="/login">
+            <Link className="font-bold text-black hover:underline" href="/login">
               Sign in
             </Link>
           </p>

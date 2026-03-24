@@ -71,7 +71,7 @@ export function GenerateButton({ materialId, target }: { materialId: string; tar
           </>
         )}
       </Button>
-      {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
+      {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
     </div>
   );
 }

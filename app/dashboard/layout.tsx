@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import { Inter, Sora } from "next/font/google";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -9,16 +8,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { createClient } from "@/lib/supabase/server";
 
 import { DashboardSidebarContent } from "./dashboard-sidebar";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-});
 
 type DashboardLayoutProps = Readonly<{
   children: ReactNode;
@@ -37,9 +26,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const userEmail = user.email ?? "No email available";
 
   return (
-    <div
-      className={`${inter.variable} ${sora.variable} min-h-screen scroll-smooth bg-white [font-family:var(--font-inter)]`}
-    >
+    <div className="min-h-screen scroll-smooth bg-[#F5F5F5]">
       <div className="flex min-h-screen">
         <aside className="hidden w-72 shrink-0 md:block">
           <div className="sticky top-0 h-screen">
@@ -48,16 +35,16 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
         </aside>
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-10 flex h-14 items-center border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur md:hidden">
+          <header className="sticky top-0 z-10 flex h-16 items-center border-b-2 border-black bg-white/95 px-4 backdrop-blur md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Open sidebar">
-                  <Menu className="size-5 text-slate-700" />
+                <Button variant="outline" size="icon" aria-label="Open sidebar">
+                  <Menu className="size-5 text-black" />
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="left"
-                className="w-72 border-slate-800 bg-slate-900 p-0 text-white [&>button]:text-slate-300 [&>button]:hover:bg-white/10 [&>button]:hover:text-white"
+                className="w-72 border-r-2 border-black bg-black p-0 text-white [&>button]:text-white"
               >
                 <SheetHeader className="sr-only">
                   <SheetTitle>Dashboard Navigation</SheetTitle>
@@ -67,13 +54,13 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
             </Sheet>
             <Link
               href="/dashboard"
-              className="ml-3 [font-family:var(--font-sora)] text-base font-bold tracking-tight text-slate-900"
+              className="ml-3 text-base font-black uppercase tracking-tight text-black"
             >
               Commercial Awareness
             </Link>
           </header>
 
-          <main className="flex-1 bg-white px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+          <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8">{children}</main>
         </div>
       </div>
     </div>

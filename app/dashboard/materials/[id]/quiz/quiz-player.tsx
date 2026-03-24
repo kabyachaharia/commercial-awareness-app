@@ -19,8 +19,7 @@ type QuizPlayerProps = {
   questions: QuizQuestion[];
 };
 
-const ctaClassName =
-  "rounded-lg bg-indigo-500 px-8 font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400";
+const ctaClassName = "px-8";
 
 export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -54,13 +53,13 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   if (total === 0) {
     return (
       <section className="mx-auto w-full max-w-3xl space-y-6">
-        <Card className="rounded-2xl border border-slate-200 shadow-sm">
+        <Card className="bg-white">
           <CardHeader>
-            <CardTitle className="[font-family:var(--font-sora)] text-xl">Quiz</CardTitle>
+            <CardTitle className="text-xl">Quiz</CardTitle>
             <CardDescription>No quiz questions are available for this material yet.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline" className="rounded-lg border-slate-200">
+            <Button asChild variant="outline">
               <Link href={`/dashboard/materials/${materialId}`}>Back to Material</Link>
             </Button>
           </CardContent>
@@ -73,20 +72,20 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
     const percentage = Math.round((score / total) * 100);
     return (
       <section className="mx-auto w-full max-w-3xl space-y-8">
-        <div className="overflow-hidden rounded-2xl border border-indigo-200/80 bg-gradient-to-b from-indigo-50 to-white p-8 text-center shadow-lg shadow-indigo-500/10 sm:p-12">
-          <p className="text-sm font-semibold uppercase tracking-wider text-indigo-600">Quiz complete</p>
-          <p className="[font-family:var(--font-sora)] mt-2 text-5xl font-bold tabular-nums text-slate-900 sm:text-6xl">
+        <div className="overflow-hidden rounded-2xl border-2 border-black bg-white p-8 text-center shadow-[8px_8px_0_0_#000] sm:p-12">
+          <p className="text-sm font-bold uppercase tracking-wider text-gray-600">Quiz complete</p>
+          <p className="mt-2 text-5xl font-black tabular-nums text-black sm:text-6xl">
             {percentage}%
           </p>
-          <p className="mt-2 text-lg text-slate-600">
-            You scored <span className="font-semibold text-slate-900">{score}</span> out of{" "}
-            <span className="font-semibold text-slate-900">{total}</span>
+          <p className="mt-2 text-lg text-gray-600">
+            You scored <span className="font-semibold text-black">{score}</span> out of{" "}
+            <span className="font-semibold text-black">{total}</span>
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button onClick={retakeQuiz} className={ctaClassName}>
               Retake Quiz
             </Button>
-            <Button asChild variant="outline" className="rounded-lg border-slate-200 px-6">
+            <Button asChild variant="outline" className="px-6">
               <Link href={`/dashboard/materials/${materialId}`}>Back to Material</Link>
             </Button>
           </div>
@@ -103,26 +102,26 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   return (
     <section className="mx-auto w-full max-w-3xl space-y-6">
       <div className="space-y-2">
-        <div className="flex items-center justify-between gap-4 text-sm text-slate-600">
+        <div className="flex items-center justify-between gap-4 text-sm text-gray-600">
           <span>
-            Question <span className="font-semibold text-slate-900">{currentIndex + 1}</span> of{" "}
-            <span className="font-semibold text-slate-900">{total}</span>
+            Question <span className="font-semibold text-black">{currentIndex + 1}</span> of{" "}
+            <span className="font-semibold text-black">{total}</span>
           </span>
-          <span className="tabular-nums text-slate-500">
+          <span className="tabular-nums text-gray-500">
             Score {score}/{total}
           </span>
         </div>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
+        <div className="h-2 w-full overflow-hidden rounded-full border-2 border-black bg-white">
           <div
-            className="h-full rounded-full bg-indigo-500 transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-[#FACC15] transition-all duration-500 ease-out"
             style={{ width: `${progressPct}%` }}
           />
         </div>
       </div>
 
-      <Card className="rounded-2xl border border-slate-200 shadow-sm">
+      <Card className="bg-white">
         <CardHeader className="space-y-3 pb-2">
-          <CardTitle className="[font-family:var(--font-sora)] text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
+          <CardTitle className="text-lg leading-snug text-black sm:text-xl">
             {currentQuestion.question}
           </CardTitle>
         </CardHeader>
@@ -133,17 +132,17 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
               const isSelected = option === selected;
 
               let optionClass =
-                "w-full rounded-xl border-2 p-4 text-left text-sm font-medium transition-all duration-300 sm:p-5 sm:text-base ";
+                "w-full rounded-xl border-2 p-4 text-left text-sm font-semibold transition-all duration-300 sm:p-5 sm:text-base ";
 
               if (!hasAnswered) {
                 optionClass +=
-                  "cursor-pointer border-slate-200 bg-white text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/60 active:scale-[0.99]";
+                  "cursor-pointer border-black bg-white text-black hover:bg-[#FEF08A]/60 active:scale-[0.99]";
               } else if (isCorrect) {
-                optionClass += "border-emerald-500 bg-emerald-50 text-emerald-950 shadow-sm";
+                optionClass += "border-black bg-[#D1FAE5] text-black shadow-sm";
               } else if (isSelected) {
-                optionClass += "border-red-500 bg-red-50 text-red-950 shadow-sm";
+                optionClass += "border-black bg-[#FED7AA] text-black shadow-sm";
               } else {
-                optionClass += "border-slate-100 bg-slate-50 text-slate-500";
+                optionClass += "border-black/50 bg-gray-100 text-gray-500";
               }
 
               return (
@@ -161,22 +160,22 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
           </div>
 
           {hasAnswered ? (
-            <div className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/90 p-4 sm:p-5">
-              <p className="text-sm font-semibold text-slate-900">
+            <div className="space-y-4 rounded-xl border-2 border-black bg-white p-4 sm:p-5">
+              <p className="text-sm font-semibold text-black">
                 {selected === currentQuestion.correct_answer ? (
-                  <span className="text-emerald-700">Correct!</span>
+                  <span className="text-green-700">Correct!</span>
                 ) : (
                   <span className="text-red-700">Not quite.</span>
                 )}
               </p>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-gray-600">
                 Correct answer:{" "}
-                <span className="font-medium text-slate-900">{currentQuestion.correct_answer}</span>
+                <span className="font-medium text-black">{currentQuestion.correct_answer}</span>
               </p>
               {currentQuestion.explanation ? (
-                <p className="text-sm leading-relaxed text-slate-600">{currentQuestion.explanation}</p>
+                <p className="text-sm leading-relaxed text-gray-600">{currentQuestion.explanation}</p>
               ) : null}
-              <div className="flex flex-wrap items-center justify-end gap-3 border-t border-slate-200/80 pt-4">
+              <div className="flex flex-wrap items-center justify-end gap-3 border-t-2 border-black/80 pt-4">
                 <Button onClick={nextQuestion} className={ctaClassName}>
                   {currentIndex === total - 1 ? "See results" : "Next Question"}
                 </Button>
@@ -186,7 +185,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
         </CardContent>
       </Card>
 
-      <Button asChild variant="ghost" className="text-slate-600 hover:text-slate-900">
+      <Button asChild variant="ghost" className="text-gray-700 hover:text-black">
         <Link href={`/dashboard/materials/${materialId}`}>← Back to Material</Link>
       </Button>
     </section>

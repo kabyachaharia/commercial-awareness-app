@@ -49,31 +49,27 @@ export default async function DashboardHomePage() {
   return (
     <section className="mx-auto w-full max-w-5xl space-y-10">
       <header className="space-y-2">
-        <h1 className="[font-family:var(--font-sora)] text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           Your Materials
         </h1>
-        <p className="max-w-xl text-base text-slate-600">
+        <p className="max-w-xl text-base text-gray-600">
           Open a document to review summaries, take quizzes, and study flashcards.
         </p>
       </header>
 
       {list.length === 0 ? (
-        <div className="rounded-2xl border border-slate-200/80 bg-slate-50/80 px-8 py-16 text-center shadow-sm">
-          <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl border border-indigo-200/60 bg-indigo-50">
-            <BookOpen className="size-9 text-indigo-500" strokeWidth={1.25} aria-hidden />
+        <div className="rounded-2xl border-2 border-black bg-white px-8 py-16 text-center shadow-[8px_8px_0_0_#000]">
+          <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl border-2 border-black bg-[#FEF08A]">
+            <BookOpen className="size-9 text-black" strokeWidth={1.5} aria-hidden />
           </div>
-          <h2 className="[font-family:var(--font-sora)] text-xl font-semibold text-slate-900">
+          <h2 className="text-xl font-black uppercase text-black">
             No materials yet
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-slate-600">
+          <p className="mx-auto mt-3 max-w-md text-gray-600">
             Upload your first PDF, article, or notes. We&apos;ll generate summaries, quizzes, and flashcards
             automatically.
           </p>
-          <Button
-            asChild
-            size="lg"
-            className="mt-8 h-12 rounded-lg bg-indigo-500 px-8 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:translate-y-[-1px] hover:bg-indigo-400"
-          >
+          <Button asChild size="lg" className="mt-8">
             <Link href="/dashboard/upload">Upload your first document</Link>
           </Button>
         </div>
@@ -88,37 +84,37 @@ export default async function DashboardHomePage() {
               <li key={material.id}>
                 <Link
                   href={`/dashboard/materials/${material.id}`}
-                  className="group block h-full rounded-2xl border border-slate-200/90 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/5"
+                  className="group block h-full rounded-2xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000] transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">
-                      <h2 className="[font-family:var(--font-sora)] text-lg font-semibold text-slate-900 transition-colors group-hover:text-indigo-700">
+                      <h2 className="text-lg font-black uppercase text-black">
                         {material.title}
                       </h2>
-                      <p className="text-sm text-slate-500">{formatDate(material.created_at)}</p>
+                      <p className="text-sm text-gray-500">{formatDate(material.created_at)}</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        className={`inline-flex rounded-full border-2 border-black px-2.5 py-0.5 text-xs font-bold uppercase ${
                           hasSummary
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-slate-200/80 text-slate-600"
+                            ? "bg-[#D1FAE5] text-black"
+                            : "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {hasSummary ? "Has summary" : "No summary"}
                       </span>
                       <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          hasQuiz ? "bg-emerald-100 text-emerald-800" : "bg-slate-200/80 text-slate-600"
+                        className={`inline-flex rounded-full border-2 border-black px-2.5 py-0.5 text-xs font-bold uppercase ${
+                          hasQuiz ? "bg-[#D1FAE5] text-black" : "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {hasQuiz ? "Has quiz" : "No quiz"}
                       </span>
                       <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        className={`inline-flex rounded-full border-2 border-black px-2.5 py-0.5 text-xs font-bold uppercase ${
                           hasFlashcards
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-slate-200/80 text-slate-600"
+                            ? "bg-[#D1FAE5] text-black"
+                            : "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {hasFlashcards ? "Has flashcards" : "No flashcards"}

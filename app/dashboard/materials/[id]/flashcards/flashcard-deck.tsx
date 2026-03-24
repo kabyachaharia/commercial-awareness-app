@@ -26,8 +26,7 @@ function shuffled<T>(items: T[]): T[] {
   return next;
 }
 
-const shuffleClassName =
-  "rounded-lg border-0 bg-indigo-500 px-4 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-indigo-400";
+const shuffleClassName = "px-4";
 
 export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
   const [orderedCards, setOrderedCards] = useState(cards);
@@ -62,13 +61,13 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
   if (total === 0 || !currentCard) {
     return (
       <section className="mx-auto w-full max-w-3xl space-y-6">
-        <Card className="rounded-2xl border border-slate-200 shadow-sm">
+        <Card className="bg-white">
           <CardHeader>
-            <CardTitle className="[font-family:var(--font-sora)] text-xl">Flashcards</CardTitle>
+            <CardTitle className="text-xl">Flashcards</CardTitle>
             <CardDescription>No flashcards are available for this material yet.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline" className="rounded-lg border-slate-200">
+            <Button asChild variant="outline">
               <Link href={`/dashboard/materials/${materialId}`}>Back to Material</Link>
             </Button>
           </CardContent>
@@ -80,25 +79,25 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
   return (
     <section className="mx-auto w-full max-w-2xl space-y-8">
       <div className="text-center">
-        <p className="text-sm font-medium text-slate-600">{progressLabel}</p>
-        <div className="mx-auto mt-3 h-1.5 max-w-xs overflow-hidden rounded-full bg-slate-200">
+        <p className="text-sm font-medium text-gray-600">{progressLabel}</p>
+        <div className="mx-auto mt-3 h-2 max-w-xs overflow-hidden rounded-full border-2 border-black bg-white">
           <div
-            className="h-full rounded-full bg-indigo-500 transition-all duration-300"
+            className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
             style={{ width: `${((currentIndex + 1) / total) * 100}%` }}
           />
         </div>
       </div>
 
-      <Card className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <Card className="bg-white">
         <CardHeader className="pb-2 text-center">
-          <CardTitle className="[font-family:var(--font-sora)] text-lg font-semibold text-slate-900">Study deck</CardTitle>
-          <CardDescription className="text-slate-600">Tap the card to flip</CardDescription>
+          <CardTitle className="text-lg">Study deck</CardTitle>
+          <CardDescription className="text-gray-600">Tap the card to flip</CardDescription>
         </CardHeader>
         <CardContent className="space-y-8 px-4 pb-8 sm:px-8">
           <div className="mx-auto w-full max-w-lg [perspective:1200px]">
             <button
               type="button"
-              className="relative aspect-[4/3] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              className="relative aspect-[4/3] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
               onClick={() => setIsFlipped((prev) => !prev)}
               aria-label={isFlipped ? "Show question" : "Show answer"}
             >
@@ -108,16 +107,16 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
                 }`}
               >
                 <div
-                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border border-slate-800/20 bg-slate-900 px-6 py-8 text-center shadow-xl [backface-visibility:hidden] sm:min-h-[280px] sm:px-10"
+                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border-2 border-black bg-[#FACC15] px-6 py-8 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] sm:min-h-[280px] sm:px-10"
                 >
-                  <p className="[font-family:var(--font-sora)] text-lg font-medium leading-relaxed text-white sm:text-xl">
+                  <p className="text-lg font-black uppercase leading-relaxed text-black sm:text-xl">
                     {currentCard.front}
                   </p>
                 </div>
                 <div
-                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white px-6 py-8 text-center shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[280px] sm:px-10"
+                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border-2 border-black bg-white px-6 py-8 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[280px] sm:px-10"
                 >
-                  <p className="text-base leading-relaxed text-slate-800 sm:text-lg">{currentCard.back}</p>
+                  <p className="text-base leading-relaxed text-gray-800 sm:text-lg">{currentCard.back}</p>
                 </div>
               </div>
             </button>
@@ -131,7 +130,7 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
                 size="icon"
                 onClick={goToPrevious}
                 disabled={currentIndex === 0}
-                className="size-11 shrink-0 rounded-full border-slate-200 text-slate-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50"
+                className="size-11 shrink-0 rounded-full text-black"
                 aria-label="Previous card"
               >
                 <ChevronLeft className="size-5" />
@@ -142,7 +141,7 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
                 size="icon"
                 onClick={goToNext}
                 disabled={currentIndex === total - 1}
-                className="size-11 shrink-0 rounded-full border-slate-200 text-slate-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50"
+                className="size-11 shrink-0 rounded-full text-black"
                 aria-label="Next card"
               >
                 <ChevronRight className="size-5" />
@@ -156,7 +155,7 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
         </CardContent>
       </Card>
 
-      <Button asChild variant="ghost" className="w-full text-slate-600 hover:text-slate-900 sm:w-auto">
+      <Button asChild variant="ghost" className="w-full text-gray-700 hover:text-black sm:w-auto">
         <Link href={`/dashboard/materials/${materialId}`}>← Back to Material</Link>
       </Button>
     </section>
