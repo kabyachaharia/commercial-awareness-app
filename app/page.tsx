@@ -152,7 +152,7 @@ export default function Home() {
             <p className="max-w-3xl text-gray-600">
               Designed for the contexts where commercial-awareness depth makes the difference.
             </p>
-            <div className="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-10 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 [
                   "Training Contract Prep",
