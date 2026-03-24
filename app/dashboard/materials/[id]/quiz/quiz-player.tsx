@@ -71,8 +71,8 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   if (isComplete) {
     const percentage = Math.round((score / total) * 100);
     return (
-      <section className="mx-auto w-full max-w-3xl space-y-8">
-        <div className="overflow-hidden rounded-2xl border-2 border-black bg-white p-8 text-center shadow-[8px_8px_0_0_#000] sm:p-12">
+      <section className="mx-auto w-full max-w-3xl space-y-6">
+        <div className="overflow-hidden rounded-xl border-2 border-black bg-white p-6 text-center shadow-[8px_8px_0_0_#000] sm:p-8">
           <p className="text-sm font-bold uppercase tracking-wider text-gray-600">Quiz complete</p>
           <p className="mt-2 text-5xl font-black tabular-nums text-black sm:text-6xl">
             {percentage}%
@@ -81,7 +81,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
             You scored <span className="font-semibold text-black">{score}</span> out of{" "}
             <span className="font-semibold text-black">{total}</span>
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button onClick={retakeQuiz} className={ctaClassName}>
               Retake Quiz
             </Button>
@@ -100,7 +100,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   const progressPct = ((currentIndex + 1) / total) * 100;
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-6">
+    <section className="mx-auto w-full max-w-3xl space-y-5">
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-4 text-sm text-gray-600">
           <span>
@@ -119,20 +119,20 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
         </div>
       </div>
 
-      <Card className="bg-white">
-        <CardHeader className="space-y-3 pb-2">
+      <Card className="rounded-xl bg-white">
+        <CardHeader className="space-y-2 pb-1">
           <CardTitle className="text-lg leading-snug text-black sm:text-xl">
             {currentQuestion.question}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 pt-2">
+        <CardContent className="space-y-3 pt-1">
           <div className="grid gap-3">
             {currentQuestion.options.map((option) => {
               const isCorrect = option === currentQuestion.correct_answer;
               const isSelected = option === selected;
 
               let optionClass =
-                "w-full rounded-xl border-2 p-4 text-left text-sm font-semibold transition-all duration-300 sm:p-5 sm:text-base ";
+                "w-full rounded-xl border-2 p-3.5 text-left text-sm font-semibold transition-all duration-300 sm:p-4 sm:text-base ";
 
               if (!hasAnswered) {
                 optionClass +=
@@ -160,7 +160,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
           </div>
 
           {hasAnswered ? (
-            <div className="space-y-4 rounded-xl border-2 border-black bg-white p-4 sm:p-5">
+            <div className="space-y-3 rounded-xl border-2 border-black bg-white p-4">
               <p className="text-sm font-semibold text-black">
                 {selected === currentQuestion.correct_answer ? (
                   <span className="text-green-700">Correct!</span>
@@ -175,7 +175,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
               {currentQuestion.explanation ? (
                 <p className="text-sm leading-relaxed text-gray-600">{currentQuestion.explanation}</p>
               ) : null}
-              <div className="flex flex-wrap items-center justify-end gap-3 border-t-2 border-black/80 pt-4">
+              <div className="flex flex-wrap items-center justify-end gap-3 border-t-2 border-black/80 pt-3">
                 <Button onClick={nextQuestion} className={ctaClassName}>
                   {currentIndex === total - 1 ? "See results" : "Next Question"}
                 </Button>

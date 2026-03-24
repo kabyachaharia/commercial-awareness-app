@@ -37,17 +37,17 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
   }) : "Unknown";
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-10">
-      <header className="space-y-2 border-b-2 border-black pb-8">
+    <section className="mx-auto w-full max-w-5xl space-y-8">
+      <header className="space-y-2 border-b-2 border-black pb-6">
         <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           {material.title}
         </h1>
         <p className="text-sm text-gray-500">Uploaded on {uploadDate}</p>
       </header>
 
-      <div className="grid gap-6">
-        <Card className="overflow-hidden bg-white">
-          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FEF08A]/40 pb-4">
+      <div className="grid gap-4">
+        <Card className="overflow-hidden rounded-xl bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FEF08A]/40 pb-3">
             <div className="flex items-start gap-4">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <FileText className="size-5" aria-hidden />
@@ -60,9 +60,9 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
               </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4 pt-6">
+          <CardContent className="space-y-3 pt-5">
             {material.summary ? (
-              <article className="rounded-xl border-2 border-black bg-white px-5 py-6 text-[15px] leading-relaxed text-gray-800 whitespace-pre-wrap">
+              <article className="whitespace-pre-wrap rounded-xl border-2 border-black bg-white px-5 py-5 text-[15px] leading-relaxed text-gray-800">
                 {material.summary}
               </article>
             ) : (
@@ -71,8 +71,8 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden bg-white">
-          <CardHeader className="space-y-3 border-b-2 border-black bg-[#D1FAE5]/40 pb-4">
+        <Card className="overflow-hidden rounded-xl bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#D1FAE5]/40 pb-3">
             <div className="flex items-start gap-4">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <ListChecks className="size-5" aria-hidden />
@@ -85,7 +85,7 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-5">
             {quiz ? (
               <Button asChild className={ctaClassName}>
                 <Link href={`/dashboard/materials/${material.id}/quiz`}>Take Quiz</Link>
@@ -96,8 +96,8 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden bg-white">
-          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FED7AA]/40 pb-4">
+        <Card className="overflow-hidden rounded-xl bg-white">
+          <CardHeader className="space-y-3 border-b-2 border-black bg-[#FED7AA]/40 pb-3">
             <div className="flex items-start gap-4">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
                 <Layers className="size-5" aria-hidden />
@@ -110,7 +110,7 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-5">
             {flashcards ? (
               <Button asChild className={ctaClassName}>
                 <Link href={`/dashboard/materials/${material.id}/flashcards`}>Study Flashcards</Link>

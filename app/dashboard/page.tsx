@@ -47,7 +47,7 @@ export default async function DashboardHomePage() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-10">
+    <section className="mx-auto w-full max-w-5xl space-y-8">
       <header className="space-y-2">
         <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           Your Materials
@@ -58,8 +58,8 @@ export default async function DashboardHomePage() {
       </header>
 
       {list.length === 0 ? (
-        <div className="rounded-2xl border-2 border-black bg-white px-8 py-16 text-center shadow-[8px_8px_0_0_#000]">
-          <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl border-2 border-black bg-[#FEF08A]">
+        <div className="rounded-xl border-2 border-black bg-white px-6 py-12 text-center shadow-[8px_8px_0_0_#000]">
+          <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-xl border-2 border-black bg-[#FEF08A]">
             <BookOpen className="size-9 text-black" strokeWidth={1.5} aria-hidden />
           </div>
           <h2 className="text-xl font-black uppercase text-black">
@@ -69,12 +69,12 @@ export default async function DashboardHomePage() {
             Upload your first PDF, article, or notes. We&apos;ll generate summaries, quizzes, and flashcards
             automatically.
           </p>
-          <Button asChild size="lg" className="mt-8">
+          <Button asChild className="mt-6">
             <Link href="/dashboard/upload">Upload your first document</Link>
           </Button>
         </div>
       ) : (
-        <ul className="grid gap-5 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {list.map((material) => {
             const hasSummary = Boolean(material.summary?.trim());
             const hasQuiz = quizIds.has(material.id);
@@ -84,7 +84,7 @@ export default async function DashboardHomePage() {
               <li key={material.id}>
                 <Link
                   href={`/dashboard/materials/${material.id}`}
-                  className="group block h-full rounded-2xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000] transition-all duration-200 hover:-translate-y-0.5"
+                  className="group block h-full rounded-xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000] transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">

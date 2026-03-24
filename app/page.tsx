@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="min-h-screen text-black">
       <header className="sticky top-0 z-40 border-b-2 border-black bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="text-base font-black uppercase tracking-tight sm:text-lg">
             Commercial Awareness
           </Link>
@@ -24,19 +24,19 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl text-center">
-            <span className="inline-flex rounded-full border-2 border-black bg-black px-4 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+        <section className="px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <span className="mb-4 inline-flex rounded-full border-2 border-black bg-black px-4 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
               Trusted by law students across the UK
             </span>
-            <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-black uppercase leading-[1.05] sm:text-5xl lg:text-7xl">
+            <h1 className="mx-auto mb-4 max-w-4xl text-5xl font-black uppercase leading-[1.05]">
               Master Commercial Awareness With Ease
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-gray-600 sm:text-lg">
+            <p className="mx-auto mb-6 max-w-3xl text-base leading-relaxed text-gray-600 sm:text-lg">
               Everything you need is in one place, so you can focus on acing your training contract
               and vacation scheme interviews.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/signup"
                 className="inline-flex h-12 items-center justify-center rounded-lg border-2 border-black bg-[#FACC15] px-7 text-sm font-bold"
@@ -48,17 +48,17 @@ export default function Home() {
               </a>
             </div>
 
-            <div id="features" className="mt-12 rounded-2xl border-[3px] border-black bg-[#FEF08A] p-4 shadow-[8px_8px_0_0_#000] sm:p-6">
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="rounded-xl border-2 border-black bg-white p-4 text-left">
+            <div id="features" className="mt-8 rounded-xl border-[3px] border-black bg-[#FEF08A] p-6 shadow-[8px_8px_0_0_#000]">
+              <div className="grid gap-5 md:grid-cols-3">
+                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Today&apos;s Summary</p>
                   <p className="mt-2 text-lg font-black uppercase">FTSE and Inflation Update</p>
                 </div>
-                <div className="rounded-xl border-2 border-black bg-white p-4 text-left">
+                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Quiz Score</p>
                   <p className="mt-2 text-lg font-black uppercase">8/10 Correct</p>
                 </div>
-                <div className="rounded-xl border-2 border-black bg-white p-4 text-left">
+                <div className="rounded-xl border-2 border-black bg-white p-6 text-left">
                   <p className="text-xs font-bold uppercase text-gray-500">Flashcards</p>
                   <p className="mt-2 text-lg font-black uppercase">24 Cards Ready</p>
                 </div>
@@ -68,15 +68,15 @@ export default function Home() {
         </section>
 
         <section id="benefits" className="border-t-2 border-black bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="max-w-3xl text-3xl font-black uppercase leading-tight sm:text-5xl">
+          <div className="mx-auto max-w-[1200px]">
+            <h2 className="mb-4 max-w-3xl text-3xl font-black uppercase leading-tight sm:text-5xl">
               Everything Is Built To Help You Learn Better
             </h2>
-            <p className="mt-4 max-w-3xl text-gray-600">
+            <p className="max-w-3xl text-gray-600">
               From uploading content to testing your knowledge, the platform simplifies your prep
               and improves results.
             </p>
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               <article className="rounded-xl border-2 border-black bg-[#FEF08A] p-6 shadow-[6px_6px_0_0_#000] md:col-span-2">
                 <h3 className="text-2xl font-black uppercase">Smart Summaries That Work</h3>
                 <p className="mt-3 max-w-2xl text-gray-700">
@@ -99,7 +99,7 @@ export default function Home() {
                   Flip-card study sessions to memorise key facts, figures and industry implications.
                 </p>
               </article>
-              <article className="relative rounded-xl border-2 border-black bg-[#FED7AA] p-6 shadow-[6px_6px_0_0_#000] md:col-span-2">
+              <article className="relative rounded-xl border-2 border-black bg-[#FED7AA] p-6 shadow-[6px_6px_0_0_#000] lg:col-span-1">
                 <span className="absolute right-4 top-4 rounded-full border-2 border-black bg-black px-2.5 py-1 text-[10px] font-bold uppercase text-white">
                   Coming soon
                 </span>
@@ -116,9 +116,12 @@ export default function Home() {
         </section>
 
         <section id="how-it-works" className="border-t-2 border-black bg-[#F5F5F5] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-3xl font-black uppercase sm:text-5xl">Get Started In Three Simple Steps</h2>
-            <div className="mt-9 grid gap-5 md:grid-cols-3">
+          <div className="mx-auto max-w-[1200px]">
+            <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Get Started In Three Simple Steps</h2>
+            <p className="max-w-3xl text-gray-600">
+              Upload, generate, and revise in one streamlined workflow built for focused daily prep.
+            </p>
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
               {[
                 ["01 Upload", "Drop in any PDF, article, or lecture notes"],
                 ["02 Generate", "AI creates summaries, quizzes and flashcards"],
@@ -134,9 +137,12 @@ export default function Home() {
         </section>
 
         <section className="border-t-2 border-black bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-3xl font-black uppercase sm:text-5xl">Your Secret Weapon For Law Applications</h2>
-            <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto max-w-[1200px]">
+            <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Your Secret Weapon For Law Applications</h2>
+            <p className="max-w-3xl text-gray-600">
+              Designed for the contexts where commercial-awareness depth makes the difference.
+            </p>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 [
                   "Training Contract Prep",
@@ -155,7 +161,7 @@ export default function Home() {
                   "Understand the commercial context behind the cases you work on",
                 ],
               ].map(([title, text]) => (
-                <article key={title} className="rounded-xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]">
+                <article key={title} className="rounded-xl border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_#000]">
                   <h3 className="text-base font-black uppercase">{title}</h3>
                   <p className="mt-3 text-sm text-gray-600">{text}</p>
                 </article>
@@ -165,7 +171,7 @@ export default function Home() {
         </section>
 
         <section className="border-t-2 border-black bg-[#FED7AA] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-[1200px] text-center">
             <h2 className="text-3xl font-black uppercase sm:text-5xl">Start Learning Smarter Today</h2>
             <p className="mt-4 text-gray-700">100% free. Upload your first document in 30 seconds.</p>
             <Link
@@ -178,7 +184,7 @@ export default function Home() {
         </section>
 
         <footer className="border-t-2 border-black bg-black px-4 py-12 text-sm text-gray-400 sm:px-6 lg:px-8">
-          <div className="mx-auto flex max-w-6xl flex-col gap-8 sm:flex-row sm:justify-between">
+          <div className="mx-auto flex max-w-[1200px] flex-col gap-8 sm:flex-row sm:justify-between">
             <div>
               <p className="text-base font-bold text-white">Commercial Awareness</p>
               <p className="mt-4 text-gray-500">© 2026 Commercial Awareness. All rights reserved.</p>

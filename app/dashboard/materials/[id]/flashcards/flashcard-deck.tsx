@@ -77,7 +77,7 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
   }
 
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8">
+    <section className="mx-auto w-full max-w-2xl space-y-6">
       <div className="text-center">
         <p className="text-sm font-medium text-gray-600">{progressLabel}</p>
         <div className="mx-auto mt-3 h-2 max-w-xs overflow-hidden rounded-full border-2 border-black bg-white">
@@ -88,12 +88,12 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
         </div>
       </div>
 
-      <Card className="bg-white">
+      <Card className="rounded-xl bg-white">
         <CardHeader className="pb-2 text-center">
           <CardTitle className="text-lg">Study deck</CardTitle>
           <CardDescription className="text-gray-600">Tap the card to flip</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-8 px-4 pb-8 sm:px-8">
+        <CardContent className="space-y-6 px-4 pb-6 sm:px-6">
           <div className="mx-auto w-full max-w-lg [perspective:1200px]">
             <button
               type="button"
@@ -106,23 +106,19 @@ export function FlashcardDeck({ materialId, cards }: FlashcardDeckProps) {
                   isFlipped ? "[transform:rotateY(180deg)]" : ""
                 }`}
               >
-                <div
-                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border-2 border-black bg-[#FACC15] px-6 py-8 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] sm:min-h-[280px] sm:px-10"
-                >
+                <div className="absolute inset-0 flex h-full min-h-[220px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-5 py-6 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] sm:min-h-[250px] sm:px-8">
                   <p className="text-lg font-black uppercase leading-relaxed text-black sm:text-xl">
                     {currentCard.front}
                   </p>
                 </div>
-                <div
-                  className="absolute inset-0 flex h-full min-h-[240px] items-center justify-center overflow-hidden rounded-2xl border-2 border-black bg-white px-6 py-8 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[280px] sm:px-10"
-                >
+                <div className="absolute inset-0 flex h-full min-h-[220px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-5 py-6 text-center shadow-[8px_8px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[250px] sm:px-8">
                   <p className="text-base leading-relaxed text-gray-800 sm:text-lg">{currentCard.back}</p>
                 </div>
               </div>
             </button>
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
             <div className="flex items-center gap-2">
               <Button
                 type="button"

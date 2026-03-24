@@ -130,7 +130,7 @@ export default function UploadPage() {
   const dropZoneInteractive = isDragging || isHoveringDrop;
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-8">
+    <section className="mx-auto w-full max-w-3xl space-y-6">
       <div className="space-y-2">
         <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           Upload study material
@@ -140,15 +140,15 @@ export default function UploadPage() {
         </p>
       </div>
 
-      <Card className="bg-white">
-        <CardHeader className="space-y-1">
+      <Card className="rounded-xl bg-white">
+        <CardHeader className="space-y-1 pb-4">
           <CardTitle className="text-xl">New material</CardTitle>
           <CardDescription className="text-gray-600">
             Supported formats: PDF, DOCX, TXT (max 10MB).
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form className="space-y-6" onSubmit={handleSubmit}>
+        <CardContent className="pt-0">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <Label htmlFor="title" className="text-black">
                 Title
@@ -175,7 +175,7 @@ export default function UploadPage() {
                 onDrop={handleDrop}
                 onMouseEnter={() => setIsHoveringDrop(true)}
                 onMouseLeave={() => setIsHoveringDrop(false)}
-                className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-10 text-center transition-all duration-300 ${
+                className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-7 text-center transition-all duration-300 ${
                   isDragging
                     ? "border-solid border-black bg-[#FEF08A] shadow-inner"
                     : dropZoneInteractive
@@ -211,12 +211,7 @@ export default function UploadPage() {
 
             {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
 
-            <Button
-              type="submit"
-              size="lg"
-              className="h-12 w-full text-base"
-              disabled={isUploading}
-            >
+            <Button type="submit" className="h-11 w-full text-sm sm:text-base" disabled={isUploading}>
               {isUploading ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />
