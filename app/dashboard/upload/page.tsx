@@ -130,9 +130,9 @@ export default function UploadPage() {
   const dropZoneInteractive = isDragging || isHoveringDrop;
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
+    <section className="mx-auto w-full max-w-2xl space-y-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-black uppercase tracking-tight text-black sm:text-3xl">
           Upload study material
         </h1>
         <p className="text-base text-gray-600">
