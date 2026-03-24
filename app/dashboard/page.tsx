@@ -47,7 +47,7 @@ export default async function DashboardHomePage() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-8 pt-10">
+    <section className="mx-auto w-full max-w-5xl space-y-8 pt-16">
       <header className="space-y-2">
         <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
           Your Materials
