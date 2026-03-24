@@ -26,9 +26,11 @@ export default function Home() {
       <main>
         <section className="min-h-screen px-4 py-24 sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-6xl flex-col justify-center text-center">
-            <span className="mb-8 inline-block w-auto rounded-full border-2 border-black bg-orange-200 px-4 py-1.5 text-sm font-bold uppercase tracking-wide text-black">
-              Trusted by law students across the UK
-            </span>
+            <div className="mb-8 flex justify-center">
+              <span className="mx-auto inline-block w-fit rounded-full border-2 border-black bg-[#FED7AA] px-4 py-2 text-sm font-bold uppercase tracking-wide text-black">
+                Trusted by law students across the UK
+              </span>
+            </div>
             <h1 className="mx-auto mb-4 max-w-4xl text-5xl font-black uppercase leading-[1.05]">
               Master Commercial Awareness With Ease
             </h1>
