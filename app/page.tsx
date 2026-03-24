@@ -148,11 +148,11 @@ export default function Home() {
 
         <section className="border-t-2 border-black bg-white px-4 pb-16 pt-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <h2 className="mb-4 text-3xl font-black uppercase sm:text-5xl">Your Secret Weapon For Law Applications</h2>
+            <h2 className="mb-4 text-3xl font-black uppercase sm:text-4xl">Your Secret Weapon For Law Applications</h2>
             <p className="max-w-3xl text-gray-600">
               Designed for the contexts where commercial-awareness depth makes the difference.
             </p>
-            <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 [
                   "Training Contract Prep",
@@ -177,7 +177,7 @@ export default function Home() {
               ].map(([title, text, background]) => (
                 <article
                   key={title}
-                  className={`rounded-xl border-2 border-black p-5 shadow-[6px_6px_0_0_#000] ${background}`}
+                  className={`rounded-xl border-2 border-black p-6 shadow-[6px_6px_0_0_#000] ${background}`}
                 >
                   <h3 className="text-base font-black uppercase">{title}</h3>
                   <p className="mt-3 text-sm text-gray-600">{text}</p>
