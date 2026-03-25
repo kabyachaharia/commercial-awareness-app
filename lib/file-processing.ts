@@ -51,9 +51,9 @@ export async function extractTextFromFile(file: File) {
   const buffer = Buffer.from(arrayBuffer);
 
   if (extension === "pdf" || file.type === "application/pdf") {
-    const pdfParse = require("pdf-parse/lib/pdf-parse.js") as (
-      dataBuffer: Buffer,
-    ) => Promise<{ text: string }>;
+    const { default: pdfParse } = (await import("pdf-parse/lib/pdf-parse.js")) as {
+      default: (dataBuffer: Buffer) => Promise<{ text: string }>;
+    };
     const parsed = await pdfParse(buffer);
     return parsed.text.trim();
   }

@@ -35,27 +35,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = (await request.json()) as { material_id?: string };
+    const body = (await request.json()) as { material_id?: string; source_text?: string };
     const materialId = body.material_id;
+    const rawSourceText = body.source_text;
 
-    if (!materialId) {
-      return NextResponse.json({ error: "material_id is required." }, { status: 400 });
+    const material = materialId
+      ? await supabase
+          .from("materials")
+          .select("id, extracted_text")
+          .eq("id", materialId)
+          .eq("user_id", user.id)
+          .single()
+      : null;
+
+    if (materialId) {
+      if (!material || material.error || !material.data) {
+        return NextResponse.json({ error: "Material not found." }, { status: 404 });
+      }
     }
 
-    const { data: material, error: fetchError } = await supabase
-      .from("materials")
-      .select("id, extracted_text")
-      .eq("id", materialId)
-      .eq("user_id", user.id)
-      .single();
-
-    if (fetchError || !material) {
-      return NextResponse.json({ error: "Material not found." }, { status: 404 });
-    }
-
-    const sourceText = truncateTextForModel(material.extracted_text ?? "");
+    const sourceText = truncateTextForModel(
+      rawSourceText ?? material?.data?.extracted_text ?? ""
+    );
     if (!sourceText.trim()) {
-      return NextResponse.json({ error: "No extracted text available for this material." }, { status: 400 });
+      return NextResponse.json(
+        { error: "No source text provided." },
+        { status: 400 }
+      );
     }
 
     const openai = createOpenAIClient();
@@ -66,7 +72,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "You are an expert commercial awareness tutor. Generate exactly 30 quiz questions based on the material. Mix multiple choice and true/false. Respond only as valid JSON with the shape: {\"quiz\":[{\"question\":\"\",\"type\":\"multiple_choice|true_false\",\"options\":[\"\"],\"correct_answer\":\"\",\"explanation\":\"\"}]}.",
+            "You are an expert commercial awareness tutor. Generate exactly 30 scenario-based quiz questions that test application and decision-making (not just recall). Anchor questions in realistic business/market scenarios; ask 'what would you do / what happens next / which option best applies' where possible. Mix multiple choice and true/false. Respond only as valid JSON with the shape: {\"quiz\":[{\"question\":\"\",\"type\":\"multiple_choice|true_false\",\"options\":[\"\"],\"correct_answer\":\"\",\"explanation\":\"\"}]}.",
         },
         {
           role: "user",
@@ -82,12 +88,16 @@ export async function POST(request: Request) {
 
     const quiz = parseQuizPayload(rawContent);
 
-    await supabase.from("quizzes").delete().eq("material_id", material.id);
+    if (!materialId) {
+      return NextResponse.json({ quiz });
+    }
+
+    await supabase.from("quizzes").delete().eq("material_id", material!.data!.id);
 
     const { data: savedQuiz, error: insertError } = await supabase
       .from("quizzes")
       .insert({
-        material_id: material.id,
+        material_id: material!.data!.id,
         questions: quiz,
       })
       .select("*");

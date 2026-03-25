@@ -32,27 +32,30 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = (await request.json()) as { material_id?: string };
+    const body = (await request.json()) as { material_id?: string; source_text?: string };
     const materialId = body.material_id;
+    const rawSourceText = body.source_text;
 
-    if (!materialId) {
-      return NextResponse.json({ error: "material_id is required." }, { status: 400 });
+    const material = materialId
+      ? await supabase
+          .from("materials")
+          .select("id, extracted_text")
+          .eq("id", materialId)
+          .eq("user_id", user.id)
+          .single()
+      : null;
+
+    if (materialId) {
+      if (!material || material.error || !material.data) {
+        return NextResponse.json({ error: "Material not found." }, { status: 404 });
+      }
     }
 
-    const { data: material, error: fetchError } = await supabase
-      .from("materials")
-      .select("id, extracted_text")
-      .eq("id", materialId)
-      .eq("user_id", user.id)
-      .single();
-
-    if (fetchError || !material) {
-      return NextResponse.json({ error: "Material not found." }, { status: 404 });
-    }
-
-    const sourceText = truncateTextForModel(material.extracted_text ?? "");
+    const sourceText = truncateTextForModel(
+      rawSourceText ?? material?.data?.extracted_text ?? ""
+    );
     if (!sourceText.trim()) {
-      return NextResponse.json({ error: "No extracted text available for this material." }, { status: 400 });
+      return NextResponse.json({ error: "No source text provided." }, { status: 400 });
     }
 
     const openai = createOpenAIClient();
@@ -79,12 +82,16 @@ export async function POST(request: Request) {
 
     const flashcards = parseFlashcardsPayload(rawContent);
 
-    await supabase.from("flashcards").delete().eq("material_id", material.id);
+    if (!materialId) {
+      return NextResponse.json({ flashcards });
+    }
+
+    await supabase.from("flashcards").delete().eq("material_id", material!.data!.id);
 
     const { data: savedFlashcards, error: insertError } = await supabase
       .from("flashcards")
       .insert({
-        material_id: material.id,
+        material_id: material!.data!.id,
         cards: flashcards,
       })
       .select("*");
