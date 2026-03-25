@@ -323,8 +323,8 @@ export function TopicPackClient({
                         aria-current={current ? "step" : undefined}
                         className={cn(
                           "flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-sm font-bold tabular-nums transition-[box-shadow,opacity,background-color,color]",
-                          done ? "bg-green-600 text-white" : "bg-gray-300 text-gray-800",
-                          current && "ring-[3px] ring-black ring-offset-2 ring-offset-white",
+                          done ? "bg-emerald-200 text-emerald-950" : "bg-gray-200 text-gray-600",
+                          current && "ring-2 ring-black ring-offset-2 ring-offset-white",
                           !navigable && "cursor-not-allowed opacity-40"
                         )}
                       >
