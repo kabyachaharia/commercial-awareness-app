@@ -302,9 +302,9 @@ export function TopicPackClient({
                 </CardDescription>
               </CardHeader>
             ) : (
-              <div className="flex flex-col md:flex-row">
+              <div>
                 <nav
-                  className="flex shrink-0 gap-1 overflow-x-auto border-b-2 border-black px-3 py-3 md:max-h-[min(70vh,32rem)] md:w-72 md:flex-col md:overflow-x-visible md:overflow-y-auto md:border-b-0 md:border-r-2 md:px-4 md:py-4"
+                  className="flex gap-2 overflow-x-auto border-b-2 border-black px-4 py-4 [scrollbar-width:thin]"
                   aria-label="Sections"
                 >
                   {sections.map((s, i) => {
@@ -312,8 +312,7 @@ export function TopicPackClient({
                     const current = i === learnViewIndex;
                     const navigable = canNavigateToSection(i);
                     const num = s.section_number ?? i + 1;
-                    const heading = s.title?.trim() ? s.title : "Section";
-                    const label = `${num}. ${heading}${done ? ", completed" : ""}${current ? ", current" : ""}${navigable ? "" : ", locked"}`;
+                    const label = `Section ${num}${done ? ", completed" : ""}${current ? ", current" : ""}${navigable ? "" : ", locked"}`;
                     return (
                       <button
                         key={s.id}
@@ -323,24 +322,18 @@ export function TopicPackClient({
                         aria-label={label}
                         aria-current={current ? "step" : undefined}
                         className={cn(
-                          "min-w-[min(100%,16rem)] shrink-0 rounded-lg px-3 py-2.5 text-left text-sm transition-colors md:min-w-0 md:w-full",
-                          done && !current && "text-green-700",
-                          !done && !current && "text-gray-500",
-                          current &&
-                            "bg-gray-100 font-bold shadow-[inset_4px_0_0_0_#000] md:bg-gray-50",
-                          current && !done && "text-black",
-                          current && done && "text-green-800 shadow-[inset_4px_0_0_0_#15803d]",
+                          "flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-sm font-bold tabular-nums transition-[box-shadow,opacity,background-color,color]",
+                          done ? "bg-green-600 text-white" : "bg-gray-300 text-gray-800",
+                          current && "ring-[3px] ring-black ring-offset-2 ring-offset-white",
                           !navigable && "cursor-not-allowed opacity-40"
                         )}
                       >
-                        <span className="leading-snug">
-                          {num}. {heading}
-                        </span>
+                        {num}
                       </button>
                     );
                   })}
                 </nav>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0">
                   <CardHeader className="space-y-4 border-b-2 border-black px-6 py-6">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm font-semibold text-gray-700">
