@@ -48,7 +48,8 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isDashboardRoute = pathname.startsWith("/dashboard");
-  const isAuthRoute = pathname === "/login" || pathname === "/signup";
+  const isAuthRoute =
+    pathname === "/login" || pathname === "/signup" || pathname === "/forgot-password";
 
   if (!user && isDashboardRoute) {
     const redirectUrl = request.nextUrl.clone();
