@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LogOut, Upload } from "lucide-react";
+import { BookOpen, Home, LogOut, Upload } from "lucide-react";
 
 import { signOut } from "./actions";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/dashboard/upload", label: "Upload", icon: Upload },
+  { href: "/dashboard/library", label: "Library", icon: BookOpen },
+  { href: "/dashboard/upload", label: "My Documents", icon: Upload },
 ] as const;
 
 export function DashboardSidebarContent({ email }: { email: string }) {
