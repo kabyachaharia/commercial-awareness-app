@@ -1,12 +1,11 @@
 import { redirect } from "next/navigation"
 
+import { ADMIN_EMAIL, isAdminEmail } from "@/lib/admin"
 import { createClient } from "@/lib/supabase/server"
 
 import { AdminPageClient } from "./page-client"
 
 export const dynamic = "force-dynamic"
-
-const ADMIN_EMAIL = "kchaharia@gmail.com"
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -14,8 +13,7 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const email = user?.email?.toLowerCase() ?? null
-  if (!email || email !== ADMIN_EMAIL.toLowerCase()) {
+  if (!isAdminEmail(user?.email)) {
     redirect("/dashboard")
   }
 

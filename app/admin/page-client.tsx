@@ -36,19 +36,6 @@ type TopicSectionRow = {
   position: number | null
 }
 
-type QuizQuestion = {
-  question: string
-  type: "multiple_choice" | "true_false"
-  options: string[]
-  correct_answer: string
-  explanation: string
-}
-
-type Flashcard = {
-  front: string
-  back: string
-}
-
 const CATEGORY_OPTIONS: { value: TopicPackCategory; label: string }[] = [
   { value: "foundation", label: "foundation" },
   { value: "current_affairs", label: "current_affairs" },
@@ -433,41 +420,27 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
     setNotice(null)
     setBusy("Generating quiz & flashcards…")
     try {
-      const combined = sections
-        .map((s, idx) => `Section ${idx + 1}: ${s.title ?? ""}\n\n${s.content ?? ""}`.trim())
-        .join("\n\n---\n\n")
-
-      const quizRes = await fetch("/api/generate/quiz", {
+      const quizRes = await fetch("/api/generate/topic-quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source_text: combined }),
+        body: JSON.stringify({ topic_pack_id: selectedPackId }),
       })
-      const quizJson = (await quizRes.json()) as { quiz?: QuizQuestion[]; error?: string }
+      const quizJson = (await quizRes.json()) as { quiz?: unknown[]; error?: string }
       if (!quizRes.ok) throw new Error(quizJson.error || "Quiz generation failed.")
-      if (!quizJson.quiz || quizJson.quiz.length === 0) throw new Error("Quiz generation returned no questions.")
+      if (!Array.isArray(quizJson.quiz) || quizJson.quiz.length === 0) {
+        throw new Error("Quiz generation returned no data.")
+      }
 
-      const flashRes = await fetch("/api/generate/flashcards", {
+      const flashRes = await fetch("/api/generate/topic-flashcards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source_text: combined }),
+        body: JSON.stringify({ topic_pack_id: selectedPackId }),
       })
-      const flashJson = (await flashRes.json()) as { flashcards?: Flashcard[]; error?: string }
+      const flashJson = (await flashRes.json()) as { flashcards?: unknown[]; error?: string }
       if (!flashRes.ok) throw new Error(flashJson.error || "Flashcard generation failed.")
-      if (!flashJson.flashcards || flashJson.flashcards.length === 0) throw new Error("Flashcard generation returned no cards.")
-
-      await supabase.from("topic_quizzes").delete().eq("topic_pack_id", selectedPackId)
-      const { error: quizSaveError } = await supabase.from("topic_quizzes").insert({
-        topic_pack_id: selectedPackId,
-        questions: quizJson.quiz,
-      })
-      if (quizSaveError) throw quizSaveError
-
-      await supabase.from("topic_flashcards").delete().eq("topic_pack_id", selectedPackId)
-      const { error: flashSaveError } = await supabase.from("topic_flashcards").insert({
-        topic_pack_id: selectedPackId,
-        cards: flashJson.flashcards,
-      })
-      if (flashSaveError) throw flashSaveError
+      if (!Array.isArray(flashJson.flashcards) || flashJson.flashcards.length === 0) {
+        throw new Error("Flashcard generation returned no data.")
+      }
 
       setNotice("Generated and saved quiz + flashcards.")
     } finally {
