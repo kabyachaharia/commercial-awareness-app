@@ -3,7 +3,7 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Check, ChevronDown, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Lock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -294,106 +294,120 @@ export function TopicPackClient({
         </TabsList>
 
         <TabsContent value="learn" className="mt-0 text-base">
-          <Card className="rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
-            <CardHeader className="space-y-4 border-b-2 border-black px-6 py-6">
-              {totalSections === 0 ? (
-                <CardDescription className="text-base text-gray-600">No learning sections are available for this pack yet.</CardDescription>
-              ) : (
-                <>
-                  <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Section progress">
-                    {sections.map((s, i) => {
-                      const done = i < progress.sections_completed;
-                      const current = i === learnViewIndex;
-                      const navigable = canNavigateToSection(i);
-                      const label = `Section ${i + 1}${done ? ", completed" : ""}${current ? ", current" : ""}${navigable ? "" : ", locked"}`;
-                      const content = done ? <Check className="size-5" strokeWidth={3} aria-hidden /> : i + 1;
-                      return (
-                        <button
-                          key={s.id}
+          <Card className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
+            {totalSections === 0 ? (
+              <CardHeader className="space-y-4 border-b-2 border-black px-6 py-6">
+                <CardDescription className="text-base text-gray-600">
+                  No learning sections are available for this pack yet.
+                </CardDescription>
+              </CardHeader>
+            ) : (
+              <div className="flex flex-col md:flex-row">
+                <nav
+                  className="flex shrink-0 gap-1 overflow-x-auto border-b-2 border-black px-3 py-3 md:max-h-[min(70vh,32rem)] md:w-72 md:flex-col md:overflow-x-visible md:overflow-y-auto md:border-b-0 md:border-r-2 md:px-4 md:py-4"
+                  aria-label="Sections"
+                >
+                  {sections.map((s, i) => {
+                    const done = i < progress.sections_completed;
+                    const current = i === learnViewIndex;
+                    const navigable = canNavigateToSection(i);
+                    const num = s.section_number ?? i + 1;
+                    const heading = s.title?.trim() ? s.title : "Section";
+                    const label = `${num}. ${heading}${done ? ", completed" : ""}${current ? ", current" : ""}${navigable ? "" : ", locked"}`;
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        disabled={!navigable}
+                        onClick={() => navigable && setLearnViewIndex(i)}
+                        aria-label={label}
+                        aria-current={current ? "step" : undefined}
+                        className={cn(
+                          "min-w-[min(100%,16rem)] shrink-0 rounded-lg px-3 py-2.5 text-left text-sm transition-colors md:min-w-0 md:w-full",
+                          done && !current && "text-green-700",
+                          !done && !current && "text-gray-500",
+                          current &&
+                            "bg-gray-100 font-bold shadow-[inset_4px_0_0_0_#000] md:bg-gray-50",
+                          current && !done && "text-black",
+                          current && done && "text-green-800 shadow-[inset_4px_0_0_0_#15803d]",
+                          !navigable && "cursor-not-allowed opacity-40"
+                        )}
+                      >
+                        <span className="leading-snug">
+                          {num}. {heading}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </nav>
+                <div className="min-w-0 flex-1">
+                  <CardHeader className="space-y-4 border-b-2 border-black px-6 py-6">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm font-semibold text-gray-700">
+                        <span>
+                          Section {learnViewIndex + 1} of {totalSections}
+                        </span>
+                      </div>
+                      <div className="h-2.5 w-full overflow-hidden rounded-full border-2 border-black bg-white">
+                        <div
+                          className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
+                          style={{ width: `${((learnViewIndex + 1) / totalSections) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  </CardHeader>
+                  {viewingSection ? (
+                    <CardContent className="space-y-6 px-6 py-8">
+                      <div className="space-y-4">
+                        <CardTitle className="text-2xl font-bold text-black">{viewingSection.title ?? "Section"}</CardTitle>
+                        <article className="rounded-xl border-2 border-gray-200 bg-gray-50/50 px-5 py-6">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                            {viewingSection.content ?? ""}
+                          </ReactMarkdown>
+                        </article>
+                      </div>
+                      {allSectionsComplete && learnViewIndex === totalSections - 1 ? (
+                        <div className="space-y-4 rounded-xl border-2 border-dashed border-black bg-[#D1FAE5]/40 px-5 py-8 text-center">
+                          <p className="text-lg font-black uppercase text-black">Congratulations</p>
+                          <p className="text-base text-gray-700">You have completed every section in this topic pack.</p>
+                          <p className="text-sm text-gray-600">Try the quiz when you are ready, or revisit any tab above.</p>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="h-12 rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
+                            onClick={() => setLearnViewIndex(0)}
+                          >
+                            Review Sections
+                          </Button>
+                        </div>
+                      ) : null}
+                      {sectionSaveError ? <p className="text-sm text-red-700">{sectionSaveError}</p> : null}
+                      {!allSectionsComplete && learnViewIndex < progress.sections_completed ? (
+                        <Button
                           type="button"
-                          disabled={!navigable}
-                          onClick={() => navigable && setLearnViewIndex(i)}
-                          aria-label={label}
-                          aria-current={current ? "step" : undefined}
-                          className={cn(
-                            "flex size-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-colors",
-                            done && current && "border-black bg-[#86EFAC] text-black ring-2 ring-black ring-offset-2",
-                            done && !current && "border-black bg-[#86EFAC] text-black",
-                            !done && current && "border-black bg-[#FACC15] text-black ring-2 ring-black ring-offset-2",
-                            !done && !current && "border-gray-300 bg-white text-gray-500",
-                            !navigable && "cursor-not-allowed opacity-40"
-                          )}
+                          variant="outline"
+                          className="h-12 w-full rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+                          onClick={() =>
+                            setLearnViewIndex(Math.min(progress.sections_completed, Math.max(0, totalSections - 1)))
+                          }
                         >
-                          {content}
-                        </button>
-                      );
-                    })}
-                  </nav>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm font-semibold text-gray-700">
-                      <span>
-                        Section {learnViewIndex + 1} of {totalSections}
-                      </span>
-                    </div>
-                    <div className="h-2.5 w-full overflow-hidden rounded-full border-2 border-black bg-white">
-                      <div
-                        className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
-                        style={{ width: `${((learnViewIndex + 1) / totalSections) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-            </CardHeader>
-            {viewingSection ? (
-              <CardContent className="space-y-6 px-6 py-8">
-                <div className="space-y-4">
-                  <CardTitle className="text-2xl font-bold text-black">{viewingSection.title ?? "Section"}</CardTitle>
-                  <article className="rounded-xl border-2 border-gray-200 bg-gray-50/50 px-5 py-6">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-                      {viewingSection.content ?? ""}
-                    </ReactMarkdown>
-                  </article>
+                          Resume where you left off
+                        </Button>
+                      ) : null}
+                      {atProgressFrontier ? (
+                        <Button
+                          type="button"
+                          onClick={handleContinueSection}
+                          className="h-12 w-full rounded-xl border-2 border-black bg-black px-6 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
+                        >
+                          {learnViewIndex + 1 >= totalSections ? "Finish" : "Continue"}
+                        </Button>
+                      ) : null}
+                    </CardContent>
+                  ) : null}
                 </div>
-                {allSectionsComplete && learnViewIndex === totalSections - 1 ? (
-                  <div className="space-y-4 rounded-xl border-2 border-dashed border-black bg-[#D1FAE5]/40 px-5 py-8 text-center">
-                    <p className="text-lg font-black uppercase text-black">Congratulations</p>
-                    <p className="text-base text-gray-700">You have completed every section in this topic pack.</p>
-                    <p className="text-sm text-gray-600">Try the quiz when you are ready, or revisit any tab above.</p>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="h-12 rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
-                      onClick={() => setLearnViewIndex(0)}
-                    >
-                      Review Sections
-                    </Button>
-                  </div>
-                ) : null}
-                {sectionSaveError ? <p className="text-sm text-red-700">{sectionSaveError}</p> : null}
-                {!allSectionsComplete && learnViewIndex < progress.sections_completed ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="h-12 w-full rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
-                    onClick={() =>
-                      setLearnViewIndex(Math.min(progress.sections_completed, Math.max(0, totalSections - 1)))
-                    }
-                  >
-                    Resume where you left off
-                  </Button>
-                ) : null}
-                {atProgressFrontier ? (
-                  <Button
-                    type="button"
-                    onClick={handleContinueSection}
-                    className="h-12 w-full rounded-xl border-2 border-black bg-black px-6 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
-                  >
-                    {learnViewIndex + 1 >= totalSections ? "Finish" : "Continue"}
-                  </Button>
-                ) : null}
-              </CardContent>
-            ) : null}
+              </div>
+            )}
           </Card>
         </TabsContent>
 
