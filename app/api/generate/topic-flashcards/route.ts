@@ -46,9 +46,9 @@ export async function POST(request: Request) {
 
     const { data: sections, error: sectionsError } = await supabase
       .from("topic_sections")
-      .select("title, content, position")
+      .select("title, content, section_number")
       .eq("topic_pack_id", topicPackId)
-      .order("position", { ascending: true });
+      .order("section_number", { ascending: true });
 
     if (sectionsError) {
       return NextResponse.json({ error: sectionsError.message }, { status: 500 });

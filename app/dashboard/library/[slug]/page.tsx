@@ -25,7 +25,7 @@ type TopicSectionRow = {
   id: string;
   title: string | null;
   content: string | null;
-  position: number | null;
+  section_number: number | null;
 };
 
 type TopicQuizRow = {
@@ -119,10 +119,9 @@ export default async function TopicPackPage({ params }: PageProps) {
   const [sectionsRes, quizRes, flashRes, progressRes] = await Promise.all([
     supabase
       .from("topic_sections")
-      .select("id,title,content,position")
+      .select("id,title,content,section_number")
       .eq("topic_pack_id", packId)
-      // Section order is stored as `position` (1-based); same ordering as `section_number` in the product.
-      .order("position", { ascending: true }),
+      .order("section_number", { ascending: true }),
     supabase.from("topic_quizzes").select("questions").eq("topic_pack_id", packId).maybeSingle(),
     supabase.from("topic_flashcards").select("cards").eq("topic_pack_id", packId).maybeSingle(),
     supabase
@@ -143,7 +142,7 @@ export default async function TopicPackPage({ params }: PageProps) {
     id: row.id,
     title: row.title,
     content: row.content,
-    section_number: clampInt(row.position) > 0 ? clampInt(row.position) : index + 1,
+    section_number: clampInt(row.section_number) > 0 ? clampInt(row.section_number) : index + 1,
   }));
 
   const quizQuestions = normalizeQuizQuestions((quizRes.data as TopicQuizRow | null)?.questions);

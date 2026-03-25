@@ -33,7 +33,7 @@ type TopicSectionRow = {
   topic_pack_id: string
   title: string | null
   content: string | null
-  position: number | null
+  section_number: number | null
 }
 
 const CATEGORY_OPTIONS: { value: TopicPackCategory; label: string }[] = [
@@ -106,9 +106,9 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
   async function refreshSections(topicPackId: string) {
     const { data, error: sectionsError } = await supabase
       .from("topic_sections")
-      .select("id,topic_pack_id,title,content,position")
+      .select("id,topic_pack_id,title,content,section_number")
       .eq("topic_pack_id", topicPackId)
-      .order("position", { ascending: true })
+      .order("section_number", { ascending: true })
 
     if (sectionsError) throw sectionsError
     setSections((data ?? []) as TopicSectionRow[])
@@ -246,7 +246,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
         topic_pack_id: selectedPackId,
         title: sectionTitle,
         content: sectionContent,
-        position: nextPos,
+        section_number: nextPos,
       })
 
       if (insertError) throw insertError
@@ -278,7 +278,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
       const renumber = remaining.map((s, idx) => ({
         id: s.id,
         topic_pack_id: selectedPackId,
-        position: idx + 1,
+        section_number: idx + 1,
       }))
 
       if (renumber.length > 0) {
@@ -328,7 +328,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
     const next = [...sections]
     const [item] = next.splice(fromIndex, 1)
     next.splice(toIndex, 0, item)
-    setSections(next.map((s, idx) => ({ ...s, position: idx + 1 })))
+    setSections(next.map((s, idx) => ({ ...s, section_number: idx + 1 })))
 
     setError(null)
     setNotice(null)
@@ -337,7 +337,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
       const payload = next.map((s, idx) => ({
         id: s.id,
         topic_pack_id: selectedPackId,
-        position: idx + 1,
+        section_number: idx + 1,
       }))
       const { error: reorderError } = await supabase
         .from("topic_sections")
@@ -358,7 +358,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
     const next = [...sections]
     const [item] = next.splice(from, 1)
     next.splice(to, 0, item)
-    setSections(next.map((s, idx) => ({ ...s, position: idx + 1 })))
+    setSections(next.map((s, idx) => ({ ...s, section_number: idx + 1 })))
 
     setError(null)
     setNotice(null)
@@ -367,7 +367,7 @@ export function AdminPageClient({ adminEmail }: { adminEmail: string }) {
       const payload = next.map((s, idx) => ({
         id: s.id,
         topic_pack_id: selectedPackId,
-        position: idx + 1,
+        section_number: idx + 1,
       }))
       const { error: reorderError } = await supabase
         .from("topic_sections")
