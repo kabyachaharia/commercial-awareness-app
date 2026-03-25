@@ -112,10 +112,21 @@ export function TopicPackClient({
   const totalSections = sections.length;
   const allSectionsComplete = totalSections > 0 && progress.sections_completed >= totalSections;
 
-  const currentSectionIndex =
-    totalSections === 0 ? 0 : Math.min(progress.sections_completed, Math.max(0, totalSections - 1));
-  const viewingSection = !allSectionsComplete && totalSections > 0 ? sections[currentSectionIndex] : null;
-  const learnStep = Math.min(progress.sections_completed, Math.max(0, totalSections - 1));
+  const [learnViewIndex, setLearnViewIndex] = React.useState(() =>
+    totalSections === 0 ? 0 : Math.min(initialProgress.sections_completed, Math.max(0, totalSections - 1))
+  );
+
+  const viewingSection =
+    totalSections > 0 ? sections[Math.min(learnViewIndex, Math.max(0, totalSections - 1))] : null;
+
+  const atProgressFrontier =
+    !allSectionsComplete && learnViewIndex === progress.sections_completed && progress.sections_completed < totalSections;
+
+  function canNavigateToSection(i: number) {
+    if (totalSections === 0) return false;
+    if (i < 0 || i >= totalSections) return false;
+    return allSectionsComplete || i <= progress.sections_completed;
+  }
 
   const [quizQuestionIndex, setQuizQuestionIndex] = React.useState(0);
   const [quizSelected, setQuizSelected] = React.useState<string | null>(null);
@@ -154,6 +165,7 @@ export function TopicPackClient({
 
   async function handleContinueSection() {
     if (!viewingSection || totalSections === 0) return;
+    if (!atProgressFrontier) return;
     setSectionSaveError(null);
     const prevSnapshot = progress;
     const nextCompleted = prevSnapshot.sections_completed + 1;
@@ -162,11 +174,15 @@ export function TopicPackClient({
       sections_completed: nextCompleted,
     };
     setProgress(next);
+    setLearnViewIndex(Math.min(nextCompleted, Math.max(0, totalSections - 1)));
     try {
       await persistProgress(next);
     } catch {
       setSectionSaveError("Could not save progress. Check your connection and try again.");
       setProgress(prevSnapshot);
+      setLearnViewIndex(
+        Math.min(prevSnapshot.sections_completed, Math.max(0, totalSections - 1))
+      );
     }
   }
 
@@ -282,44 +298,47 @@ export function TopicPackClient({
             <CardHeader className="space-y-4 border-b-2 border-black px-6 py-6">
               {totalSections === 0 ? (
                 <CardDescription className="text-base text-gray-600">No learning sections are available for this pack yet.</CardDescription>
-              ) : allSectionsComplete ? (
-                <div className="space-y-3 rounded-xl border-2 border-dashed border-black bg-[#D1FAE5]/40 px-5 py-8 text-center">
-                  <p className="text-lg font-black uppercase text-black">Congratulations</p>
-                  <p className="text-base text-gray-700">You have completed every section in this topic pack.</p>
-                  <p className="text-sm text-gray-600">Try the quiz when you are ready, or revisit any tab above.</p>
-                </div>
               ) : (
                 <>
                   <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Section progress">
                     {sections.map((s, i) => {
                       const done = i < progress.sections_completed;
-                      const current = i === learnStep && !allSectionsComplete;
+                      const current = i === learnViewIndex;
+                      const navigable = canNavigateToSection(i);
+                      const label = `Section ${i + 1}${done ? ", completed" : ""}${current ? ", current" : ""}${navigable ? "" : ", locked"}`;
+                      const content = done ? <Check className="size-5" strokeWidth={3} aria-hidden /> : i + 1;
                       return (
-                        <span
+                        <button
                           key={s.id}
+                          type="button"
+                          disabled={!navigable}
+                          onClick={() => navigable && setLearnViewIndex(i)}
+                          aria-label={label}
+                          aria-current={current ? "step" : undefined}
                           className={cn(
                             "flex size-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-colors",
-                            done && "border-black bg-[#86EFAC] text-black",
-                            current && !done && "border-black bg-[#FACC15] text-black ring-2 ring-black ring-offset-2",
-                            !done && !current && "border-gray-300 bg-white text-gray-500"
+                            done && current && "border-black bg-[#86EFAC] text-black ring-2 ring-black ring-offset-2",
+                            done && !current && "border-black bg-[#86EFAC] text-black",
+                            !done && current && "border-black bg-[#FACC15] text-black ring-2 ring-black ring-offset-2",
+                            !done && !current && "border-gray-300 bg-white text-gray-500",
+                            !navigable && "cursor-not-allowed opacity-40"
                           )}
-                          aria-label={`Section ${i + 1}${done ? ", completed" : ""}${current ? ", current" : ""}`}
                         >
-                          {done ? <Check className="size-5" strokeWidth={3} aria-hidden /> : i + 1}
-                        </span>
+                          {content}
+                        </button>
                       );
                     })}
                   </nav>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm font-semibold text-gray-700">
                       <span>
-                        Section {currentSectionIndex + 1} of {totalSections}
+                        Section {learnViewIndex + 1} of {totalSections}
                       </span>
                     </div>
                     <div className="h-2.5 w-full overflow-hidden rounded-full border-2 border-black bg-white">
                       <div
                         className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
-                        style={{ width: `${((currentSectionIndex + 1) / totalSections) * 100}%` }}
+                        style={{ width: `${((learnViewIndex + 1) / totalSections) * 100}%` }}
                       />
                     </div>
                   </div>
@@ -336,14 +355,43 @@ export function TopicPackClient({
                     </ReactMarkdown>
                   </article>
                 </div>
+                {allSectionsComplete && learnViewIndex === totalSections - 1 ? (
+                  <div className="space-y-4 rounded-xl border-2 border-dashed border-black bg-[#D1FAE5]/40 px-5 py-8 text-center">
+                    <p className="text-lg font-black uppercase text-black">Congratulations</p>
+                    <p className="text-base text-gray-700">You have completed every section in this topic pack.</p>
+                    <p className="text-sm text-gray-600">Try the quiz when you are ready, or revisit any tab above.</p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-12 rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
+                      onClick={() => setLearnViewIndex(0)}
+                    >
+                      Review Sections
+                    </Button>
+                  </div>
+                ) : null}
                 {sectionSaveError ? <p className="text-sm text-red-700">{sectionSaveError}</p> : null}
-                <Button
-                  type="button"
-                  onClick={handleContinueSection}
-                  className="h-12 w-full rounded-xl border-2 border-black bg-black px-6 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
-                >
-                  {currentSectionIndex + 1 >= totalSections ? "Finish" : "Continue"}
-                </Button>
+                {!allSectionsComplete && learnViewIndex < progress.sections_completed ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-12 w-full rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+                    onClick={() =>
+                      setLearnViewIndex(Math.min(progress.sections_completed, Math.max(0, totalSections - 1)))
+                    }
+                  >
+                    Resume where you left off
+                  </Button>
+                ) : null}
+                {atProgressFrontier ? (
+                  <Button
+                    type="button"
+                    onClick={handleContinueSection}
+                    className="h-12 w-full rounded-xl border-2 border-black bg-black px-6 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
+                  >
+                    {learnViewIndex + 1 >= totalSections ? "Finish" : "Continue"}
+                  </Button>
+                ) : null}
               </CardContent>
             ) : null}
           </Card>
