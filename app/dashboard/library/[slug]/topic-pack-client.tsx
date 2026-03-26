@@ -705,59 +705,24 @@ export function TopicPackClient({
                       style={{ width: `${((cardIndex + 1) / flashcards.length) * 100}%` }}
                     />
                   </div>
-                  {flashcards.length > 12 ? (
-                    <div className="flex justify-center">
-                      <button
-                        type="button"
-                        className="rounded-xl border-2 border-black bg-white px-5 py-2 text-sm font-bold uppercase text-black hover:bg-gray-50 shadow-[4px_4px_0_0_#000] flex items-center gap-2"
-                        onClick={() => {
-                          if (flashcards.length === 0) return;
-                          if (flashcards.length === 1) {
-                            setCardIndex(0);
-                            setCardFlipped(false);
-                            return;
-                          }
-                          let next = Math.floor(Math.random() * flashcards.length);
-                          if (flashcards.length >= 2) {
-                            while (next === cardIndex) {
-                              next = Math.floor(Math.random() * flashcards.length);
-                            }
-                          }
-                          setCardIndex(next);
-                          setCardFlipped(false);
-                        }}
-                        aria-label="Shuffle flashcards"
-                      >
-                        <Shuffle className="size-4" aria-hidden />
-                        Shuffle
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2 overflow-x-auto py-2 justify-center flex-wrap">
-                      {flashcards.map((_, i) => {
-                        const active = i === cardIndex;
-                        return (
-                          <button
-                            key={`flashcard-jump-${i}`}
-                            type="button"
-                            onClick={() => {
-                              setCardIndex(i);
-                              setCardFlipped(false);
-                            }}
-                            aria-current={active ? "true" : undefined}
-                            aria-label={`Jump to card ${i + 1}`}
-                            className={
-                              active
-                                ? "size-8 rounded-full border-2 border-black bg-[#FACC15] text-xs font-bold text-black"
-                                : "size-8 rounded-full border-2 border-black bg-white text-xs font-bold text-black hover:bg-gray-100"
-                            }
-                          >
-                            {i + 1}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <div className="flex justify-center">
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-2 text-sm font-bold uppercase text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
+                      onClick={() => {
+                        if (flashcards.length <= 1) return;
+                        let next = cardIndex;
+                        while (next === cardIndex) {
+                          next = Math.floor(Math.random() * flashcards.length);
+                        }
+                        setCardIndex(next);
+                        setCardFlipped(false);
+                      }}
+                    >
+                      <Shuffle className="size-4" />
+                      Shuffle
+                    </button>
+                  </div>
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
                     <button
                       type="button"
