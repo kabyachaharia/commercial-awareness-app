@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BookOpen } from "lucide-react";
+import { BookOpen, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,12 +44,16 @@ function clampInt(value: unknown) {
   return Math.max(0, Math.floor(n));
 }
 
+function hasQuizScore(progress: UserProgressRow | null | undefined) {
+  if (!progress) return false;
+  const q = progress.quiz_best_score;
+  return typeof q === "number" && Number.isFinite(q);
+}
+
 function isNotStarted(progress: UserProgressRow | null | undefined) {
   if (!progress) return true;
   const completed = clampInt(progress.sections_completed);
-  const quiz = progress.quiz_best_score;
-  const hasQuizScore = typeof quiz === "number" && Number.isFinite(quiz);
-  return completed === 0 && !hasQuizScore;
+  return completed === 0 && !hasQuizScore(progress);
 }
 
 function isPackStudyingFinished(pack: TopicPackRow, progress: UserProgressRow | null | undefined) {
@@ -92,6 +96,20 @@ function progressSortKey(pack: TopicPackRow, progress: UserProgressRow | null | 
     : 0;
   const pub = pack.published_at ? new Date(pack.published_at).getTime() : 0;
   return completed * 1000 + q + pub / 1e12;
+}
+
+function sectionsCompletionRatio(pack: TopicPackRow, progress: UserProgressRow | null | undefined) {
+  const total = clampInt(pack.total_sections);
+  const completed = clampInt(progress?.sections_completed);
+  if (total <= 0) return 0;
+  return Math.max(0, Math.min(1, completed / total));
+}
+
+function isAllSectionsComplete(pack: TopicPackRow, progress: UserProgressRow | null | undefined) {
+  const total = clampInt(pack.total_sections);
+  const completed = clampInt(progress?.sections_completed);
+  if (total <= 0) return false;
+  return completed >= total;
 }
 
 export default async function DashboardHomePage() {
@@ -142,6 +160,27 @@ export default async function DashboardHomePage() {
     });
   }
 
+  let packsStarted = 0;
+  let packsCompleted = 0;
+  let quizScoreSum = 0;
+  let quizScoreCount = 0;
+
+  for (const pack of packs) {
+    const progress = progressByPackId.get(pack.id);
+    if (!isNotStarted(progress)) {
+      packsStarted += 1;
+    }
+    if (isAllSectionsComplete(pack, progress)) {
+      packsCompleted += 1;
+    }
+    if (hasQuizScore(progress)) {
+      quizScoreSum += progress!.quiz_best_score as number;
+      quizScoreCount += 1;
+    }
+  }
+
+  const averageQuizScore = quizScoreCount > 0 ? quizScoreSum / quizScoreCount : null;
+
   const list = materials ?? [];
   const ids = list.map((m) => m.id);
 
@@ -187,6 +226,28 @@ export default async function DashboardHomePage() {
     <section className="mx-auto w-full max-w-5xl space-y-12 pt-16">
       <CheckoutSuccessBanner />
 
+      <div className="space-y-4">
+        <header className="space-y-1">
+          <p className="text-xs font-black uppercase tracking-wide text-gray-600">Study overview</p>
+        </header>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
+            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Packs Started</p>
+            <p className="mt-1 text-2xl font-black text-black">{packsStarted}</p>
+          </div>
+          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
+            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Packs Completed</p>
+            <p className="mt-1 text-2xl font-black text-black">{packsCompleted}</p>
+          </div>
+          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
+            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Average Quiz Score</p>
+            <p className="mt-1 text-2xl font-black text-black">
+              {averageQuizScore != null ? `${Math.round(Math.max(0, Math.min(100, averageQuizScore)))}%` : "—"}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="space-y-6">
         <header className="space-y-2">
           <h2 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
@@ -225,6 +286,36 @@ export default async function DashboardHomePage() {
               const progress = progressByPackId.get(pack.id);
               const status = continueCardStatus(pack, progress, variant);
 
+              const totalSections = clampInt(pack.total_sections);
+              const ratio = sectionsCompletionRatio(pack, progress);
+              const barPercent =
+                variant === "not_started" && !progress ? 0 : Math.round(Math.max(0, Math.min(100, ratio * 100)));
+
+              const completedSections = clampInt(progress?.sections_completed);
+              const quizScore = hasQuizScore(progress)
+                ? Math.max(0, Math.min(100, Math.round(progress!.quiz_best_score as number)))
+                : null;
+
+              let primaryLabel = status;
+              let secondaryLabel: string | null = null;
+              let completedState = false;
+
+              if (isNotStarted(progress)) {
+                primaryLabel = totalSections > 0 ? "Not started" : "Not started";
+                secondaryLabel = totalSections > 0 ? `0 of ${totalSections} sections` : null;
+              } else if (totalSections > 0 && completedSections < totalSections) {
+                const currentSection = Math.min(completedSections + 1, totalSections);
+                primaryLabel = "In progress";
+                secondaryLabel = `Section ${currentSection} of ${totalSections}`;
+              } else if (totalSections > 0 && completedSections >= totalSections && !hasQuizScore(progress)) {
+                primaryLabel = "Ready to quiz";
+                secondaryLabel = "All sections complete — take the quiz!";
+              } else if (quizScore != null) {
+                primaryLabel = "Completed";
+                secondaryLabel = `Quiz: ${quizScore}%`;
+                completedState = true;
+              }
+
               return (
                 <li key={pack.id}>
                   <Link
@@ -239,7 +330,23 @@ export default async function DashboardHomePage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-4 pt-3">
-                        <p className="text-sm font-semibold text-black">{status}</p>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            {completedState ? (
+                              <CheckCircle2 className="size-4 shrink-0 text-emerald-600" aria-hidden />
+                            ) : null}
+                            <p className="text-sm font-semibold text-black">{primaryLabel}</p>
+                          </div>
+                          {secondaryLabel ? (
+                            <p className="text-xs font-medium text-gray-700">{secondaryLabel}</p>
+                          ) : null}
+                          <div className="mt-2 h-2 w-full overflow-hidden rounded-full border-2 border-black bg-white">
+                            <div
+                              className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
+                              style={{ width: `${barPercent}%` }}
+                            />
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </Link>
