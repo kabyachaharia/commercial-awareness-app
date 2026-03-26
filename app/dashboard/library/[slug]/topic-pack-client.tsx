@@ -144,6 +144,7 @@ export function TopicPackClient({
 
   const [cardIndex, setCardIndex] = React.useState(0);
   const [cardFlipped, setCardFlipped] = React.useState(false);
+  const [flashcardJumpValue, setFlashcardJumpValue] = React.useState("");
 
   const quizTotal = quizQuestions.length;
 
@@ -705,6 +706,59 @@ export function TopicPackClient({
                       style={{ width: `${((cardIndex + 1) / flashcards.length) * 100}%` }}
                     />
                   </div>
+                  {flashcards.length > 12 ? (
+                    <div className="flex justify-center">
+                      <select
+                        className="rounded-lg border-2 border-black bg-white px-3 py-1.5 text-sm font-bold"
+                        value={flashcardJumpValue}
+                        onChange={(e) => {
+                          const next = Number.parseInt(e.target.value, 10);
+                          if (Number.isNaN(next)) return;
+                          setCardIndex(Math.min(Math.max(next, 0), Math.max(0, flashcards.length - 1)));
+                          setCardFlipped(false);
+                          setFlashcardJumpValue("");
+                        }}
+                        aria-label="Jump to flashcard"
+                      >
+                        <option value="" disabled>
+                          Jump to card...
+                        </option>
+                        {flashcards.map((c, i) => {
+                          const label = `${i + 1}. ${(c.front ?? "").trim().slice(0, 30)}${(c.front ?? "").trim().length > 30 ? "…" : ""}`;
+                          return (
+                            <option key={`${i}-${c.front.slice(0, 24)}`} value={String(i)}>
+                              {label}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 overflow-x-auto py-2 justify-center flex-wrap">
+                      {flashcards.map((_, i) => {
+                        const active = i === cardIndex;
+                        return (
+                          <button
+                            key={`flashcard-jump-${i}`}
+                            type="button"
+                            onClick={() => {
+                              setCardIndex(i);
+                              setCardFlipped(false);
+                            }}
+                            aria-current={active ? "true" : undefined}
+                            aria-label={`Jump to card ${i + 1}`}
+                            className={
+                              active
+                                ? "size-8 rounded-full border-2 border-black bg-[#FACC15] text-xs font-bold text-black"
+                                : "size-8 rounded-full border-2 border-black bg-white text-xs font-bold text-black hover:bg-gray-100"
+                            }
+                          >
+                            {i + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
                     <button
                       type="button"
