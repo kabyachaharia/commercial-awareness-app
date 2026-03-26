@@ -43,16 +43,6 @@ export default async function UpgradePage() {
     <UpgradePricing
       currentTier={currentTier}
       hasActivePaidSubscription={hasActivePaidSubscription}
-      priceIds={{
-        student: {
-          monthly: process.env.STRIPE_STUDENT_MONTHLY_PRICE_ID ?? "",
-          yearly: process.env.STRIPE_STUDENT_YEARLY_PRICE_ID ?? "",
-        },
-        pro: {
-          monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID ?? "",
-          yearly: process.env.STRIPE_PRO_YEARLY_PRICE_ID ?? "",
-        },
-      }}
     />
   );
 }

@@ -10,18 +10,23 @@ export function CheckoutSuccessBanner() {
   const [visible, setVisible] = useState(searchParams.get("checkout") === "success");
 
   useEffect(() => {
-    if (searchParams.get("checkout") !== "success") return;
+    const isSuccess = searchParams.get("checkout") === "success";
+    setVisible(isSuccess);
+    if (!isSuccess) return;
 
-    const next = new URLSearchParams(searchParams.toString());
-    next.delete("checkout");
+    const timer = window.setTimeout(() => {
+      const next = new URLSearchParams(searchParams.toString());
+      next.delete("checkout");
+      const query = next.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    }, 4000);
 
-    const query = next.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    return () => window.clearTimeout(timer);
   }, [pathname, router, searchParams]);
 
   useEffect(() => {
     if (!visible) return;
-    const timer = window.setTimeout(() => setVisible(false), 4500);
+    const timer = window.setTimeout(() => setVisible(false), 4000);
     return () => window.clearTimeout(timer);
   }, [visible]);
 

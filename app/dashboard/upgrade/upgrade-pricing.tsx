@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,10 +12,6 @@ type BillingPeriod = "monthly" | "yearly";
 type UpgradePricingProps = {
   currentTier: SubscriptionTier;
   hasActivePaidSubscription: boolean;
-  priceIds: {
-    student: { monthly: string; yearly: string };
-    pro: { monthly: string; yearly: string };
-  };
 };
 
 type PlanConfig = {
@@ -70,21 +66,73 @@ function compareTier(plan: SubscriptionTier, currentTier: SubscriptionTier) {
   return PLAN_ORDER.indexOf(plan) - PLAN_ORDER.indexOf(currentTier);
 }
 
-export function UpgradePricing({ currentTier, hasActivePaidSubscription, priceIds }: UpgradePricingProps) {
-  const [billingByPlan, setBillingByPlan] = useState<Record<"student" | "pro", BillingPeriod>>({
-    student: "monthly",
-    pro: "monthly",
-  });
+export function UpgradePricing({ currentTier, hasActivePaidSubscription }: UpgradePricingProps) {
+  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>("monthly");
   const [loadingPlan, setLoadingPlan] = useState<SubscriptionTier | null>(null);
   const [portalLoading, setPortalLoading] = useState(false);
+  const [pricesLoading, setPricesLoading] = useState(true);
+  const [priceIds, setPriceIds] = useState<{
+    student: { monthly: string; yearly: string };
+    pro: { monthly: string; yearly: string };
+  }>({
+    student: { monthly: "", yearly: "" },
+    pro: { monthly: "", yearly: "" },
+  });
   const [error, setError] = useState<string | null>(null);
 
-  const selectedPriceId = useMemo(() => {
-    return {
-      student: priceIds.student[billingByPlan.student],
-      pro: priceIds.pro[billingByPlan.pro],
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadPriceIds() {
+      setPricesLoading(true);
+      try {
+        const response = await fetch("/api/stripe/prices");
+        const data = (await response.json()) as {
+          student?: { monthly?: string; yearly?: string };
+          pro?: { monthly?: string; yearly?: string };
+          error?: string;
+        };
+
+        if (!response.ok) {
+          throw new Error(data.error ?? "Could not load pricing.");
+        }
+
+        if (!cancelled) {
+          setPriceIds({
+            student: {
+              monthly: data.student?.monthly?.trim() ?? "",
+              yearly: data.student?.yearly?.trim() ?? "",
+            },
+            pro: {
+              monthly: data.pro?.monthly?.trim() ?? "",
+              yearly: data.pro?.yearly?.trim() ?? "",
+            },
+          });
+        }
+      } catch (pricesError) {
+        if (!cancelled) {
+          setError(pricesError instanceof Error ? pricesError.message : "Could not load pricing.");
+        }
+      } finally {
+        if (!cancelled) {
+          setPricesLoading(false);
+        }
+      }
+    }
+
+    void loadPriceIds();
+    return () => {
+      cancelled = true;
     };
-  }, [billingByPlan, priceIds]);
+  }, []);
+
+  const selectedPriceId = useMemo(
+    () => ({
+      student: priceIds.student[billingPeriod],
+      pro: priceIds.pro[billingPeriod],
+    }),
+    [billingPeriod, priceIds]
+  );
 
   async function startCheckout(plan: "student" | "pro") {
     const priceId = selectedPriceId[plan];
@@ -147,7 +195,21 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription, priceId
         </p>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
+        <span className={`text-xs font-bold uppercase ${billingPeriod === "monthly" ? "text-black" : "text-gray-500"}`}>
+          Monthly
+        </span>
+        <Switch
+          checked={billingPeriod === "yearly"}
+          onCheckedChange={(checked) => setBillingPeriod(checked ? "yearly" : "monthly")}
+          aria-label="Toggle billing period"
+        />
+        <span className={`text-xs font-bold uppercase ${billingPeriod === "yearly" ? "text-black" : "text-gray-500"}`}>
+          Yearly
+        </span>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {PLANS.map((plan) => {
           const relation = compareTier(plan.key, currentTier);
           const isCurrentPlan = relation === 0;
@@ -155,8 +217,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription, priceId
 
           const isPaidPlan = plan.key === "student" || plan.key === "pro";
           const paidKey = isPaidPlan ? plan.key : null;
-          const billing = paidKey ? billingByPlan[paidKey] : "monthly";
-          const isYearly = billing === "yearly";
+          const isYearly = billingPeriod === "yearly";
           const isLoading = loadingPlan === plan.key;
 
           let actionLabel = "";
@@ -202,21 +263,9 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription, priceId
               </CardHeader>
 
               <CardContent className="space-y-6">
-                {isPaidPlan && paidKey ? (
-                  <div className="flex items-center justify-between rounded-lg border-2 border-black bg-white px-3 py-2">
-                    <span className="text-xs font-bold uppercase text-gray-700">
-                      {isYearly ? "Yearly billing" : "Monthly billing"}
-                    </span>
-                    <Switch
-                      checked={isYearly}
-                      onCheckedChange={(checked) =>
-                        setBillingByPlan((prev) => ({
-                          ...prev,
-                          [paidKey]: checked ? "yearly" : "monthly",
-                        }))
-                      }
-                      aria-label={`Toggle ${plan.name} billing period`}
-                    />
+                {isPaidPlan && isYearly && plan.yearlySavings ? (
+                  <div className="w-fit rounded-lg border-2 border-black bg-[#D1FAE5] px-2.5 py-1 text-xs font-bold uppercase text-black">
+                    {plan.yearlySavings}
                   </div>
                 ) : null}
 
@@ -230,7 +279,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription, priceId
                   type="button"
                   className="w-full"
                   variant={actionDisabled ? "outline" : "default"}
-                  disabled={actionDisabled || isLoading}
+                  disabled={actionDisabled || isLoading || pricesLoading}
                   onClick={onClick}
                 >
                   {isLoading ? "Redirecting..." : actionLabel}
