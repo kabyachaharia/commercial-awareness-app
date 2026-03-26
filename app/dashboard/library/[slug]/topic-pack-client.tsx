@@ -136,6 +136,10 @@ export function TopicPackClient({
   const [quizCorrectCount, setQuizCorrectCount] = React.useState(0);
   const [quizFinished, setQuizFinished] = React.useState(false);
   const [quizSaveError, setQuizSaveError] = React.useState<string | null>(null);
+  const [quizSaving, setQuizSaving] = React.useState(false);
+  const [quizSavedOnce, setQuizSavedOnce] = React.useState(false);
+  const [quizFinishedScorePct, setQuizFinishedScorePct] = React.useState<number | null>(null);
+  const [quizSaveConfirmation, setQuizSaveConfirmation] = React.useState<string | null>(null);
   const [quizReviewIndex, setQuizReviewIndex] = React.useState(0);
 
   const [cardIndex, setCardIndex] = React.useState(0);
@@ -197,6 +201,10 @@ export function TopicPackClient({
     setQuizCorrectCount(0);
     setQuizFinished(false);
     setQuizSaveError(null);
+    setQuizSaving(false);
+    setQuizSavedOnce(false);
+    setQuizFinishedScorePct(null);
+    setQuizSaveConfirmation(null);
     setQuizReviewIndex(0);
   }
 
@@ -223,12 +231,21 @@ export function TopicPackClient({
 
     const pct = quizTotal > 0 ? Math.round((quizCorrectCount / quizTotal) * 100) : 0;
     setQuizFinished(true);
+    setQuizFinishedScorePct(pct);
     setQuizSaveError(null);
+    setQuizSaveConfirmation(null);
+  }
+
+  async function handleSaveAttempt() {
+    if (!quizFinished || quizFinishedScorePct == null) return;
+    setQuizSaveError(null);
+    setQuizSaveConfirmation(null);
+    setQuizSaving(true);
 
     let committed: ProgressState | null = null;
     setProgress((prev) => {
       const attempts = prev.quiz_attempts + 1;
-      const best = Math.max(prev.quiz_best_score ?? 0, pct);
+      const best = Math.max(prev.quiz_best_score ?? 0, quizFinishedScorePct);
       committed = { ...prev, quiz_best_score: best, quiz_attempts: attempts };
       return committed;
     });
@@ -236,10 +253,14 @@ export function TopicPackClient({
     if (committed) {
       try {
         await persistProgress(committed);
+        setQuizSavedOnce(true);
+        setQuizSaveConfirmation("Score saved!");
       } catch {
         setQuizSaveError("Could not save your score. You can try again in a moment.");
       }
     }
+
+    setQuizSaving(false);
   }
 
   const goNextCard = () => {
@@ -448,7 +469,10 @@ export function TopicPackClient({
                         {progress.quiz_attempts > 0 ? ` · Attempts: ${progress.quiz_attempts}` : null}
                       </p>
                     ) : null}
-                    {quizSaveError ? <p className="mt-3 text-sm text-red-700">{quizSaveError}</p> : null}
+                  {quizSaveError ? <p className="mt-3 text-sm text-red-700">{quizSaveError}</p> : null}
+                  {quizSaveConfirmation ? (
+                    <p className="mt-3 text-sm font-semibold text-emerald-700">{quizSaveConfirmation}</p>
+                  ) : null}
                   </div>
 
                   {quizTotal > 0 ? (
@@ -638,6 +662,15 @@ export function TopicPackClient({
                 className="h-12 rounded-xl border-2 border-black bg-black px-8 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
               >
                 Retake Quiz
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleSaveAttempt}
+                disabled={quizSaving || quizSavedOnce}
+                className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+              >
+                {quizSavedOnce ? "Attempt Saved ✓" : quizSaving ? "Saving..." : "Save Attempt"}
               </Button>
               <Button
                 type="button"
