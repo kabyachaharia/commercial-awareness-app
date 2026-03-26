@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 
 type SubscriptionTier = "free" | "student" | "pro";
+type PaidSubscriptionTier = Exclude<SubscriptionTier, "free">;
 type BillingPeriod = "monthly" | "yearly";
 
 type UpgradePricingProps = {
@@ -134,7 +135,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
     [billingPeriod, priceIds]
   );
 
-  async function startCheckout(plan: "student" | "pro") {
+  async function startCheckout(plan: PaidSubscriptionTier) {
     const priceId = selectedPriceId[plan];
     if (!priceId) {
       setError("This plan is not configured yet. Please contact support.");
@@ -216,7 +217,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           const isIncluded = relation < 0;
 
           const isPaidPlan = plan.key === "student" || plan.key === "pro";
-          const paidKey = isPaidPlan ? plan.key : null;
+          const paidKey: PaidSubscriptionTier | null = plan.key === "free" ? null : plan.key;
           const isYearly = billingPeriod === "yearly";
           const isLoading = loadingPlan === plan.key;
 
