@@ -705,24 +705,6 @@ export function TopicPackClient({
                       style={{ width: `${((cardIndex + 1) / flashcards.length) * 100}%` }}
                     />
                   </div>
-                  <div className="flex justify-center">
-                    <button
-                      type="button"
-                      className="p-2 text-gray-600 hover:text-black transition-colors"
-                      onClick={() => {
-                        if (flashcards.length <= 1) return;
-                        let next = cardIndex;
-                        while (next === cardIndex) {
-                          next = Math.floor(Math.random() * flashcards.length);
-                        }
-                        setCardIndex(next);
-                        setCardFlipped(false);
-                      }}
-                      aria-label="Shuffle cards"
-                    >
-                      <Shuffle className="size-6" />
-                    </button>
-                  </div>
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
                     <button
                       type="button"
@@ -745,29 +727,48 @@ export function TopicPackClient({
                       </div>
                     </button>
                   </div>
-                  <div className="flex items-center justify-center gap-3">
-                    <Button
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        className="size-10 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        onClick={goPrevCard}
+                        disabled={cardIndex === 0}
+                        aria-label="Previous card"
+                      >
+                        <ChevronLeft className="size-5" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        className="size-10 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        onClick={goNextCard}
+                        disabled={cardIndex >= flashcards.length - 1}
+                        aria-label="Next card"
+                      >
+                        <ChevronRight className="size-5" />
+                      </Button>
+                    </div>
+                    <button
                       type="button"
-                      variant="outline"
-                      size="icon"
-                      className="size-11 rounded-full border-2 border-black"
-                      onClick={goPrevCard}
-                      disabled={cardIndex === 0}
-                      aria-label="Previous card"
+                      className="flex items-center gap-2 rounded-lg border-2 border-black bg-[#FACC15] px-4 py-2 text-sm font-bold text-black hover:bg-[#EAB308] transition-colors"
+                      onClick={() => {
+                        if (flashcards.length <= 1) return;
+                        let next = cardIndex;
+                        while (next === cardIndex) {
+                          next = Math.floor(Math.random() * flashcards.length);
+                        }
+                        setCardIndex(next);
+                        setCardFlipped(false);
+                      }}
+                      aria-label="Shuffle cards"
                     >
-                      <ChevronLeft className="size-5" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      className="size-11 rounded-full border-2 border-black"
-                      onClick={goNextCard}
-                      disabled={cardIndex >= flashcards.length - 1}
-                      aria-label="Next card"
-                    >
-                      <ChevronRight className="size-5" />
-                    </Button>
+                      <Shuffle className="size-4" />
+                      Shuffle
+                    </button>
                   </div>
                 </>
               ) : null}
