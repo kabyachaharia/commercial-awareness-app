@@ -708,7 +708,7 @@ export function TopicPackClient({
                   <div className="flex justify-center">
                     <button
                       type="button"
-                      className="flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-2 text-sm font-bold uppercase text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
+                      className="p-2 text-gray-600 hover:text-black transition-colors"
                       onClick={() => {
                         if (flashcards.length <= 1) return;
                         let next = cardIndex;
@@ -718,9 +718,9 @@ export function TopicPackClient({
                         setCardIndex(next);
                         setCardFlipped(false);
                       }}
+                      aria-label="Shuffle cards"
                     >
-                      <Shuffle className="size-4" />
-                      Shuffle
+                      <Shuffle className="size-6" />
                     </button>
                   </div>
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
