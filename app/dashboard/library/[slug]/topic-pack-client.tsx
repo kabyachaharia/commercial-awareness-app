@@ -3,7 +3,7 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Check, ChevronDown, ChevronLeft, ChevronRight, Lock, X } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, ChevronRight, Lock, Shuffle, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -144,7 +144,6 @@ export function TopicPackClient({
 
   const [cardIndex, setCardIndex] = React.useState(0);
   const [cardFlipped, setCardFlipped] = React.useState(false);
-  const [flashcardJumpValue, setFlashcardJumpValue] = React.useState("");
 
   const quizTotal = quizQuestions.length;
 
@@ -708,30 +707,30 @@ export function TopicPackClient({
                   </div>
                   {flashcards.length > 12 ? (
                     <div className="flex justify-center">
-                      <select
-                        className="rounded-lg border-2 border-black bg-white px-3 py-1.5 text-sm font-bold"
-                        value={flashcardJumpValue}
-                        onChange={(e) => {
-                          const next = Number.parseInt(e.target.value, 10);
-                          if (Number.isNaN(next)) return;
-                          setCardIndex(Math.min(Math.max(next, 0), Math.max(0, flashcards.length - 1)));
+                      <button
+                        type="button"
+                        className="rounded-xl border-2 border-black bg-white px-5 py-2 text-sm font-bold uppercase text-black hover:bg-gray-50 shadow-[4px_4px_0_0_#000] flex items-center gap-2"
+                        onClick={() => {
+                          if (flashcards.length === 0) return;
+                          if (flashcards.length === 1) {
+                            setCardIndex(0);
+                            setCardFlipped(false);
+                            return;
+                          }
+                          let next = Math.floor(Math.random() * flashcards.length);
+                          if (flashcards.length >= 2) {
+                            while (next === cardIndex) {
+                              next = Math.floor(Math.random() * flashcards.length);
+                            }
+                          }
+                          setCardIndex(next);
                           setCardFlipped(false);
-                          setFlashcardJumpValue("");
                         }}
-                        aria-label="Jump to flashcard"
+                        aria-label="Shuffle flashcards"
                       >
-                        <option value="" disabled>
-                          Jump to card...
-                        </option>
-                        {flashcards.map((c, i) => {
-                          const label = `${i + 1}. ${(c.front ?? "").trim().slice(0, 30)}${(c.front ?? "").trim().length > 30 ? "…" : ""}`;
-                          return (
-                            <option key={`${i}-${c.front.slice(0, 24)}`} value={String(i)}>
-                              {label}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        <Shuffle className="size-4" aria-hidden />
+                        Shuffle
+                      </button>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 overflow-x-auto py-2 justify-center flex-wrap">
