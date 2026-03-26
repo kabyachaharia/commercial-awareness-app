@@ -3,7 +3,7 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ChevronDown, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, ChevronRight, Lock, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -107,6 +107,7 @@ export function TopicPackClient({
 
   const [progress, setProgress] = React.useState<ProgressState>(initialProgress);
   const [takeawaysOpen, setTakeawaysOpen] = React.useState(false);
+  const [activeTab, setActiveTab] = React.useState<"learn" | "quiz" | "flashcards">("learn");
   const [sectionSaveError, setSectionSaveError] = React.useState<string | null>(null);
 
   const totalSections = sections.length;
@@ -130,6 +131,7 @@ export function TopicPackClient({
 
   const [quizQuestionIndex, setQuizQuestionIndex] = React.useState(0);
   const [quizSelected, setQuizSelected] = React.useState<string | null>(null);
+  const [quizSelectedByIndex, setQuizSelectedByIndex] = React.useState<Record<number, string>>({});
   const [quizRevealed, setQuizRevealed] = React.useState(false);
   const [quizCorrectCount, setQuizCorrectCount] = React.useState(0);
   const [quizFinished, setQuizFinished] = React.useState(false);
@@ -189,6 +191,7 @@ export function TopicPackClient({
   function resetQuizSession() {
     setQuizQuestionIndex(0);
     setQuizSelected(null);
+    setQuizSelectedByIndex({});
     setQuizRevealed(false);
     setQuizCorrectCount(0);
     setQuizFinished(false);
@@ -198,6 +201,7 @@ export function TopicPackClient({
   function handleSelectAnswer(option: string) {
     if (quizRevealed || quizFinished) return;
     setQuizSelected(option);
+    setQuizSelectedByIndex((prev) => ({ ...prev, [quizQuestionIndex]: option }));
     setQuizRevealed(true);
     const q = quizQuestions[quizQuestionIndex];
     if (q && option === q.correct_answer) {
@@ -248,6 +252,15 @@ export function TopicPackClient({
 
   const currentCard = flashcards[cardIndex];
   const title = packTitle?.trim() ? packTitle : "Topic pack";
+  const quizPercentage = quizTotal > 0 ? Math.round((quizCorrectCount / quizTotal) * 100) : 0;
+  const quizPerformanceMessage =
+    quizPercentage >= 90
+      ? "Excellent!"
+      : quizPercentage >= 70
+        ? "Great job!"
+        : quizPercentage >= 50
+          ? "Good effort — review the sections you missed"
+          : "Keep studying — try re-reading the Learn sections";
 
   return (
     <div className="space-y-8">
@@ -280,7 +293,11 @@ export function TopicPackClient({
         </Card>
       ) : null}
 
-      <Tabs defaultValue="learn" className="w-full gap-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as "learn" | "quiz" | "flashcards")}
+        className="w-full gap-6"
+      >
         <TabsList variant="line" className="h-auto w-full flex-wrap justify-start gap-1 border-b-2 border-black bg-transparent p-0 pb-0">
           <TabsTrigger value="learn" className="rounded-t-lg border-2 border-b-0 border-black px-5 py-2.5 text-base data-active:bg-white">
             Learn
@@ -416,29 +433,103 @@ export function TopicPackClient({
               ) : quizTotal === 0 ? (
                 <p className="text-center text-base text-gray-600">No quiz has been published for this pack yet.</p>
               ) : quizFinished ? (
-                <div className="mx-auto max-w-lg space-y-6 text-center">
-                  <h3 className="text-2xl font-black uppercase text-black">Quiz complete</h3>
-                  <p className="text-4xl font-black text-black">
-                    {Math.round((quizCorrectCount / quizTotal) * 100)}%
-                  </p>
-                  <p className="text-base text-gray-700">
-                    You got {quizCorrectCount} out of {quizTotal} correct.
+                <div className="mx-auto w-full space-y-6">
+                  <div className="rounded-xl border-2 border-black bg-[#EEF2FF]/60 px-6 py-6 text-center">
+                    <p className="text-sm font-black uppercase tracking-wide text-gray-600">Results summary</p>
+                    <h3 className="mt-3 text-3xl font-black text-black">
+                      You scored {quizCorrectCount}/{quizTotal} ({quizPercentage}%)
+                    </h3>
+                    <p className="mt-2 text-base font-bold text-[#4F46E5]">{quizPerformanceMessage}</p>
                     {progress.quiz_best_score != null ? (
-                      <span className="mt-2 block text-sm text-gray-600">
-                        Best score recorded: {Math.min(100, Math.round(progress.quiz_best_score))}%
+                      <p className="mt-3 text-sm text-gray-700">
+                        Best score recorded: {Math.min(100, Math.round(progress.quiz_best_score))}%{" "}
                         {progress.quiz_attempts > 0 ? ` · Attempts: ${progress.quiz_attempts}` : null}
-                      </span>
+                      </p>
                     ) : null}
-                  </p>
-                  {quizSaveError ? <p className="text-sm text-red-700">{quizSaveError}</p> : null}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-xl border-2 border-black"
-                    onClick={resetQuizSession}
+                    {quizSaveError ? <p className="mt-3 text-sm text-red-700">{quizSaveError}</p> : null}
+                  </div>
+
+                  <div
+                    className="max-h-[55vh] space-y-4 overflow-y-auto pr-2 [scrollbar-width:thin]"
+                    aria-label="Question review"
                   >
-                    Try again
-                  </Button>
+                    {quizQuestions.map((q, index) => {
+                      const userAnswer = quizSelectedByIndex[index];
+                      const isCorrect = userAnswer === q.correct_answer;
+
+                      const icon = isCorrect ? (
+                        <Check className="size-5 text-emerald-700" aria-hidden />
+                      ) : (
+                        <X className="size-5 text-red-700" aria-hidden />
+                      );
+
+                      const answerBg = isCorrect ? "bg-[#D1FAE5]" : "bg-red-100";
+
+                      return (
+                        <article
+                          key={`${index}-${q.question.slice(0, 32)}`}
+                          className="rounded-xl border-2 border-black bg-white px-5 py-4"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-3">
+                              <div className="flex size-9 items-center justify-center rounded-lg border-2 border-black bg-white">
+                                {icon}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-sm font-black uppercase tracking-wide text-gray-600">
+                                  Question {index + 1}
+                                </p>
+                                <p className="mt-1 text-base font-bold leading-relaxed text-black">{q.question}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 space-y-3">
+                            <div className="space-y-1">
+                              <p className="text-sm font-semibold text-gray-700">Your selected answer</p>
+                              <div
+                                className={`inline-block rounded-lg border-2 border-black ${answerBg} px-3 py-2 text-sm font-bold text-black`}
+                              >
+                                {userAnswer ?? "—"}
+                              </div>
+                            </div>
+
+                            {!isCorrect ? (
+                              <div className="space-y-1">
+                                <p className="text-sm font-semibold text-gray-700">Correct answer</p>
+                                <div className="inline-block rounded-lg border-2 border-black bg-[#D1FAE5] px-3 py-2 text-sm font-bold text-black">
+                                  {q.correct_answer}
+                                </div>
+                              </div>
+                            ) : null}
+
+                            <div className="space-y-1">
+                              <p className="text-sm font-semibold text-gray-700">Explanation</p>
+                              <p className="text-sm leading-relaxed text-gray-700">{q.explanation}</p>
+                            </div>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
+                    <Button
+                      type="button"
+                      onClick={resetQuizSession}
+                      className="h-12 rounded-xl border-2 border-black bg-black px-8 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
+                    >
+                      Retake Quiz
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setActiveTab("learn")}
+                      className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+                    >
+                      Back to Topic
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <div className="mx-auto max-w-xl space-y-6">
