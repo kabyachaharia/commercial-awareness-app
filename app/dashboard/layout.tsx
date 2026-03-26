@@ -24,14 +24,6 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   }
 
   const userEmail = user.email ?? "No email available";
-  const { data: subscription } = await supabase
-    .from("user_subscriptions")
-    .select("tier,status")
-    .eq("user_id", user.id)
-    .maybeSingle();
-  const hasActivePaidSubscription =
-    (subscription?.tier === "student" || subscription?.tier === "pro") &&
-    subscription?.status === "active";
 
   return (
     <div className="min-h-screen scroll-smooth bg-[#F5F5F5]">
@@ -40,7 +32,6 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
           <div className="sticky top-0 h-screen">
             <DashboardSidebarContent
               email={userEmail}
-              hasActivePaidSubscription={hasActivePaidSubscription}
             />
           </div>
         </aside>
@@ -62,7 +53,6 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
                 </SheetHeader>
                 <DashboardSidebarContent
                   email={userEmail}
-                  hasActivePaidSubscription={hasActivePaidSubscription}
                 />
               </SheetContent>
             </Sheet>

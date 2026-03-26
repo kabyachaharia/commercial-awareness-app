@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Home, LogOut, Sparkles, Upload } from "lucide-react";
+import { ArrowUpCircle, BookOpen, Home, LogOut, Upload } from "lucide-react";
 
 import { signOut } from "./actions";
 
@@ -14,10 +14,8 @@ const navItems = [
 
 export function DashboardSidebarContent({
   email,
-  hasActivePaidSubscription,
 }: {
   email: string;
-  hasActivePaidSubscription: boolean;
 }) {
   const pathname = usePathname();
 
@@ -65,8 +63,8 @@ export function DashboardSidebarContent({
                 : "border-transparent text-gray-300 hover:border-white hover:bg-white/10 hover:text-white"
             }`}
           >
-            <Sparkles className="size-4 shrink-0 opacity-90" aria-hidden />
-            {hasActivePaidSubscription ? "Manage Plan" : "Upgrade"}
+            <ArrowUpCircle className="size-4 shrink-0 opacity-90" aria-hidden />
+            Upgrade
           </Link>
         </div>
       </nav>
