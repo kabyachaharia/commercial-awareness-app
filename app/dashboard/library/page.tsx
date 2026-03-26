@@ -4,6 +4,7 @@ import { Lock } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserTier } from "@/lib/subscription";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -121,8 +122,8 @@ export default async function LibraryPage() {
     }
   );
 
-  // No tier gating yet — for now, treat all users as free tier for lock display.
-  const isFreeTierUser = true;
+  const userTier = await getUserTier(user.id);
+  const isFreeTierUser = userTier === "free";
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-10 pt-16">
@@ -164,14 +165,28 @@ export default async function LibraryPage() {
                     const slug = pack.slug ?? "";
                     const isFree = Boolean(pack.is_free);
                     const showLock = !isFree && isFreeTierUser;
+                    const href = showLock
+                      ? "/dashboard/upgrade"
+                      : slug
+                        ? `/dashboard/library/${slug}`
+                        : "/dashboard/library";
 
                     return (
                       <li key={pack.id}>
                         <Link
-                          href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"}
+                          href={href}
                           className="group block h-full"
                         >
-                          <Card className="h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5">
+                          <Card
+                            className={`relative h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5 ${
+                              showLock ? "opacity-80" : ""
+                            }`}
+                          >
+                            {showLock ? (
+                              <div className="pointer-events-none absolute right-3 top-3 rounded-full border-2 border-black bg-white p-1.5">
+                                <Lock className="size-4 text-gray-700" aria-hidden />
+                              </div>
+                            ) : null}
                             <CardHeader className="space-y-2 border-b-2 border-black p-4 pb-3">
                               <div className="flex items-start justify-between gap-3">
                                 <div className="min-w-0">
@@ -192,7 +207,6 @@ export default async function LibraryPage() {
                                       Free
                                     </Badge>
                                   ) : null}
-                                  {showLock ? <Lock className="size-4 text-gray-700" aria-hidden /> : null}
                                 </div>
                               </div>
                             </CardHeader>
@@ -200,6 +214,11 @@ export default async function LibraryPage() {
                               <p className="text-sm font-semibold text-black">
                                 {formatProgressLabel(pack, progress)}
                               </p>
+                              {showLock ? (
+                                <p className="mt-2 text-xs font-bold uppercase tracking-wide text-gray-700">
+                                  Upgrade to unlock
+                                </p>
+                              ) : null}
                             </CardContent>
                           </Card>
                         </Link>

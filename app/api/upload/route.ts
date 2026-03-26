@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { buildStoragePath, extractTextFromFile, validateUploadFile } from "@/lib/file-processing";
+import { getUserTier } from "@/lib/subscription";
 import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -14,6 +15,11 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userTier = await getUserTier(user.id);
+    if (userTier !== "pro") {
+      return NextResponse.json({ error: "Uploads are available on the Pro plan." }, { status: 403 });
     }
 
     const formData = await request.formData();

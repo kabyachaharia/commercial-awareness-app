@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { getUserTier } from "@/lib/subscription";
 import { createClient } from "@/lib/supabase/server";
 
 import { TopicPackClient, type FlashcardItem, type QuizQuestionItem } from "./topic-pack-client";
@@ -19,6 +20,7 @@ type TopicPackRow = {
   description: string | null;
   key_takeaways: string[] | null;
   icon: string | null;
+  is_free: boolean | null;
 };
 
 type TopicSectionRow = {
@@ -100,7 +102,7 @@ export default async function TopicPackPage({ params }: PageProps) {
 
   const { data: packRow, error: packError } = await supabase
     .from("topic_packs")
-    .select("id,title,slug,description,key_takeaways,icon")
+    .select("id,title,slug,description,key_takeaways,icon,is_free")
     .eq("slug", slug)
     .eq("is_published", true)
     .maybeSingle();
@@ -114,6 +116,11 @@ export default async function TopicPackPage({ params }: PageProps) {
   }
 
   const pack = packRow as TopicPackRow;
+  const userTier = await getUserTier(user.id);
+  const isFreePack = Boolean(pack.is_free);
+  if (!isFreePack && userTier === "free") {
+    redirect("/dashboard/upgrade");
+  }
   const packId = pack.id;
 
   const [sectionsRes, quizRes, flashRes, progressRes] = await Promise.all([

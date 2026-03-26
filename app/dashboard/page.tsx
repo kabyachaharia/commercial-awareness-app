@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserTier } from "@/lib/subscription";
 import { createClient } from "@/lib/supabase/server";
 
 import { CheckoutSuccessBanner } from "./checkout-success-banner";
@@ -26,6 +27,7 @@ type TopicPackRow = {
   title: string | null;
   slug: string | null;
   icon: string | null;
+  is_free: boolean | null;
   total_sections: number | null;
   published_at: string | null;
 };
@@ -102,7 +104,8 @@ export default async function DashboardHomePage() {
     redirect("/login");
   }
 
-  const [{ data: materials }, { data: packRows, error: packError }] = await Promise.all([
+  const [userTier, { data: materials }, { data: packRows, error: packError }] = await Promise.all([
+    getUserTier(user.id),
     supabase
       .from("materials")
       .select("id, title, created_at, summary")
@@ -110,7 +113,7 @@ export default async function DashboardHomePage() {
       .order("created_at", { ascending: false }),
     supabase
       .from("topic_packs")
-      .select("id,title,slug,icon,total_sections,published_at")
+      .select("id,title,slug,icon,is_free,total_sections,published_at")
       .eq("is_published", true)
       .order("published_at", { ascending: false }),
   ]);
@@ -119,7 +122,8 @@ export default async function DashboardHomePage() {
     throw packError;
   }
 
-  const packs = (packRows ?? []) as TopicPackRow[];
+  const allPacks = (packRows ?? []) as TopicPackRow[];
+  const packs = userTier === "free" ? allPacks.filter((pack) => Boolean(pack.is_free)) : allPacks;
   const packIds = packs.map((p) => p.id);
 
   const progressByPackId = new Map<string, UserProgressRow>();
