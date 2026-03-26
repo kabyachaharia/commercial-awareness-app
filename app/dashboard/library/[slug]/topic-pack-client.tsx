@@ -136,6 +136,7 @@ export function TopicPackClient({
   const [quizCorrectCount, setQuizCorrectCount] = React.useState(0);
   const [quizFinished, setQuizFinished] = React.useState(false);
   const [quizSaveError, setQuizSaveError] = React.useState<string | null>(null);
+  const [quizReviewIndex, setQuizReviewIndex] = React.useState(0);
 
   const [cardIndex, setCardIndex] = React.useState(0);
   const [cardFlipped, setCardFlipped] = React.useState(false);
@@ -196,6 +197,7 @@ export function TopicPackClient({
     setQuizCorrectCount(0);
     setQuizFinished(false);
     setQuizSaveError(null);
+    setQuizReviewIndex(0);
   }
 
   function handleSelectAnswer(option: string) {
@@ -449,69 +451,131 @@ export function TopicPackClient({
                     {quizSaveError ? <p className="mt-3 text-sm text-red-700">{quizSaveError}</p> : null}
                   </div>
 
-                  <div
-                    className="max-h-[55vh] space-y-4 overflow-y-auto pr-2 [scrollbar-width:thin]"
-                    aria-label="Question review"
-                  >
-                    {quizQuestions.map((q, index) => {
-                      const userAnswer = quizSelectedByIndex[index];
-                      const isCorrect = userAnswer === q.correct_answer;
+                  {quizTotal > 0 ? (
+                    <div className="space-y-4" aria-label="Question review">
+                      <div className="flex items-center justify-center text-sm font-semibold text-gray-700">
+                        <p>
+                          Question <span className="font-bold text-black">{quizReviewIndex + 1}</span> of{" "}
+                          <span className="font-bold text-black">{quizTotal}</span>
+                        </p>
+                      </div>
 
-                      const icon = isCorrect ? (
-                        <Check className="size-5 text-emerald-700" aria-hidden />
-                      ) : (
-                        <X className="size-5 text-red-700" aria-hidden />
-                      );
+                      {(() => {
+                        const index = Math.min(Math.max(quizReviewIndex, 0), quizTotal - 1);
+                        const q = quizQuestions[index];
+                        const userAnswer = quizSelectedByIndex[index];
+                        const isCorrect = userAnswer === q.correct_answer;
 
-                      const answerBg = isCorrect ? "bg-[#D1FAE5]" : "bg-red-100";
+                        const icon = isCorrect ? (
+                          <Check className="size-5 text-emerald-700" aria-hidden />
+                        ) : (
+                          <X className="size-5 text-red-700" aria-hidden />
+                        );
 
-                      return (
-                        <article
-                          key={`${index}-${q.question.slice(0, 32)}`}
-                          className="rounded-xl border-2 border-black bg-white px-5 py-4"
-                        >
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start gap-3">
-                              <div className="flex size-9 items-center justify-center rounded-lg border-2 border-black bg-white">
-                                {icon}
-                              </div>
-                              <div className="min-w-0">
-                                <p className="text-sm font-black uppercase tracking-wide text-gray-600">
-                                  Question {index + 1}
-                                </p>
-                                <p className="mt-1 text-base font-bold leading-relaxed text-black">{q.question}</p>
-                              </div>
-                            </div>
-                          </div>
+                        const answerBg = isCorrect ? "bg-[#D1FAE5]" : "bg-red-100";
 
-                          <div className="mt-4 space-y-3">
-                            <div className="space-y-1">
-                              <p className="text-sm font-semibold text-gray-700">Your selected answer</p>
-                              <div
-                                className={`inline-block rounded-lg border-2 border-black ${answerBg} px-3 py-2 text-sm font-bold text-black`}
-                              >
-                                {userAnswer ?? "—"}
-                              </div>
-                            </div>
+                        return (
+                          <div className="flex items-stretch gap-4">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              className="hidden size-11 rounded-full border-2 border-black sm:inline-flex"
+                              onClick={() =>
+                                setQuizReviewIndex((i) => Math.max(i - 1, 0))
+                              }
+                              disabled={index === 0}
+                              aria-label="Previous question"
+                            >
+                              <ChevronLeft className="size-5" />
+                            </Button>
 
-                            {!isCorrect ? (
-                              <div className="space-y-1">
-                                <p className="text-sm font-semibold text-gray-700">Correct answer</p>
-                                <div className="inline-block rounded-lg border-2 border-black bg-[#D1FAE5] px-3 py-2 text-sm font-bold text-black">
-                                  {q.correct_answer}
+                            <article className="flex-1 rounded-xl border-2 border-black bg-white px-5 py-4">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="flex size-9 items-center justify-center rounded-lg border-2 border-black bg-white">
+                                    {icon}
+                                  </div>
+                                  <div className="min-w-0">
+                                    <p className="text-sm font-black uppercase tracking-wide text-gray-600">
+                                      Question {index + 1}
+                                    </p>
+                                    <p className="mt-1 text-base font-bold leading-relaxed text-black">{q.question}</p>
+                                  </div>
                                 </div>
                               </div>
-                            ) : null}
 
-                            <div className="space-y-1">
-                              <p className="text-sm font-semibold text-gray-700">Explanation</p>
-                              <p className="text-sm leading-relaxed text-gray-700">{q.explanation}</p>
-                            </div>
+                              <div className="mt-4 space-y-3">
+                                <div className="space-y-1">
+                                  <p className="text-sm font-semibold text-gray-700">Your selected answer</p>
+                                  <div
+                                    className={`inline-block rounded-lg border-2 border-black ${answerBg} px-3 py-2 text-sm font-bold text-black`}
+                                  >
+                                    {userAnswer ?? "—"}
+                                  </div>
+                                </div>
+
+                                {!isCorrect ? (
+                                  <div className="space-y-1">
+                                    <p className="text-sm font-semibold text-gray-700">Correct answer</p>
+                                    <div className="inline-block rounded-lg border-2 border-black bg-[#D1FAE5] px-3 py-2 text-sm font-bold text-black">
+                                      {q.correct_answer}
+                                    </div>
+                                  </div>
+                                ) : null}
+
+                                <div className="space-y-1">
+                                  <p className="text-sm font-semibold text-gray-700">Explanation</p>
+                                  <p className="text-sm leading-relaxed text-gray-700">{q.explanation}</p>
+                                </div>
+                              </div>
+                            </article>
+
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              className="hidden size-11 rounded-full border-2 border-black sm:inline-flex"
+                              onClick={() =>
+                                setQuizReviewIndex((i) => Math.min(i + 1, quizTotal - 1))
+                              }
+                              disabled={index >= quizTotal - 1}
+                              aria-label="Next question"
+                            >
+                              <ChevronRight className="size-5" />
+                            </Button>
                           </div>
-                        </article>
-                      );
-                    })}
-                  </div>
+                        );
+                      })()}
+
+                      <div className="flex items-center justify-between gap-3 sm:hidden">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="flex-1 rounded-xl border-2 border-black"
+                          onClick={() =>
+                            setQuizReviewIndex((i) => Math.max(i - 1, 0))
+                          }
+                          disabled={quizReviewIndex === 0}
+                          aria-label="Previous question"
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="flex-1 rounded-xl border-2 border-black"
+                          onClick={() =>
+                            setQuizReviewIndex((i) => Math.min(i + 1, quizTotal - 1))
+                          }
+                          disabled={quizReviewIndex >= quizTotal - 1}
+                          aria-label="Next question"
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               ) : (
                 <div className="mx-auto max-w-xl space-y-6">
