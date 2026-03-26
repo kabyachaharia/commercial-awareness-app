@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
+import { CheckoutSuccessBanner } from "./checkout-success-banner";
+
 export const dynamic = "force-dynamic";
 
 function formatDate(iso: string | null) {
@@ -179,6 +181,8 @@ export default async function DashboardHomePage() {
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-12 pt-16">
+      <CheckoutSuccessBanner />
+
       <div className="space-y-6">
         <header className="space-y-2">
           <h2 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Home, LogOut, Upload } from "lucide-react";
+import { BookOpen, Home, LogOut, Sparkles, Upload } from "lucide-react";
 
 import { signOut } from "./actions";
 
@@ -12,7 +12,13 @@ const navItems = [
   { href: "/dashboard/upload", label: "My Documents", icon: Upload },
 ] as const;
 
-export function DashboardSidebarContent({ email }: { email: string }) {
+export function DashboardSidebarContent({
+  email,
+  hasActivePaidSubscription,
+}: {
+  email: string;
+  hasActivePaidSubscription: boolean;
+}) {
   const pathname = usePathname();
 
   return (
@@ -49,6 +55,20 @@ export function DashboardSidebarContent({ email }: { email: string }) {
             </Link>
           );
         })}
+
+        <div className="pt-4">
+          <Link
+            href="/dashboard/upgrade"
+            className={`flex items-center gap-3 rounded-lg border-2 px-3 py-2.5 text-sm font-bold uppercase transition-colors duration-200 ${
+              pathname === "/dashboard/upgrade" || pathname.startsWith("/dashboard/upgrade/")
+                ? "border-black bg-[#FACC15] text-black"
+                : "border-transparent text-gray-300 hover:border-white hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            <Sparkles className="size-4 shrink-0 opacity-90" aria-hidden />
+            {hasActivePaidSubscription ? "Manage Plan" : "Upgrade"}
+          </Link>
+        </div>
       </nav>
 
       <div className="border-t-2 border-white/20 p-4">
