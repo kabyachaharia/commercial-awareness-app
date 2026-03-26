@@ -512,24 +512,6 @@ export function TopicPackClient({
                       );
                     })}
                   </div>
-
-                  <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
-                    <Button
-                      type="button"
-                      onClick={resetQuizSession}
-                      className="h-12 rounded-xl border-2 border-black bg-black px-8 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
-                    >
-                      Retake Quiz
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setActiveTab("learn")}
-                      className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
-                    >
-                      Back to Topic
-                    </Button>
-                  </div>
                 </div>
               ) : (
                 <div className="mx-auto max-w-xl space-y-6">
@@ -584,6 +566,25 @@ export function TopicPackClient({
               )}
             </CardContent>
           </Card>
+          {quizFinished ? (
+            <section className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button
+                type="button"
+                onClick={resetQuizSession}
+                className="h-12 rounded-xl border-2 border-black bg-black px-8 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
+              >
+                Retake Quiz
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setActiveTab("learn")}
+                className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+              >
+                Back to Topic
+              </Button>
+            </section>
+          ) : null}
         </TabsContent>
 
         <TabsContent value="flashcards" className="mt-0">
