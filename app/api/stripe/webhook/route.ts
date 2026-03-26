@@ -60,7 +60,9 @@ async function handleCheckoutSessionCompleted(
   const firstItem = subscription.items.data[0];
   const priceId = firstItem?.price?.id;
   const tier = mapTierFromPriceId(priceId);
-  const currentPeriodEnd = new Date((subscription as any).current_period_end * 1000).toISOString();
+  const rawEnd = (subscription as any).current_period_end;
+  const currentPeriodEnd =
+    typeof rawEnd === "number" ? new Date(rawEnd * 1000).toISOString() : null;
   const updatedAt = new Date().toISOString();
 
   const supabase = getServiceRoleSupabaseClient();
@@ -93,7 +95,9 @@ async function updateSubscriptionFromEvent(
 
   const tier = options.forceTier ?? mapTierFromPriceId(priceId);
   const status = options.forceTier === "free" ? "canceled" : subscription.status;
-  const currentPeriodEnd = new Date((subscription as any).current_period_end * 1000).toISOString();
+  const rawEnd = (subscription as any).current_period_end;
+  const currentPeriodEnd =
+    typeof rawEnd === "number" ? new Date(rawEnd * 1000).toISOString() : null;
   const updatedAt = new Date().toISOString();
 
   const supabase = getServiceRoleSupabaseClient();
