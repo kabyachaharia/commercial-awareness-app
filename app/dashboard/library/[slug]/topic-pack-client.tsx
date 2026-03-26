@@ -159,6 +159,7 @@ export function TopicPackClient({
       sections_completed: next.sections_completed,
       quiz_best_score: next.quiz_best_score,
       quiz_attempts: next.quiz_attempts,
+      last_studied_at: new Date().toISOString(),
     };
 
     let res = await supabase.from("user_progress").upsert(payload, { onConflict: "user_id,topic_pack_id" });

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BookOpen, CheckCircle2 } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,6 +36,7 @@ type UserProgressRow = {
   topic_pack_id: string;
   sections_completed: number | null;
   quiz_best_score: number | null;
+  last_studied_at: string | null;
 };
 
 function clampInt(value: unknown) {
@@ -148,7 +149,7 @@ export default async function DashboardHomePage() {
   if (packIds.length > 0) {
     const { data: progressRows } = await supabase
       .from("user_progress")
-      .select("topic_pack_id,sections_completed,quiz_best_score")
+      .select("topic_pack_id,sections_completed,quiz_best_score,last_studied_at")
       .eq("user_id", user.id)
       .in("topic_pack_id", packIds);
 
@@ -221,6 +222,23 @@ export default async function DashboardHomePage() {
     if (continueCards.length >= 3) break;
     continueCards.push({ pack, variant: "not_started" });
   }
+
+  const reviewPacks = packs
+    .map((pack) => {
+      const progress = progressByPackId.get(pack.id);
+      if (!isAllSectionsComplete(pack, progress)) return null;
+      if (!hasQuizScore(progress)) return null;
+      const last = progress?.last_studied_at ?? null;
+      if (!last) return null;
+
+      const daysSinceStudy = Math.floor((Date.now() - new Date(last).getTime()) / (1000 * 60 * 60 * 24));
+      if (!Number.isFinite(daysSinceStudy) || daysSinceStudy <= 7) return null;
+
+      return { pack, progress, daysSinceStudy };
+    })
+    .filter((x): x is { pack: TopicPackRow; progress: UserProgressRow; daysSinceStudy: number } => x !== null)
+    .sort((a, b) => b.daysSinceStudy - a.daysSinceStudy)
+    .slice(0, 3);
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-12 pt-16">
@@ -356,6 +374,52 @@ export default async function DashboardHomePage() {
           </ul>
         )}
       </div>
+
+      {reviewPacks.length > 0 ? (
+        <div className="space-y-6">
+          <header className="space-y-2">
+            <h2 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">Time to Review</h2>
+            <p className="max-w-xl text-base text-gray-600">
+              These packs are due for revision to lock in your knowledge
+            </p>
+          </header>
+
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reviewPacks.map(({ pack, progress, daysSinceStudy }) => {
+              const title = pack.title ?? "Untitled pack";
+              const slug = pack.slug ?? "";
+              const quizScore = Math.max(0, Math.min(100, Math.round(progress.quiz_best_score as number)));
+
+              return (
+                <li key={pack.id}>
+                  <Link href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"} className="group block h-full">
+                    <Card className="h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5">
+                      <CardHeader className="space-y-2 border-b-2 border-black p-4 pb-3">
+                        <CardTitle className="text-lg font-black uppercase text-black">
+                          {pack.icon ? `${pack.icon} ` : ""}
+                          {title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-3">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Clock className="size-4 shrink-0 text-amber-700" aria-hidden />
+                            <p className="text-sm font-semibold text-amber-700">Studied {daysSinceStudy} days ago</p>
+                          </div>
+                          <p className="text-xs text-gray-600">Last quiz: {quizScore}%</p>
+                          <div className="flex justify-end pt-2">
+                            <p className="text-xs font-bold uppercase text-amber-600">Review now</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
 
       <div className="space-y-8">
         <header className="space-y-2">
