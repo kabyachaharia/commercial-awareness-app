@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, UploadCloud } from "lucide-react";
+import { Check, Loader2, UploadCloud } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DragEvent, FormEvent, useMemo, useState } from "react";
 
@@ -27,6 +27,7 @@ export function UploadForm() {
   const [isHoveringDrop, setIsHoveringDrop] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState<{ id: string; title: string } | null>(null);
 
   const fileLabel = useMemo(() => {
     if (!file) {
@@ -118,8 +119,7 @@ export function UploadForm() {
         return;
       }
 
-      router.push(`/dashboard/materials/${data.id}`);
-      router.refresh();
+      setUploadSuccess({ id: data.id, title: title.trim() });
     } catch {
       setErrorMessage("Something went wrong while uploading.");
     } finally {
@@ -128,6 +128,45 @@ export function UploadForm() {
   }
 
   const dropZoneInteractive = isDragging || isHoveringDrop;
+
+  if (uploadSuccess) {
+    return (
+      <Card className="rounded-xl bg-white">
+        <CardContent className="flex flex-col items-center gap-4 px-6 py-10 text-center">
+          <div className="flex size-16 items-center justify-center rounded-full bg-[#D1FAE5]">
+            <Check className="size-8 text-emerald-600" />
+          </div>
+          <h2 className="text-xl font-black uppercase text-black">Upload Successful!</h2>
+          <p className="max-w-md text-gray-600">
+            &ldquo;{uploadSuccess.title}&rdquo; has been uploaded. Head to your document to generate summaries, quizzes, and
+            flashcards.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button
+              onClick={() => {
+                router.push(`/dashboard/materials/${uploadSuccess.id}`);
+                router.refresh();
+              }}
+              className="h-11 px-6"
+            >
+              Generate Study Materials
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setUploadSuccess(null);
+                setTitle("");
+                setFile(null);
+              }}
+              className="h-11 px-6"
+            >
+              Upload Another
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="rounded-xl bg-white">
