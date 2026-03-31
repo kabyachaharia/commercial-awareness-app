@@ -189,7 +189,7 @@ export default async function LibraryPage() {
                       <li key={pack.id}>
                         <Link href={href} className="group block h-full">
                           <div
-                            className={`h-full rounded-2xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:shadow-sm ${
+                            className={`h-full rounded-2xl border-2 border-black bg-white p-4 transition-all duration-200 hover:shadow-[4px_4px_0_0_#000] ${
                               showLock ? "opacity-70" : ""
                             }`}
                           >
@@ -203,7 +203,7 @@ export default async function LibraryPage() {
                                 {pack.icon ?? "📚"}
                               </div>
                               <div className="min-w-0 flex-1">
-                                <p className="truncate text-[13px] font-semibold text-black">{title}</p>
+                                <p className="truncate text-[13px] font-black text-black">{title}</p>
                               </div>
                               {isFree ? (
                                 <span className="shrink-0 rounded-md bg-[#DDF0D9] px-2 py-0.5 text-[9px] font-semibold text-[#2E7D32]">
@@ -243,7 +243,7 @@ export default async function LibraryPage() {
                                   <>
                                     <div className="flex items-center gap-1.5">
                                       {barWidth > 0 || isReadyToQuiz || isComplete ? (
-                                        <div className="h-[3px] w-[60px] overflow-hidden rounded-full bg-gray-100">
+                                        <div className="h-[4px] w-[60px] overflow-hidden rounded-full border border-gray-200 bg-gray-100">
                                           <div
                                             className="h-full rounded-full"
                                             style={{
