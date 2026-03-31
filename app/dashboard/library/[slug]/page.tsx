@@ -172,7 +172,10 @@ export default async function TopicPackPage({ params }: PageProps) {
           <Button asChild variant="ghost" className="-ml-3 h-auto justify-start px-3 py-1 text-sm text-gray-600 hover:text-black">
             <Link href="/dashboard/library">← Topic Library</Link>
           </Button>
-          <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
+          <h1
+            className="text-3xl font-black tracking-tight text-black sm:text-4xl"
+            style={{ textTransform: "none" }}
+          >
             {pack.icon ? `${pack.icon} ` : ""}
             {pack.title?.trim() ? pack.title : "Topic pack"}
           </h1>
