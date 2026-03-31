@@ -431,7 +431,7 @@ export default async function DashboardHomePage() {
             <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">
               Continue studying
             </h2>
-            <Link href="/dashboard/library" className="text-[13px] text-gray-500 hover:text-gray-700">
+            <Link href="/dashboard/library" className="text-[13px] font-bold text-gray-500 hover:text-gray-700">
               View library →
             </Link>
           </div>
@@ -569,7 +569,7 @@ export default async function DashboardHomePage() {
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
             <p className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">Your documents</p>
-            <Link href="/dashboard/documents" className="text-[13px] text-gray-500 hover:text-gray-700">
+            <Link href="/dashboard/documents" className="text-[13px] font-bold text-gray-500 hover:text-gray-700">
               View all →
             </Link>
           </div>
