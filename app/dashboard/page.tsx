@@ -259,7 +259,12 @@ export default async function DashboardHomePage() {
     <section className="mx-auto w-full max-w-5xl space-y-5 pt-6">
       <CheckoutSuccessBanner />
       <div>
-        <h1 className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black">Welcome back</h1>
+        <h1
+          className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black"
+          style={{ textTransform: "none" }}
+        >
+          Welcome back
+        </h1>
         <p className="text-sm text-gray-500">Here&apos;s your study snapshot</p>
       </div>
 
@@ -428,7 +433,12 @@ export default async function DashboardHomePage() {
         {/* Continue Studying - left side */}
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">Continue studying</h2>
+            <h2
+              className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black"
+              style={{ textTransform: "none" }}
+            >
+              Continue studying
+            </h2>
             <Link href="/dashboard/library" className="text-[13px] font-bold text-gray-500 hover:text-gray-700">
               View library →
             </Link>
