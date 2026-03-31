@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type SubscriptionTier = "free" | "student" | "pro";
 type PaidSubscriptionTier = Exclude<SubscriptionTier, "free">;
@@ -219,7 +218,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3.5 lg:grid-cols-3">
         {PLANS.map((plan) => {
           const relation = compareTier(plan.key, currentTier);
           const isCurrentPlan = relation === 0;
@@ -235,7 +234,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           let onClick: (() => Promise<void>) | undefined;
 
           if (isCurrentPlan) {
-            actionLabel = "Current Plan";
+            actionLabel = "Current plan";
           } else if (isIncluded) {
             actionLabel = "Included";
           } else if (paidKey) {
@@ -244,64 +243,86 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
             onClick = async () => startCheckout(paidKey);
           }
 
+          const isStudent = plan.key === "student";
+          const isPro = plan.key === "pro";
+
+          const cardBg = isStudent ? "bg-[#E8E4F7]" : isPro ? "bg-[#FFF8E1]" : "bg-white";
+          const cardBorder = isStudent ? "border-2 border-[#6B5CE7]" : "border border-gray-200";
+          const labelColor = isStudent ? "text-[#4A3D8F]" : isPro ? "text-[#854F0B]" : "text-gray-500";
+          const priceColor = isStudent ? "text-[#2D2459]" : isPro ? "text-[#633806]" : "text-black";
+          const subColor = isStudent ? "text-[#6B5CE7]" : isPro ? "text-[#854F0B]" : "text-gray-500";
+          const checkColor = isStudent ? "#6B5CE7" : isPro ? "#E07830" : "#4CAF50";
+          const featureColor = isStudent ? "text-[#4A3D8F]" : isPro ? "text-[#854F0B]" : "text-gray-500";
+
           return (
-            <Card
-              key={plan.key}
-              className={`border-2 border-black ${
-                plan.highlighted ? "bg-[#DBEAFE] shadow-[8px_8px_0_0_#000]" : "bg-white shadow-[6px_6px_0_0_#000]"
-              }`}
-            >
-              <CardHeader className="space-y-2">
-                {plan.highlighted ? (
-                  <span className="w-fit rounded-full border-2 border-black bg-black px-2.5 py-1 text-[10px] font-bold uppercase text-white">
-                    Most Popular
-                  </span>
-                ) : null}
-                <CardTitle className="text-lg font-black uppercase">{plan.name}</CardTitle>
-                <p className="text-3xl font-black uppercase text-black">
-                  {isPaidPlan && isYearly && plan.yearlyLabel ? plan.yearlyLabel : plan.monthlyLabel}
+            <div key={plan.key} className={`relative flex flex-col rounded-2xl ${cardBg} ${cardBorder} p-6`}>
+              {isStudent ? (
+                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-[#6B5CE7] px-3 py-0.5 text-[10px] font-semibold text-white whitespace-nowrap">
+                  Most popular
+                </span>
+              ) : null}
+
+              <p className={`text-[11px] font-semibold uppercase tracking-wider ${labelColor}`}>{plan.name}</p>
+
+              <div className="mt-1 mb-1">
+                <span className={`font-[family-name:var(--font-epilogue)] text-[32px] font-black ${priceColor}`}>
+                  {isPaidPlan && isYearly && plan.yearlyLabel
+                    ? plan.yearlyLabel.split("/")[0]
+                    : plan.monthlyLabel.split("/")[0]}
+                </span>
+                {isPaidPlan ? <span className={`text-sm ${subColor}`}>/{isYearly ? "year" : "mo"}</span> : null}
+              </div>
+
+              {isPaidPlan ? (
+                <p className={`text-[12px] font-medium ${subColor} mb-4`}>
+                  {isYearly ? `${plan.monthlyLabel} equivalent` : `${plan.yearlyLabel} (${plan.yearlySavings})`}
                 </p>
-                {isPaidPlan ? (
-                  <p className="text-sm font-bold text-gray-700">
-                    {isYearly
-                      ? `${plan.monthlyLabel} equivalent`
-                      : `${plan.yearlyLabel} (${plan.yearlySavings})`}
-                  </p>
-                ) : (
-                  <p className="text-sm font-bold text-gray-600">Get started</p>
-                )}
-              </CardHeader>
+              ) : (
+                <p className="mb-4 text-[13px] font-medium text-gray-500">Get started</p>
+              )}
 
-              <CardContent className="space-y-6">
-                {isPaidPlan && isYearly && plan.yearlySavings ? (
-                  <div className="w-fit rounded-lg border-2 border-black bg-[#D1FAE5] px-2.5 py-1 text-xs font-bold uppercase text-black">
-                    {plan.yearlySavings}
+              <div className="flex-1 space-y-2">
+                {plan.features.map((feature) => (
+                  <div key={feature} className="flex items-center gap-2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
+                      <path
+                        d="M9 12l2 2 4-4"
+                        stroke={checkColor}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <span className={`text-[13px] ${featureColor}`}>{feature}</span>
                   </div>
-                ) : null}
+                ))}
+              </div>
 
-                <ul className="space-y-2 text-sm text-gray-700">
-                  {plan.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-
-                <Button
-                  type="button"
-                  className="w-full"
-                  variant={actionDisabled ? "outline" : "default"}
-                  disabled={actionDisabled || isLoading || pricesLoading}
-                  onClick={onClick}
-                >
-                  {isLoading ? "Redirecting..." : actionLabel}
-                </Button>
-              </CardContent>
-            </Card>
+              <button
+                type="button"
+                disabled={actionDisabled || isLoading || pricesLoading}
+                onClick={onClick}
+                className={`mt-5 w-full rounded-[10px] px-4 py-2.5 text-[13px] font-medium transition-colors ${
+                  isStudent && !actionDisabled
+                    ? "bg-[#6B5CE7] text-white hover:bg-[#534AB7]"
+                    : isPro && !actionDisabled
+                      ? "bg-[#FACC15] border-[1.5px] border-black text-black hover:bg-[#EAB308]"
+                      : isStudent && actionDisabled
+                        ? "bg-[#6B5CE7] text-white opacity-80"
+                        : actionDisabled
+                          ? "border border-gray-200 bg-white text-gray-500"
+                          : "bg-black text-white hover:bg-gray-800"
+                }`}
+              >
+                {isLoading ? "Redirecting..." : actionLabel}
+              </button>
+            </div>
           );
         })}
       </div>
 
       {error ? (
-        <div className="rounded-lg border-2 border-black bg-[#FEE2E2] px-4 py-3 text-sm font-semibold text-black">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
           {error}
         </div>
       ) : null}
@@ -313,7 +334,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
             variant="link"
             disabled={portalLoading}
             onClick={openPortal}
-            className="h-auto text-sm font-bold uppercase"
+            className="h-auto text-sm font-medium underline underline-offset-2"
           >
             {portalLoading ? "Opening..." : "Manage Subscription"}
           </Button>
