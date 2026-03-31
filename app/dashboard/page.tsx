@@ -184,6 +184,20 @@ export default async function DashboardHomePage() {
 
   const averageQuizScore = quizScoreCount > 0 ? quizScoreSum / quizScoreCount : null;
 
+  const barChartPacks = packs
+    .filter((p) => !isNotStarted(progressByPackId.get(p.id)))
+    .slice(0, 5)
+    .map((p) => {
+      const pr = progressByPackId.get(p.id);
+      const completed = clampInt(pr?.sections_completed);
+      const total = clampInt(p.total_sections);
+      const score = hasQuizScore(pr) ? Math.round(pr!.quiz_best_score as number) : 0;
+      const shortName = (p.title ?? "Pack").split(" ").slice(0, 2).join(" ");
+      return { shortName, completed, total, score };
+    });
+
+  const maxBarValue = Math.max(1, ...barChartPacks.map((b) => b.completed));
+
   const list = materials ?? [];
   const ids = list.map((m) => m.id);
 
@@ -313,6 +327,93 @@ export default async function DashboardHomePage() {
                 />
               </svg>
               <span className="text-xs text-[#2E7D32]">{quizScoreCount > 1 ? "Improving" : "Keep going"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-3.5 sm:grid-cols-[1.2fr_0.8fr]">
+        {/* Study Activity Bar Chart */}
+        <div className="rounded-2xl border border-gray-200 bg-white p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <p className="text-[15px] font-medium text-black">Study activity</p>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <div className="size-2 rounded-sm bg-[#E07830]" />
+                <span className="text-[11px] text-gray-500">Sections</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="size-2 rounded-sm bg-[#FCE8D9]" />
+                <span className="text-[11px] text-gray-500">Quizzes</span>
+              </div>
+            </div>
+          </div>
+          {barChartPacks.length === 0 ? (
+            <div className="flex h-40 items-center justify-center">
+              <p className="text-sm text-gray-400">Complete your first pack to see activity</p>
+            </div>
+          ) : (
+            <div className="flex items-end gap-2" style={{ height: "160px" }}>
+              {barChartPacks.map((bar, i) => {
+                const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 120);
+                const quizHeight = bar.score > 0 ? Math.max(6, (bar.score / 100) * 40) : 0;
+                return (
+                  <div
+                    key={i}
+                    className="flex flex-1 flex-col items-center gap-0.5"
+                    style={{ paddingBottom: "24px", position: "relative" }}
+                  >
+                    <div className="flex w-[70%] flex-col items-stretch gap-px">
+                      <div className="rounded-t bg-[#E07830]" style={{ height: `${sectionHeight}px` }} />
+                      {quizHeight > 0 ? (
+                        <div className="rounded-b bg-[#FCE8D9]" style={{ height: `${quizHeight}px` }} />
+                      ) : null}
+                    </div>
+                    <span className="absolute bottom-0 text-[10px] text-gray-400">{bar.shortName}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Performance Gauge */}
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-5">
+          <p className="mb-3 self-start text-[15px] font-medium text-black">Performance</p>
+          <div className="relative mb-2" style={{ width: "140px", height: "140px" }}>
+            <svg viewBox="0 0 120 120" width="140" height="140">
+              <circle cx="60" cy="60" r="48" fill="none" stroke="#E8E4F7" strokeWidth="12" />
+              <circle
+                cx="60"
+                cy="60"
+                r="48"
+                fill="none"
+                stroke="#6B5CE7"
+                strokeWidth="12"
+                strokeDasharray={`${2 * Math.PI * 48}`}
+                strokeDashoffset={`${
+                  2 * Math.PI * 48 * (1 - (averageQuizScore != null ? averageQuizScore / 100 : 0))
+                }`}
+                strokeLinecap="round"
+                transform="rotate(-90 60 60)"
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <p className="text-[32px] font-medium text-black">
+                {averageQuizScore != null ? `${Math.round(averageQuizScore)}%` : "—"}
+              </p>
+              <p className="text-[11px] text-gray-500">Avg score</p>
+            </div>
+          </div>
+          <div className="mt-2 flex items-center gap-5">
+            <div className="text-center">
+              <p className="text-lg font-medium text-black">{quizScoreCount}</p>
+              <p className="text-[11px] text-gray-500">Quizzes</p>
+            </div>
+            <div className="h-8 w-px bg-gray-200" />
+            <div className="text-center">
+              <p className="text-lg font-medium text-black">{totalSectionsCompleted}</p>
+              <p className="text-[11px] text-gray-500">Sections</p>
             </div>
           </div>
         </div>
