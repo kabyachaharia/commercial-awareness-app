@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 
 type SubscriptionTier = "free" | "student" | "pro";
 type PaidSubscriptionTier = Exclude<SubscriptionTier, "free">;
@@ -31,14 +30,14 @@ const PLANS: PlanConfig[] = [
   {
     key: "free",
     name: "Free",
-    monthlyLabel: "GBP0",
+    monthlyLabel: "£0",
     features: ["3 full topic packs", "Learn, Quiz, and Flashcards", "Progress tracking"],
   },
   {
     key: "student",
     name: "Student",
-    monthlyLabel: "GBP7.99/mo",
-    yearlyLabel: "GBP59.99/year",
+    monthlyLabel: "£7.99/mo",
+    yearlyLabel: "£59.99/year",
     yearlySavings: "Save 37%",
     highlighted: true,
     features: [
@@ -51,8 +50,8 @@ const PLANS: PlanConfig[] = [
   {
     key: "pro",
     name: "Pro",
-    monthlyLabel: "GBP14.99/mo",
-    yearlyLabel: "GBP119.99/year",
+    monthlyLabel: "£14.99/mo",
+    yearlyLabel: "£119.99/year",
     yearlySavings: "Save 33%",
     features: [
       "Everything in Student",
@@ -188,26 +187,36 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
   }
 
   return (
-    <section className="mx-auto w-full max-w-6xl space-y-8 pt-8">
-      <header className="space-y-2 text-center">
-        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">Upgrade your plan</h1>
-        <p className="mx-auto max-w-2xl text-base text-gray-600">
+    <section className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+      <header className="text-center">
+        <h1
+          className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black"
+          style={{ textTransform: "none" }}
+        >
+          Upgrade your plan
+        </h1>
+        <p className="mx-auto mt-1 max-w-2xl text-sm text-gray-500">
           Choose the plan that matches your preparation style. Upgrade any time.
         </p>
       </header>
 
-      <div className="mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
-        <span className={`text-xs font-bold uppercase ${billingPeriod === "monthly" ? "text-black" : "text-gray-500"}`}>
-          Monthly
-        </span>
-        <Switch
-          checked={billingPeriod === "yearly"}
-          onCheckedChange={(checked) => setBillingPeriod(checked ? "yearly" : "monthly")}
-          aria-label="Toggle billing period"
-        />
-        <span className={`text-xs font-bold uppercase ${billingPeriod === "yearly" ? "text-black" : "text-gray-500"}`}>
-          Yearly
-        </span>
+      <div className="flex justify-center">
+        <div className="inline-flex items-center gap-3 rounded-full bg-gray-100 p-1">
+          <button
+            type="button"
+            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "monthly" ? "bg-white text-black shadow-sm" : "text-gray-500 hover:text-black"}`}
+            onClick={() => setBillingPeriod("monthly")}
+          >
+            Monthly
+          </button>
+          <button
+            type="button"
+            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "yearly" ? "bg-white text-black shadow-sm" : "text-gray-500 hover:text-black"}`}
+            onClick={() => setBillingPeriod("yearly")}
+          >
+            Yearly
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
