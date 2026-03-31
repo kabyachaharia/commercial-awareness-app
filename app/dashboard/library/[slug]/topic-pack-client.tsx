@@ -656,7 +656,7 @@ export function TopicPackClient({
                                   onClick={() => handleSelectAnswer(opt)}
                                   className={cn(
                                     "w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm font-medium transition-colors",
-                                    !showResult && "border-black bg-white hover:bg-gray-50",
+                                    !showResult && "border-black bg-white cursor-pointer hover:bg-gray-50",
                                     showResult && isCorrect && "border-black bg-[#DDF0D9]",
                                     showResult && picked && !isCorrect && "border-black bg-[#FCE8D9]"
                                   )}
