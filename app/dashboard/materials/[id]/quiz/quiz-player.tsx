@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,26 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [revealed, setRevealed] = useState(false);
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`quiz-progress-material-${materialId}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed.questionIndex === "number") {
+          setCurrentIndex(parsed.questionIndex);
+        }
+        if (parsed && typeof parsed.selectedAnswers === "object") {
+          setSelectedAnswers(parsed.selectedAnswers);
+        }
+        if (parsed && typeof parsed.questionIndex === "number" && parsed.selectedAnswers?.[parsed.questionIndex]) {
+          setRevealed(true);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [materialId]);
 
   const total = questions.length;
   const isComplete = total > 0 && currentIndex >= total;
