@@ -166,14 +166,14 @@ export default async function TopicPackPage({ params }: PageProps) {
   };
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-4 px-4 pb-8 pt-6 sm:px-6">
+    <section className="mx-auto w-full max-w-3xl space-y-2 px-4 pb-2 pt-3 sm:px-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Button asChild variant="ghost" className="-ml-3 h-auto justify-start px-3 py-1 text-sm text-gray-600 hover:text-black">
             <Link href="/dashboard/library">← Topic Library</Link>
           </Button>
           <h1
-            className="text-3xl font-black tracking-tight text-black sm:text-4xl"
+            className="text-xl font-black tracking-tight text-black sm:text-2xl"
             style={{ textTransform: "none" }}
           >
             {pack.icon ? `${pack.icon} ` : ""}

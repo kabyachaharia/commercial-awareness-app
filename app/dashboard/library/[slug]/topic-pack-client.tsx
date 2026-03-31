@@ -308,13 +308,13 @@ export function TopicPackClient({
           : "Keep studying. Try re-reading the Learn sections.";
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-2">
       {allSectionsComplete && keyTakeaways.length > 0 ? (
         <Card className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
           <button
             type="button"
             onClick={() => setTakeawaysOpen((o) => !o)}
-            className="flex w-full items-center justify-between gap-3 border-b-2 border-black bg-[#FEF08A]/35 px-5 py-4 text-left transition-colors hover:bg-[#FEF08A]/50"
+            className="flex w-full items-center justify-between gap-3 border-b-2 border-black bg-[#FEF08A]/35 px-3 py-2 text-left transition-colors hover:bg-[#FEF08A]/50"
             aria-expanded={takeawaysOpen}
           >
             <div>
@@ -327,7 +327,7 @@ export function TopicPackClient({
             />
           </button>
           {takeawaysOpen ? (
-            <CardContent className="px-5 py-5">
+            <CardContent className="px-3 py-3">
               <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed text-gray-800">
                 {keyTakeaways.map((line, idx) => (
                   <li key={`${idx}-${line.slice(0, 48)}`}>{line}</li>
@@ -341,7 +341,7 @@ export function TopicPackClient({
       <Tabs
         value={activeTab}
         onValueChange={(v) => setActiveTab(v as "learn" | "quiz" | "flashcards")}
-        className="w-full gap-6"
+        className="w-full gap-2"
       >
         <div className="flex gap-1.5">
           <button
@@ -752,13 +752,7 @@ export function TopicPackClient({
 
         <TabsContent value="flashcards" className="mt-0">
           <Card className="rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
-            <CardHeader className="border-b-2 border-black px-4 py-3 text-center">
-              <CardTitle className="text-base font-bold" style={{ textTransform: "none" }}>
-                Flashcards
-              </CardTitle>
-              <CardDescription className="text-sm text-gray-600">Tap a card to flip</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 px-4 py-4">
+            <CardContent className="space-y-2 px-3 py-3">
               {flashcards.length === 0 ? (
                 <p className="text-center text-base text-gray-600">No flashcards for this pack yet.</p>
               ) : currentCard ? (
@@ -775,7 +769,7 @@ export function TopicPackClient({
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
                     <button
                       type="button"
-                      className="relative aspect-[16/9] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
+                      className="relative aspect-[2/1] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
                       onClick={() => setCardFlipped((f) => !f)}
                       aria-label={cardFlipped ? "Show front" : "Show answer"}
                     >
@@ -785,10 +779,10 @@ export function TopicPackClient({
                           cardFlipped && "[transform:rotateY(180deg)]"
                         )}
                       >
-                        <div className="absolute inset-0 flex min-h-[140px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] sm:min-h-[160px]">
+                        <div className="absolute inset-0 flex min-h-[100px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-4 py-4 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] sm:min-h-[110px]">
                           <p className="text-base font-black uppercase leading-relaxed text-black sm:text-lg">{currentCard.front}</p>
                         </div>
-                        <div className="absolute inset-0 flex min-h-[140px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[160px]">
+                        <div className="absolute inset-0 flex min-h-[100px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-4 py-4 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[110px]">
                           <p className="text-sm leading-relaxed text-gray-800 sm:text-base">{currentCard.back}</p>
                         </div>
                       </div>
@@ -821,7 +815,7 @@ export function TopicPackClient({
                     </div>
                     <button
                       type="button"
-                      className="flex items-center gap-2 rounded-lg border-2 border-black bg-[#FACC15] px-4 py-2 text-sm font-bold text-black hover:bg-[#EAB308] transition-colors"
+                      className="flex items-center gap-2 rounded-lg border-2 border-black bg-[#FACC15] px-3 py-1.5 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
                       onClick={() => {
                         if (flashcards.length <= 1) return;
                         let next = cardIndex;
