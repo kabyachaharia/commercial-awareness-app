@@ -635,7 +635,12 @@ export function TopicPackClient({
                     if (!q) return null;
                     return (
                       <>
-                        <h3 className="text-lg font-medium leading-snug text-black">{q.question}</h3>
+                        <h3
+                          className="text-lg font-bold leading-snug text-black"
+                          style={{ textTransform: "none" }}
+                        >
+                          {q.question}
+                        </h3>
                         <ul className="space-y-3">
                           {q.options.map((opt) => {
                             const picked = quizSelected === opt;
