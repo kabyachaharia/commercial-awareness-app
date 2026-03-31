@@ -259,7 +259,7 @@ export default async function DashboardHomePage() {
     <section className="mx-auto w-full max-w-5xl space-y-5 pt-6">
       <CheckoutSuccessBanner />
       <div>
-        <h1 className="font-[family-name:var(--font-epilogue)] text-xl font-bold text-black">Welcome back</h1>
+        <h1 className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black">Welcome back</h1>
         <p className="text-sm text-gray-500">Here&apos;s your study snapshot</p>
       </div>
 
@@ -339,7 +339,7 @@ export default async function DashboardHomePage() {
         {/* Study Activity Bar Chart */}
         <div className="rounded-2xl border border-gray-200 bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
-            <p className="font-[family-name:var(--font-epilogue)] text-[15px] font-bold text-black">Study activity</p>
+            <p className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">Study activity</p>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
                 <div className="size-2 rounded-sm bg-[#E07830]" />
@@ -382,7 +382,7 @@ export default async function DashboardHomePage() {
 
         {/* Performance Gauge */}
         <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-4">
-          <p className="mb-1 self-start font-[family-name:var(--font-epilogue)] text-[15px] font-bold text-black">
+          <p className="mb-1 self-start font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">
             Performance
           </p>
           <div className="relative mb-2" style={{ width: "120px", height: "120px" }}>
@@ -428,7 +428,7 @@ export default async function DashboardHomePage() {
         {/* Continue Studying - left side */}
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-bold text-black">
+            <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">
               Continue studying
             </h2>
             <Link href="/dashboard/library" className="text-[13px] text-gray-500 hover:text-gray-700">
@@ -568,7 +568,7 @@ export default async function DashboardHomePage() {
         {/* Your Documents - right side */}
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <p className="font-[family-name:var(--font-epilogue)] text-[15px] font-bold text-black">Your documents</p>
+            <p className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">Your documents</p>
             <Link href="/dashboard/documents" className="text-[13px] text-gray-500 hover:text-gray-700">
               View all →
             </Link>
