@@ -142,6 +142,26 @@ export function TopicPackClient({
   const [quizSaveConfirmation, setQuizSaveConfirmation] = React.useState<string | null>(null);
   const [quizReviewIndex, setQuizReviewIndex] = React.useState(0);
 
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`quiz-progress-${packId}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed.questionIndex === "number") {
+          setQuizQuestionIndex(parsed.questionIndex);
+        }
+        if (parsed && typeof parsed.selectedByIndex === "object") {
+          setQuizSelectedByIndex(parsed.selectedByIndex);
+        }
+        if (parsed && typeof parsed.correctCount === "number") {
+          setQuizCorrectCount(parsed.correctCount);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [packId]);
+
   const [cardIndex, setCardIndex] = React.useState(0);
   const [cardFlipped, setCardFlipped] = React.useState(false);
 
@@ -195,6 +215,7 @@ export function TopicPackClient({
   }
 
   function resetQuizSession() {
+    localStorage.removeItem(`quiz-progress-${packId}`);
     setQuizQuestionIndex(0);
     setQuizSelected(null);
     setQuizSelectedByIndex({});
@@ -683,6 +704,27 @@ export function TopicPackClient({
                               >
                                 <ChevronLeft className="size-4" />
                                 Previous
+                              </button>
+                              <button
+                                type="button"
+                                className="rounded-full border-2 border-black bg-[#FACC15] px-5 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#EAB308]"
+                                onClick={() => {
+                                  try {
+                                    const quizState = {
+                                      packId,
+                                      questionIndex: quizQuestionIndex,
+                                      selectedByIndex: quizSelectedByIndex,
+                                      correctCount: quizCorrectCount,
+                                      timestamp: Date.now(),
+                                    };
+                                    localStorage.setItem(`quiz-progress-${packId}`, JSON.stringify(quizState));
+                                    alert("Quiz progress saved! You can resume later.");
+                                  } catch {
+                                    alert("Could not save progress.");
+                                  }
+                                }}
+                              >
+                                Save quiz
                               </button>
                               <button
                                 type="button"
