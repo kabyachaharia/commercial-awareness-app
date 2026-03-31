@@ -314,7 +314,7 @@ export function TopicPackClient({
           <button
             type="button"
             onClick={() => setTakeawaysOpen((o) => !o)}
-            className="flex w-full items-center justify-between gap-3 border-b-2 border-black bg-[#FEF08A]/35 px-3 py-2 text-left transition-colors hover:bg-[#FEF08A]/50"
+            className="flex w-full cursor-pointer items-center justify-between gap-3 border-b-2 border-black bg-[#FEF08A]/35 px-3 py-2 text-left transition-colors hover:bg-[#FEF08A]/50"
             aria-expanded={takeawaysOpen}
           >
             <div>
@@ -347,7 +347,7 @@ export function TopicPackClient({
           <button
             type="button"
             onClick={() => setActiveTab("learn")}
-            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+            className={`flex-1 cursor-pointer rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "learn"
                 ? "border-black bg-[#FCE8D9] text-[#E07830]"
                 : "border-black bg-white text-gray-400"
@@ -359,7 +359,7 @@ export function TopicPackClient({
             type="button"
             onClick={() => setActiveTab("quiz")}
             disabled={!allSectionsComplete}
-            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+            className={`flex-1 cursor-pointer rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "quiz"
                 ? "border-black bg-[#E8E4F7] text-[#6B5CE7]"
                 : "border-black bg-white text-gray-400"
@@ -370,7 +370,7 @@ export function TopicPackClient({
           <button
             type="button"
             onClick={() => setActiveTab("flashcards")}
-            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+            className={`flex-1 cursor-pointer rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "flashcards"
                 ? "border-black bg-[#DDF0D9] text-[#2E7D32]"
                 : "border-black bg-white text-gray-400"
