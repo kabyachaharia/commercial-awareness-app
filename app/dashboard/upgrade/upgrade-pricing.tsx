@@ -246,7 +246,14 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           const isStudent = plan.key === "student";
           const isPro = plan.key === "pro";
 
-          const cardBg = isStudent ? "bg-[#DBEAFE]" : "bg-white";
+          const cardBg =
+            plan.key === "free"
+              ? "bg-[#FEF08A]"
+              : isStudent
+                ? "bg-[#FDDCB5]"
+                : isPro
+                  ? "bg-[#CCFBF1]"
+                  : "bg-white";
           const checkColor = "#000000";
 
           return (
