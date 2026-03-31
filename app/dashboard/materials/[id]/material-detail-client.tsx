@@ -23,6 +23,7 @@ export function MaterialDetailClient({
   hasFlashcards,
 }: MaterialDetailClientProps) {
   const [activeTab, setActiveTab] = useState<"summary" | "quiz" | "flashcards">("summary");
+  const [showFullSummary, setShowFullSummary] = useState(false);
 
   return (
     <div className="space-y-4">
@@ -78,16 +79,17 @@ export function MaterialDetailClient({
             {summary ? (
               <>
                 <p className="text-base leading-relaxed text-gray-800 whitespace-pre-line">
-                  {summary.length > 500 ? summary.slice(0, 500) + "..." : summary}
+                  {showFullSummary || summary.length <= 500 ? summary : summary.slice(0, 500) + "..."}
                 </p>
                 {summary.length > 500 && (
                   <div className="flex justify-end border-t border-gray-100 pt-4">
-                    <Link
-                      href={`/dashboard/materials/${materialId}`}
-                      className="rounded-full border-2 border-black bg-[#FACC15] px-5 py-2 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
+                    <button
+                      type="button"
+                      onClick={() => setShowFullSummary((v) => !v)}
+                      className="cursor-pointer rounded-full border-2 border-black bg-[#FACC15] px-5 py-2 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
                     >
-                      Read full summary
-                    </Link>
+                      {showFullSummary ? "Show less" : "Read full summary"}
+                    </button>
                   </div>
                 )}
               </>
