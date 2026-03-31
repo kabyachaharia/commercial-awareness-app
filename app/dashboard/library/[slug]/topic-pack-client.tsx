@@ -718,11 +718,11 @@ export function TopicPackClient({
             </CardContent>
           </Card>
           {quizFinished ? (
-            <section className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <section className="mt-4 flex items-center justify-center gap-3 sm:flex-row">
               <Button
                 type="button"
                 onClick={resetQuizSession}
-                className="h-12 rounded-xl border-2 border-black bg-black px-8 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
+                className="h-11 flex-1 rounded-xl bg-[#E8E4F7] text-[13px] font-medium text-[#6B5CE7] hover:bg-[#DDD8F0] border-0 shadow-none sm:w-auto"
               >
                 Retake Quiz
               </Button>
@@ -731,7 +731,7 @@ export function TopicPackClient({
                 variant="outline"
                 onClick={handleSaveAttempt}
                 disabled={quizSaving || quizSavedOnce}
-                className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+                className="h-11 flex-1 rounded-xl border-[1.5px] border-black bg-[#FACC15] text-[13px] font-semibold text-black hover:bg-[#EAB308] shadow-none sm:w-auto"
               >
                 {quizSavedOnce ? "Attempt Saved ✓" : quizSaving ? "Saving..." : "Save Attempt"}
               </Button>
@@ -739,7 +739,7 @@ export function TopicPackClient({
                 type="button"
                 variant="outline"
                 onClick={() => setActiveTab("learn")}
-                className="h-12 rounded-xl border-2 border-black bg-white px-8 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50 sm:w-auto"
+                className="h-11 flex-1 rounded-xl bg-[#DDF0D9] text-[13px] font-medium text-[#2E7D32] hover:bg-[#CEE8C9] border-0 shadow-none sm:w-auto"
               >
                 Back to Topic
               </Button>
