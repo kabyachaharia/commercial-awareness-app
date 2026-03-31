@@ -677,19 +677,21 @@ export function TopicPackClient({
                             <div className="mt-4 flex items-center justify-between">
                               <button
                                 type="button"
-                                className="rounded-full border-2 border-black bg-[#E8E4F7] px-5 py-2 text-sm font-medium text-[#6B5CE7] transition-colors hover:bg-[#DDD8F0] disabled:opacity-40"
+                                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black disabled:opacity-30"
                                 onClick={() => setQuizQuestionIndex((i) => Math.max(0, i - 1))}
                                 disabled={quizQuestionIndex === 0}
                               >
-                                Previous question
+                                <ChevronLeft className="size-4" />
+                                Previous
                               </button>
-                              <Button
+                              <button
                                 type="button"
-                                className="rounded-full border-2 border-black bg-[#FACC15] px-5 py-2 text-sm font-medium text-black hover:bg-[#EAB308]"
+                                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black"
                                 onClick={handleQuizNext}
                               >
-                                {quizQuestionIndex + 1 >= quizTotal ? "See results" : "Next question"}
-                              </Button>
+                                {quizQuestionIndex + 1 >= quizTotal ? "See results" : "Next"}
+                                <ChevronRight className="size-4" />
+                              </button>
                             </div>
                           </>
                         ) : null}
