@@ -265,7 +265,10 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
               <p className={`text-[11px] font-semibold uppercase tracking-wider ${labelColor}`}>{plan.name}</p>
 
               <div className="mt-1 mb-1">
-                <span className={`font-[family-name:var(--font-epilogue)] text-[32px] font-black ${priceColor}`}>
+                <span
+                  className={`font-[family-name:var(--font-epilogue)] text-[32px] font-black ${priceColor}`}
+                  style={{ textTransform: "none" }}
+                >
                   {isPaidPlan && isYearly && plan.yearlyLabel
                     ? plan.yearlyLabel.split("/")[0]
                     : plan.monthlyLabel.split("/")[0]}
