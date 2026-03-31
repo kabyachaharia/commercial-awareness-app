@@ -554,48 +554,38 @@ export default async function DashboardHomePage() {
       </div>
 
       {reviewPacks.length > 0 ? (
-        <div className="space-y-6">
-          <header className="space-y-2">
-            <h2 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">Time to Review</h2>
-            <p className="max-w-xl text-base text-gray-600">
-              These packs are due for revision to lock in your knowledge
-            </p>
-          </header>
-
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-3">
+          <p className="text-[15px] font-medium text-black">Time to review</p>
+          <div className="space-y-2.5">
             {reviewPacks.map(({ pack, progress, daysSinceStudy }) => {
               const title = pack.title ?? "Untitled pack";
               const slug = pack.slug ?? "";
               const quizScore = Math.max(0, Math.min(100, Math.round(progress.quiz_best_score as number)));
 
               return (
-                <li key={pack.id}>
-                  <Link href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"} className="group block h-full">
-                    <Card className="h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5">
-                      <CardHeader className="space-y-2 border-b-2 border-black p-4 pb-3">
-                        <CardTitle className="text-lg font-black uppercase text-black">
-                          {pack.icon ? `${pack.icon} ` : ""}
-                          {title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-3">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <Clock className="size-4 shrink-0 text-amber-700" aria-hidden />
-                            <p className="text-sm font-semibold text-amber-700">Studied {daysSinceStudy} days ago</p>
-                          </div>
-                          <p className="text-xs text-gray-600">Last quiz: {quizScore}%</p>
-                          <div className="flex justify-end pt-2">
-                            <p className="text-xs font-bold uppercase text-amber-600">Review now</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </li>
+                <Link
+                  key={pack.id}
+                  href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"}
+                  className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-gray-300 hover:shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-9 items-center justify-center rounded-[10px] bg-[#FCE8D9] text-base">
+                      {pack.icon ?? "📚"}
+                    </div>
+                    <div>
+                      <p className="text-[14px] font-medium text-black">{title}</p>
+                      <p className="text-[12px] text-[#854F0B]">
+                        Studied {daysSinceStudy} days ago · Quiz: {quizScore}%
+                      </p>
+                    </div>
+                  </div>
+                  <div className="rounded-lg bg-[#FAEEDA] px-3.5 py-1.5 text-[12px] font-medium text-[#854F0B]">
+                    Review now
+                  </div>
+                </Link>
               );
             })}
-          </ul>
+          </div>
         </div>
       ) : null}
 
