@@ -2,8 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Lock } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUserTier } from "@/lib/subscription";
 import { createClient } from "@/lib/supabase/server";
 
@@ -189,54 +187,82 @@ export default async function LibraryPage() {
 
                     return (
                       <li key={pack.id}>
-                        <Link
-                          href={href}
-                          className="group block h-full"
-                        >
-                          <Card
-                            className={`relative h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5 ${
-                              showLock ? "opacity-80" : ""
+                        <Link href={href} className="group block h-full">
+                          <div
+                            className={`h-full rounded-2xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:shadow-sm ${
+                              showLock ? "opacity-70" : ""
                             }`}
                           >
-                            {showLock ? (
-                              <div className="pointer-events-none absolute right-3 top-3 rounded-full border-2 border-black bg-white p-1.5">
-                                <Lock className="size-4 text-gray-700" aria-hidden />
+                            <div className="mb-2.5 flex items-center gap-2.5">
+                              <div
+                                className="flex size-9 shrink-0 items-center justify-center rounded-[10px] text-base"
+                                style={{
+                                  backgroundColor: ["#E8E4F7", "#FCE8D9", "#DDF0D9"][Math.abs(title.charCodeAt(0)) % 3],
+                                }}
+                              >
+                                {pack.icon ?? "📚"}
                               </div>
-                            ) : null}
-                            <CardHeader className="space-y-2 border-b-2 border-black p-4 pb-3">
-                              <div className="flex items-start justify-between gap-3">
-                                <div className="min-w-0">
-                                  <CardTitle className="truncate text-lg font-black uppercase text-black">
-                                    {pack.icon ? `${pack.icon} ` : ""}
-                                    {title}
-                                  </CardTitle>
-                                  <CardDescription className="text-sm text-gray-600">
-                                    {pack.description?.trim()
-                                      ? pack.description
-                                      : "Guided lessons, quizzes, and flashcards."}
-                                  </CardDescription>
-                                </div>
-
-                                <div className="flex shrink-0 items-center gap-2">
-                                  {isFree ? (
-                                    <Badge variant="secondary" className="border-2 border-black bg-[#D1FAE5] text-black">
-                                      Free
-                                    </Badge>
-                                  ) : null}
-                                </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate text-[13px] font-semibold text-black">{title}</p>
                               </div>
-                            </CardHeader>
-                            <CardContent className="p-4 pt-3">
-                              <p className="text-sm font-semibold text-black">
-                                {formatProgressLabel(pack, progress)}
-                              </p>
-                              {showLock ? (
-                                <p className="mt-2 text-xs font-bold uppercase tracking-wide text-gray-700">
-                                  Upgrade to unlock
-                                </p>
+                              {isFree ? (
+                                <span className="shrink-0 rounded-md bg-[#DDF0D9] px-2 py-0.5 text-[9px] font-semibold text-[#2E7D32]">
+                                  Free
+                                </span>
                               ) : null}
-                            </CardContent>
-                          </Card>
+                              {showLock ? <Lock className="size-3.5 shrink-0 text-gray-400" aria-hidden /> : null}
+                            </div>
+                            <p className="mb-2.5 line-clamp-2 text-[11px] leading-relaxed text-gray-500">
+                              {pack.description?.trim() ? pack.description : "Guided lessons, quizzes, and flashcards."}
+                            </p>
+                            <div className="flex items-center justify-between">
+                              {(() => {
+                                const total = clampInt(pack.total_sections);
+                                const completed = clampInt(progress?.sections_completed);
+                                const label = formatProgressLabel(pack, progress);
+                                const isComplete = label.startsWith("Quiz:");
+                                const isReadyToQuiz = label === "Ready to quiz";
+                                const isInProgress = label.startsWith("Learning:");
+                                const barWidth = total > 0 ? Math.round((completed / total) * 100) : 0;
+                                const barColor = isComplete
+                                  ? "#4CAF50"
+                                  : isReadyToQuiz
+                                    ? "#E07830"
+                                    : isInProgress
+                                      ? "#1565C0"
+                                      : "#E0E0E0";
+                                const textColor = isComplete
+                                  ? "#2E7D32"
+                                  : isReadyToQuiz
+                                    ? "#E07830"
+                                    : isInProgress
+                                      ? "#1565C0"
+                                      : "var(--color-text-tertiary)";
+
+                                return (
+                                  <>
+                                    <div className="flex items-center gap-1.5">
+                                      {barWidth > 0 || isReadyToQuiz || isComplete ? (
+                                        <div className="h-[3px] w-[60px] overflow-hidden rounded-full bg-gray-100">
+                                          <div
+                                            className="h-full rounded-full"
+                                            style={{
+                                              width: `${isReadyToQuiz || isComplete ? 100 : barWidth}%`,
+                                              backgroundColor: barColor,
+                                            }}
+                                          />
+                                        </div>
+                                      ) : null}
+                                      <span className="text-[10px] font-medium" style={{ color: textColor }}>
+                                        {showLock ? "Upgrade to unlock" : label}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] text-gray-400">{total > 0 ? `${total} sections` : ""}</span>
+                                  </>
+                                );
+                              })()}
+                            </div>
+                          </div>
                         </Link>
                       </li>
                     );
