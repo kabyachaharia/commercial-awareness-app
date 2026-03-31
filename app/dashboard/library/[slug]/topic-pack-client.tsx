@@ -304,8 +304,8 @@ export function TopicPackClient({
       : quizPercentage >= 70
         ? "Great job!"
         : quizPercentage >= 50
-          ? "Good effort — review the sections you missed"
-          : "Keep studying — try re-reading the Learn sections";
+          ? "Good effort. Review the sections you missed."
+          : "Keep studying. Try re-reading the Learn sections.";
 
   return (
     <div className="space-y-8">
@@ -508,12 +508,17 @@ export function TopicPackClient({
                 <p className="text-center text-base text-gray-600">No quiz has been published for this pack yet.</p>
               ) : quizFinished ? (
                 <div className="mx-auto w-full space-y-6">
-                  <div className="rounded-xl border-2 border-black bg-[#EEF2FF]/60 px-6 py-6 text-center">
-                    <p className="text-sm font-black uppercase tracking-wide text-gray-600">Results summary</p>
-                    <h3 className="mt-3 text-3xl font-black text-black">
-                      You scored {quizCorrectCount}/{quizTotal} ({quizPercentage}%)
+                  <div className="rounded-xl bg-[#E8E4F7] px-6 py-6 text-center">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6B5CE7]">
+                      Results Summary
+                    </p>
+                    <h3
+                      className="mt-3 font-[family-name:var(--font-epilogue)] text-[26px] font-black text-[#2D2459]"
+                      style={{ textTransform: "none" }}
+                    >
+                      {quizCorrectCount} out of {quizTotal} ({quizPercentage}%)
                     </h3>
-                    <p className="mt-2 text-base font-bold text-[#4F46E5]">{quizPerformanceMessage}</p>
+                    <p className="mt-2 text-[13px] font-semibold text-[#6B5CE7]">{quizPerformanceMessage}</p>
                     {progress.quiz_best_score != null ? (
                       <p className="mt-3 text-sm text-gray-700">
                         Best score recorded: {Math.min(100, Math.round(progress.quiz_best_score))}%{" "}
