@@ -556,20 +556,6 @@ export function TopicPackClient({
 
                         return (
                           <div className="flex items-stretch gap-4">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="icon"
-                              className="hidden size-11 rounded-full border-2 border-black sm:inline-flex"
-                              onClick={() =>
-                                setQuizReviewIndex((i) => Math.max(i - 1, 0))
-                              }
-                              disabled={index === 0}
-                              aria-label="Previous question"
-                            >
-                              <ChevronLeft className="size-5" />
-                            </Button>
-
                             <article className="flex-1 rounded-xl border-2 border-black bg-white px-5 py-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-start gap-3">
@@ -609,51 +595,33 @@ export function TopicPackClient({
                                   <p className="text-sm leading-relaxed text-gray-700">{q.explanation}</p>
                                 </div>
                               </div>
-                            </article>
 
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="icon"
-                              className="hidden size-11 rounded-full border-2 border-black sm:inline-flex"
-                              onClick={() =>
-                                setQuizReviewIndex((i) => Math.min(i + 1, quizTotal - 1))
-                              }
-                              disabled={index >= quizTotal - 1}
-                              aria-label="Next question"
-                            >
-                              <ChevronRight className="size-5" />
-                            </Button>
+                              <div className="mt-6 flex items-center justify-between">
+                                <button
+                                  type="button"
+                                  className="flex items-center gap-1 text-[13px] font-medium text-gray-400 transition-colors hover:text-black disabled:opacity-30"
+                                  onClick={() => setQuizReviewIndex((i) => Math.max(i - 1, 0))}
+                                  disabled={quizReviewIndex <= 0}
+                                  aria-label="Previous question"
+                                >
+                                  <ChevronLeft className="size-4" />
+                                  Previous
+                                </button>
+                                <button
+                                  type="button"
+                                  className="flex items-center gap-1 text-[13px] font-medium text-gray-400 transition-colors hover:text-black disabled:opacity-30"
+                                  onClick={() => setQuizReviewIndex((i) => Math.min(i + 1, quizTotal - 1))}
+                                  disabled={quizReviewIndex >= quizTotal - 1}
+                                  aria-label="Next question"
+                                >
+                                  Next
+                                  <ChevronRight className="size-4" />
+                                </button>
+                              </div>
+                            </article>
                           </div>
                         );
                       })()}
-
-                      <div className="flex items-center justify-between gap-3 sm:hidden">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          className="flex-1 rounded-xl border-2 border-black"
-                          onClick={() =>
-                            setQuizReviewIndex((i) => Math.max(i - 1, 0))
-                          }
-                          disabled={quizReviewIndex === 0}
-                          aria-label="Previous question"
-                        >
-                          Previous
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          className="flex-1 rounded-xl border-2 border-black"
-                          onClick={() =>
-                            setQuizReviewIndex((i) => Math.min(i + 1, quizTotal - 1))
-                          }
-                          disabled={quizReviewIndex >= quizTotal - 1}
-                          aria-label="Next question"
-                        >
-                          Next
-                        </Button>
-                      </div>
                     </div>
                   ) : null}
                 </div>
