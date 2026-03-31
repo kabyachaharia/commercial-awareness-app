@@ -667,15 +667,31 @@ export function TopicPackClient({
                           })}
                         </ul>
                         {quizRevealed ? (
-                          <div className="rounded-xl border-2 border-black bg-[#FEF9C3] px-4 py-3 text-base text-gray-900">
-                            <p className="font-bold text-black">
-                              {quizSelected === q.correct_answer ? "Correct." : "Incorrect."}
-                            </p>
-                            <p className="mt-2 leading-relaxed">{q.explanation}</p>
-                            <Button type="button" className="mt-4 rounded-xl border-2 border-black" onClick={handleQuizNext}>
-                              {quizQuestionIndex + 1 >= quizTotal ? "See results" : "Next question"}
-                            </Button>
-                          </div>
+                          <>
+                            <div className="rounded-xl border-2 border-black bg-[#FEF9C3] px-4 py-3 text-base text-gray-900">
+                              <p className="font-bold text-black">
+                                {quizSelected === q.correct_answer ? "Correct." : "Incorrect."}
+                              </p>
+                              <p className="mt-2 leading-relaxed">{q.explanation}</p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between">
+                              <button
+                                type="button"
+                                className="rounded-full border-2 border-black bg-[#E8E4F7] px-5 py-2 text-sm font-medium text-[#6B5CE7] transition-colors hover:bg-[#DDD8F0] disabled:opacity-40"
+                                onClick={() => setQuizQuestionIndex((i) => Math.max(0, i - 1))}
+                                disabled={quizQuestionIndex === 0}
+                              >
+                                Previous question
+                              </button>
+                              <Button
+                                type="button"
+                                className="rounded-full border-2 border-black bg-[#FACC15] px-5 py-2 text-sm font-medium text-black hover:bg-[#EAB308]"
+                                onClick={handleQuizNext}
+                              >
+                                {quizQuestionIndex + 1 >= quizTotal ? "See results" : "Next question"}
+                              </Button>
+                            </div>
+                          </>
                         ) : null}
                       </>
                     );
