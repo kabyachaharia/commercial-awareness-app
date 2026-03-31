@@ -321,10 +321,13 @@ export function TopicPackClient({
               <p className="text-sm font-black uppercase tracking-wide text-black">Key takeaways</p>
               <p className="text-sm text-gray-600">Review the essentials from {title}</p>
             </div>
-            <ChevronDown
-              className={cn("size-5 shrink-0 text-black transition-transform duration-300", takeawaysOpen && "rotate-180")}
-              aria-hidden
-            />
+            <span className="flex shrink-0 items-center gap-1 rounded-full border-2 border-gray-300 bg-white px-3 py-1 text-xs font-bold uppercase tracking-wide text-black">
+              {takeawaysOpen ? "Hide" : "Show"}
+              <ChevronDown
+                className={cn("size-3.5 transition-transform duration-300", takeawaysOpen && "rotate-180")}
+                aria-hidden
+              />
+            </span>
           </button>
           {takeawaysOpen ? (
             <CardContent className="px-3 py-3">
