@@ -1,17 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FileText, Layers, ListChecks } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
-import { CollapsibleSummary } from "./collapsible-summary";
-import { GenerateButton } from "./generate-actions";
+import { MaterialDetailClient } from "./material-detail-client";
 
-export const dynamic = 'force-dynamic';
-
-const ctaClassName = "px-6 text-sm";
+export const dynamic = "force-dynamic";
 
 type MaterialDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -21,107 +14,37 @@ export default async function MaterialDetailPage({ params }: MaterialDetailPageP
   const { id } = await params;
   const supabase = await createClient();
 
-  const { data: material } = await supabase.from("materials").select("id, title, summary, created_at").eq("id", id).single();
+  const { data: material } = await supabase
+    .from("materials")
+    .select("id, title, summary, created_at")
+    .eq("id", id)
+    .single();
 
   if (!material) {
     notFound();
   }
 
   const { data: quizRows } = await supabase.from("quizzes").select("id").eq("material_id", material.id).limit(1);
-
   const { data: flashcardRows } = await supabase.from("flashcards").select("id").eq("material_id", material.id).limit(1);
 
-  const quiz = quizRows?.[0] ?? null;
-  const flashcards = flashcardRows?.[0] ?? null;
-  const uploadDate = material.created_at ? new Date(material.created_at).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }) : "Unknown";
+  const uploadDate = material.created_at
+    ? new Date(material.created_at).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Unknown";
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-8">
-      <header className="space-y-2 border-b-2 border-black pb-6">
-        <h1 className="text-2xl font-black uppercase tracking-tight text-black">
-          {material.title}
-        </h1>
-        <p className="text-sm text-gray-500">Uploaded on {uploadDate}</p>
-      </header>
-
-      <div className="grid gap-4">
-        {material.summary ? (
-          <CollapsibleSummary summary={material.summary} />
-        ) : (
-          <Card className="overflow-hidden rounded-xl bg-white">
-            <CardHeader className="space-y-2 border-b-2 border-black bg-[#FEF08A]/40 p-4 pb-2">
-              <div className="flex items-start gap-4">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
-                  <FileText className="size-5" aria-hidden />
-                </span>
-                <div className="min-w-0 space-y-1">
-                  <CardTitle className="text-lg font-bold uppercase">Summary</CardTitle>
-                  <CardDescription className="text-sm text-gray-500">
-                    Quick commercial-awareness focused overview.
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3 p-4 pt-3">
-              <GenerateButton materialId={material.id} target="summary" />
-            </CardContent>
-          </Card>
-        )}
-
-        <Card className="overflow-hidden rounded-xl bg-white">
-          <CardHeader className="space-y-2 border-b-2 border-black bg-[#D1FAE5]/40 p-4 pb-2">
-            <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
-                <ListChecks className="size-5" aria-hidden />
-              </span>
-              <div className="min-w-0 space-y-1">
-                <CardTitle className="text-lg font-bold uppercase">Quiz</CardTitle>
-                <CardDescription className="text-sm text-gray-500">
-                  Test your understanding with AI-generated questions.
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4 pt-3">
-            {quiz ? (
-              <Button asChild className={ctaClassName}>
-                <Link href={`/dashboard/materials/${material.id}/quiz`}>Take Quiz</Link>
-              </Button>
-            ) : (
-              <GenerateButton materialId={material.id} target="quiz" />
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="overflow-hidden rounded-xl bg-white">
-          <CardHeader className="space-y-2 border-b-2 border-black bg-[#FED7AA]/40 p-4 pb-2">
-            <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border-2 border-black bg-white text-black">
-                <Layers className="size-5" aria-hidden />
-              </span>
-              <div className="min-w-0 space-y-1">
-                <CardTitle className="text-lg font-bold uppercase">Flashcards</CardTitle>
-                <CardDescription className="text-sm text-gray-500">
-                  Practice key ideas with rapid recall prompts.
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4 pt-3">
-            {flashcards ? (
-              <Button asChild className={ctaClassName}>
-                <Link href={`/dashboard/materials/${material.id}/flashcards`}>Study Flashcards</Link>
-              </Button>
-            ) : (
-              <GenerateButton materialId={material.id} target="flashcards" />
-            )}
-          </CardContent>
-        </Card>
-      </div>
+    <section className="mx-auto w-full max-w-3xl space-y-4 px-4 pb-2 pt-3 sm:px-6">
+      <MaterialDetailClient
+        materialId={material.id}
+        title={material.title}
+        summary={material.summary}
+        uploadDate={uploadDate}
+        hasQuiz={Boolean(quizRows?.[0])}
+        hasFlashcards={Boolean(flashcardRows?.[0])}
+      />
     </section>
   );
 }
