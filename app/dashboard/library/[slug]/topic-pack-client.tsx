@@ -526,7 +526,7 @@ export function TopicPackClient({
                           <X className="size-5 text-red-700" aria-hidden />
                         );
 
-                        const answerBg = isCorrect ? "bg-[#D1FAE5]" : "bg-red-100";
+                        const answerBg = isCorrect ? "bg-[#DDF0D9]" : "bg-[#FCE8D9]";
 
                         return (
                           <div className="flex items-stretch gap-4">
@@ -572,7 +572,7 @@ export function TopicPackClient({
                                 {!isCorrect ? (
                                   <div className="space-y-1">
                                     <p className="text-sm font-semibold text-gray-700">Correct answer</p>
-                                    <div className="inline-block rounded-lg border-2 border-black bg-[#D1FAE5] px-3 py-2 text-sm font-bold text-black">
+                                    <div className="inline-block rounded-lg border-2 border-black bg-[#DDF0D9] px-3 py-2 text-sm font-bold text-black">
                                       {q.correct_answer}
                                     </div>
                                   </div>
@@ -656,8 +656,8 @@ export function TopicPackClient({
                                   className={cn(
                                     "w-full rounded-xl border-2 px-4 py-3 text-left text-base font-medium transition-colors",
                                     !showResult && "border-black bg-white hover:bg-gray-50",
-                                    showResult && isCorrect && "border-black bg-[#D1FAE5]",
-                                    showResult && picked && !isCorrect && "border-black bg-red-100"
+                                    showResult && isCorrect && "border-black bg-[#DDF0D9]",
+                                    showResult && picked && !isCorrect && "border-black bg-[#FCE8D9]"
                                   )}
                                 >
                                   {opt}
