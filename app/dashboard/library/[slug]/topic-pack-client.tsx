@@ -479,13 +479,15 @@ export function TopicPackClient({
                         </Button>
                       ) : null}
                       {atProgressFrontier ? (
-                        <Button
-                          type="button"
-                          onClick={handleContinueSection}
-                          className="h-12 w-full rounded-xl border-2 border-black bg-black px-6 text-base font-bold text-white shadow-[4px_4px_0_0_#000] hover:bg-gray-900 sm:w-auto"
-                        >
-                          {learnViewIndex + 1 >= totalSections ? "Finish" : "Continue"}
-                        </Button>
+                        <div className="flex justify-end">
+                          <Button
+                            type="button"
+                            onClick={handleContinueSection}
+                            className="h-12 w-full rounded-xl border-2 border-black bg-[#FACC15] px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-[#EAB308] sm:w-auto"
+                          >
+                            {learnViewIndex + 1 >= totalSections ? "Finish" : "Continue"}
+                          </Button>
+                        </div>
                       ) : null}
                     </CardContent>
                   ) : null}
