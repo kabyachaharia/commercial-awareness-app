@@ -335,7 +335,7 @@ export default async function DashboardHomePage() {
         </div>
       </div>
 
-      <div className="grid gap-3.5 sm:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-3.5 sm:grid-cols-[1.25fr_0.75fr]">
         {/* Study Activity Bar Chart */}
         <div className="rounded-2xl border border-gray-200 bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
@@ -424,7 +424,7 @@ export default async function DashboardHomePage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
+      <div className="grid gap-3.5 lg:grid-cols-[1.25fr_0.75fr]">
         {/* Continue Studying - left side */}
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
