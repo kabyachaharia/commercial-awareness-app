@@ -796,7 +796,7 @@ export function TopicPackClient({
                         type="button"
                         variant="outline"
                         size="icon"
-                        className="size-9 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        className="size-9 cursor-pointer rounded-full border-2 border-black bg-white hover:bg-gray-50"
                         onClick={goPrevCard}
                         disabled={cardIndex === 0}
                         aria-label="Previous card"
@@ -807,7 +807,7 @@ export function TopicPackClient({
                         type="button"
                         variant="outline"
                         size="icon"
-                        className="size-9 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        className="size-9 cursor-pointer rounded-full border-2 border-black bg-white hover:bg-gray-50"
                         onClick={goNextCard}
                         disabled={cardIndex >= flashcards.length - 1}
                         aria-label="Next card"
@@ -817,7 +817,7 @@ export function TopicPackClient({
                     </div>
                     <button
                       type="button"
-                      className="flex items-center gap-2 rounded-lg border-2 border-black bg-[#FACC15] px-3 py-1.5 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
+                      className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-black bg-[#FACC15] px-3 py-1.5 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
                       onClick={() => {
                         if (flashcards.length <= 1) return;
                         let next = cardIndex;
