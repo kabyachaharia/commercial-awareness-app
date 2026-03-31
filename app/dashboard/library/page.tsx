@@ -126,39 +126,55 @@ export default async function LibraryPage() {
   const isFreeTierUser = userTier === "free";
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-10 pt-16">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
-          Topic Library
+    <section className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+      <header>
+        <h1
+          className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black"
+          style={{ textTransform: "none" }}
+        >
+          Topic library
         </h1>
-        <p className="max-w-3xl text-base text-gray-600">
+        <p className="text-sm text-gray-500">
           Master key commercial awareness topics with guided lessons, quizzes, and flashcards
         </p>
       </header>
 
       {packs.length === 0 ? (
-        <div className="rounded-xl border-2 border-black bg-white px-6 py-12 text-center shadow-[8px_8px_0_0_#000]">
-          <h2 className="text-xl font-black uppercase text-black">No published topic packs yet</h2>
+        <div className="rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center">
+          <h2 className="text-base font-medium text-black">No published topic packs yet</h2>
           <p className="mx-auto mt-3 max-w-md text-gray-600">
             Check back soon — new packs will appear here once published.
           </p>
         </div>
       ) : (
-        <div className="space-y-10">
+        <div className="space-y-6">
           {(Object.keys(CATEGORY_LABELS) as TopicPackCategory[]).map((category) => {
             const list = byCategory[category];
             if (list.length === 0) return null;
 
             return (
               <section key={category} className="space-y-4">
-                <div className="space-y-1">
-                  <h2 className="text-xl font-black uppercase tracking-tight text-black">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="h-5 w-1 rounded-sm"
+                    style={{
+                      backgroundColor:
+                        category === "foundation"
+                          ? "#6B5CE7"
+                          : category === "current_affairs"
+                            ? "#E07830"
+                            : "#1565C0",
+                    }}
+                  />
+                  <h2
+                    className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black"
+                    style={{ textTransform: "none" }}
+                  >
                     {CATEGORY_LABELS[category]}
                   </h2>
-                  <div className="h-0.5 w-full bg-black" />
                 </div>
 
-                <ul className="grid gap-4 sm:grid-cols-2">
+                <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {list.map((pack) => {
                     const progress = progressByPackId.get(pack.id) ?? null;
                     const title = pack.title ?? "Untitled pack";
