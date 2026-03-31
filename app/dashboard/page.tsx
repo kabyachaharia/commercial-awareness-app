@@ -256,19 +256,19 @@ export default async function DashboardHomePage() {
     .slice(0, 3);
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-8 pt-10">
+    <section className="mx-auto w-full max-w-5xl space-y-5 pt-6">
       <CheckoutSuccessBanner />
       <div>
-        <h1 className="text-[22px] font-medium text-black">Welcome back</h1>
+        <h1 className="text-lg font-medium text-black">Welcome back</h1>
         <p className="text-sm text-gray-500">Here&apos;s your study snapshot</p>
       </div>
 
       <div className="grid gap-3.5 sm:grid-cols-3">
-        <div className="rounded-2xl bg-[#E8E4F7] px-5 py-5">
-          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+        <div className="rounded-2xl bg-[#E8E4F7] px-5 py-3.5">
+          <div className="mb-6 flex size-11 items-center justify-center rounded-xl bg-white">
             <BookOpen className="size-5 text-[#6B5CE7]" strokeWidth={1.5} />
           </div>
-          <p className="text-[15px] font-medium text-[#2D2459]">{packsStarted} packs started</p>
+          <p className="text-[13px] font-medium text-[#2D2459]">{packsStarted} packs started</p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#6B5CE7]/20 pt-2.5">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-[#6B5CE7]" />
@@ -281,11 +281,11 @@ export default async function DashboardHomePage() {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-[#FCE8D9] px-5 py-5">
-          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+        <div className="rounded-2xl bg-[#FCE8D9] px-5 py-3.5">
+          <div className="mb-6 flex size-11 items-center justify-center rounded-xl bg-white">
             <CheckCircle2 className="size-5 text-[#E07830]" strokeWidth={1.5} />
           </div>
-          <p className="text-[15px] font-medium text-[#6B3A14]">{packsCompleted} packs completed</p>
+          <p className="text-[13px] font-medium text-[#6B3A14]">{packsCompleted} packs completed</p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#E07830]/20 pt-2.5">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-[#E07830]" />
@@ -300,8 +300,8 @@ export default async function DashboardHomePage() {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-[#DDF0D9] px-5 py-5">
-          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+        <div className="rounded-2xl bg-[#DDF0D9] px-5 py-3.5">
+          <div className="mb-6 flex size-11 items-center justify-center rounded-xl bg-white">
             <svg className="size-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M22 12h-4l-3 9L9 3l-3 9H2"
@@ -312,7 +312,7 @@ export default async function DashboardHomePage() {
               />
             </svg>
           </div>
-          <p className="text-[15px] font-medium text-[#1B5E20]">
+          <p className="text-[13px] font-medium text-[#1B5E20]">
             {averageQuizScore != null ? `${Math.round(averageQuizScore)}% avg quiz score` : "No quizzes yet"}
           </p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#4CAF50]/20 pt-2.5">
@@ -333,7 +333,7 @@ export default async function DashboardHomePage() {
 
       <div className="grid gap-3.5 sm:grid-cols-[1.2fr_0.8fr]">
         {/* Study Activity Bar Chart */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="rounded-2xl border border-gray-200 bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-[15px] font-medium text-black">Study activity</p>
             <div className="flex items-center gap-3">
@@ -352,7 +352,7 @@ export default async function DashboardHomePage() {
               <p className="text-sm text-gray-400">Complete your first pack to see activity</p>
             </div>
           ) : (
-            <div className="flex items-end gap-2" style={{ height: "160px" }}>
+            <div className="flex items-end gap-2" style={{ height: "120px" }}>
               {barChartPacks.map((bar, i) => {
                 const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 120);
                 const quizHeight = bar.score > 0 ? Math.max(6, (bar.score / 100) * 40) : 0;
@@ -377,10 +377,10 @@ export default async function DashboardHomePage() {
         </div>
 
         {/* Performance Gauge */}
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-5">
-          <p className="mb-3 self-start text-[15px] font-medium text-black">Performance</p>
-          <div className="relative mb-2" style={{ width: "140px", height: "140px" }}>
-            <svg viewBox="0 0 120 120" width="140" height="140">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-4">
+          <p className="mb-1 self-start text-[15px] font-medium text-black">Performance</p>
+          <div className="relative mb-2" style={{ width: "120px", height: "120px" }}>
+            <svg viewBox="0 0 120 120" width="120" height="120">
               <circle cx="60" cy="60" r="48" fill="none" stroke="#E8E4F7" strokeWidth="12" />
               <circle
                 cx="60"
@@ -398,27 +398,27 @@ export default async function DashboardHomePage() {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p className="text-[32px] font-medium text-black">
+              <p className="text-[26px] font-medium text-black">
                 {averageQuizScore != null ? `${Math.round(averageQuizScore)}%` : "—"}
               </p>
               <p className="text-[11px] text-gray-500">Avg score</p>
             </div>
           </div>
-          <div className="mt-2 flex items-center gap-5">
+          <div className="mt-1 flex items-center gap-4">
             <div className="text-center">
-              <p className="text-lg font-medium text-black">{quizScoreCount}</p>
+              <p className="text-base font-medium text-black">{quizScoreCount}</p>
               <p className="text-[11px] text-gray-500">Quizzes</p>
             </div>
-            <div className="h-8 w-px bg-gray-200" />
+            <div className="h-6 w-px bg-gray-200" />
             <div className="text-center">
-              <p className="text-lg font-medium text-black">{totalSectionsCompleted}</p>
+              <p className="text-base font-medium text-black">{totalSectionsCompleted}</p>
               <p className="text-[11px] text-gray-500">Sections</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-2.5">
         <div className="flex items-baseline justify-between">
           <h2 className="text-[15px] font-medium text-black">Continue studying</h2>
           <Link
@@ -499,9 +499,9 @@ export default async function DashboardHomePage() {
               return (
                 <li key={pack.id}>
                   <Link href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"} className="group block h-full">
-                    <div className="h-full rounded-2xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
+                    <div className="h-full rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
                       <div className="mb-2.5 flex items-center gap-2.5">
-                        <div className={`flex size-9 items-center justify-center rounded-[10px] ${iconBgClass} text-base`}>
+                        <div className={`flex size-8 items-center justify-center rounded-[8px] ${iconBgClass} text-base`}>
                           {pack.icon ?? "📚"}
                         </div>
                         <div className="min-w-0 flex-1">
@@ -565,7 +565,7 @@ export default async function DashboardHomePage() {
                 <Link
                   key={pack.id}
                   href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"}
-                  className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-gray-300 hover:shadow-sm"
+                  className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-3 transition-all hover:border-gray-300 hover:shadow-sm"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex size-9 items-center justify-center rounded-[10px] bg-[#FCE8D9] text-base">
@@ -603,7 +603,7 @@ export default async function DashboardHomePage() {
               className="flex items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white p-6 text-center transition-all hover:border-gray-400 hover:shadow-sm"
             >
               <div>
-                <div className="mx-auto mb-2 flex size-10 items-center justify-center rounded-[10px] bg-gray-100">
+                <div className="mx-auto mb-2 flex size-8 items-center justify-center rounded-[10px] bg-gray-100">
                   <svg
                     className="size-4.5 text-gray-400"
                     viewBox="0 0 24 24"
@@ -633,9 +633,9 @@ export default async function DashboardHomePage() {
                 <Link
                   key={material.id}
                   href={`/dashboard/materials/${material.id}`}
-                  className="group flex items-start gap-3 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-gray-300 hover:shadow-sm"
+                  className="group flex items-start gap-3 rounded-2xl border border-gray-200 bg-white p-3 transition-all hover:border-gray-300 hover:shadow-sm"
                 >
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-[10px] bg-[#E8E4F7]">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-[#E8E4F7]">
                     <svg
                       className="size-4.5 text-[#6B5CE7]"
                       viewBox="0 0 24 24"
@@ -685,7 +685,7 @@ export default async function DashboardHomePage() {
                 className="flex items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white p-6 text-center transition-all hover:border-gray-400 hover:shadow-sm"
               >
                 <div>
-                  <div className="mx-auto mb-2 flex size-10 items-center justify-center rounded-[10px] bg-gray-100">
+                  <div className="mx-auto mb-2 flex size-8 items-center justify-center rounded-[10px] bg-gray-100">
                     <svg
                       className="size-4.5 text-gray-400"
                       viewBox="0 0 24 24"
