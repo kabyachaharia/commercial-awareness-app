@@ -508,7 +508,7 @@ export function TopicPackClient({
                 <p className="text-center text-base text-gray-600">No quiz has been published for this pack yet.</p>
               ) : quizFinished ? (
                 <div className="mx-auto w-full space-y-6">
-                  <div className="rounded-xl bg-[#E8E4F7] px-6 py-6 text-center">
+                  <div className="rounded-xl border-2 border-black bg-[#E8E4F7] px-6 py-6 text-center">
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6B5CE7]">
                       Results Summary
                     </p>
@@ -556,7 +556,7 @@ export function TopicPackClient({
 
                         return (
                           <div>
-                            <article className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4">
+                            <article className="flex-1 rounded-xl border-2 border-black bg-white px-5 py-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-start gap-3">
                                   <div
@@ -576,12 +576,10 @@ export function TopicPackClient({
                               <div className="mt-4 space-y-3">
                                 <div className="space-y-1">
                                   <p className="text-[11px] font-medium text-gray-500">Your selected answer</p>
-                                  <div
-                                    className={`inline-block rounded-lg ${answerBg} px-3 py-2 text-[13px] font-medium ${
-                                      isCorrect ? "text-[#2E7D32]" : "text-[#E07830]"
-                                    }`}
-                                  >
-                                    {userAnswer ?? "No answer"}
+                                  <div className={`inline-block rounded-lg ${answerBg} px-3 py-2 text-[13px] font-medium`}>
+                                    <span className={isCorrect ? "text-[#2E7D32]" : "text-[#E07830]"}>
+                                      {userAnswer ?? "No answer"}
+                                    </span>
                                   </div>
                                 </div>
 
