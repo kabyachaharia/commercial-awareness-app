@@ -416,7 +416,7 @@ export function TopicPackClient({
                               ? "bg-[#DDF0D9] text-[#2E7D32]"
                               : "bg-gray-200 text-gray-600",
                           current && "ring-2 ring-black ring-offset-2 ring-offset-white",
-                          !navigable && "cursor-not-allowed opacity-40"
+                          navigable ? "cursor-pointer" : "cursor-not-allowed opacity-40"
                         )}
                       >
                         {num}
