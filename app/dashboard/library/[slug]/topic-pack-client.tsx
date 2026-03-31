@@ -509,16 +509,16 @@ export function TopicPackClient({
               ) : quizFinished ? (
                 <div className="mx-auto w-full space-y-6">
                   <div className="rounded-xl border-2 border-black bg-[#E8E4F7] px-6 py-6 text-center">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6B5CE7]">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-black">
                       Results Summary
                     </p>
                     <h3
-                      className="mt-3 font-[family-name:var(--font-epilogue)] text-[26px] font-black text-[#2D2459]"
+                      className="mt-3 font-[family-name:var(--font-epilogue)] text-[26px] font-black text-black"
                       style={{ textTransform: "none" }}
                     >
                       {quizCorrectCount} out of {quizTotal} ({quizPercentage}%)
                     </h3>
-                    <p className="mt-2 text-[13px] font-semibold text-[#6B5CE7]">{quizPerformanceMessage}</p>
+                    <p className="mt-2 text-[13px] font-semibold text-black">{quizPerformanceMessage}</p>
                     {progress.quiz_best_score != null ? (
                       <p className="mt-3 text-sm text-gray-700">
                         Best score recorded: {Math.min(100, Math.round(progress.quiz_best_score))}%{" "}
@@ -567,17 +567,17 @@ export function TopicPackClient({
                                     {icon}
                                   </div>
                                   <div className="min-w-0">
-                                    <p className="text-[12px] font-medium text-gray-500">Question {index + 1}</p>
-                                    <p className="mt-1 text-[14px] font-medium leading-relaxed text-black">{q.question}</p>
+                                    <p className="text-[13px] font-medium text-black">Question {index + 1}</p>
+                                    <p className="mt-1 text-[15px] font-bold leading-relaxed text-black">{q.question}</p>
                                   </div>
                                 </div>
                               </div>
 
                               <div className="mt-4 space-y-3">
                                 <div className="space-y-1">
-                                  <p className="text-[11px] font-medium text-gray-500">Your selected answer</p>
+                                  <p className="text-[13px] font-medium text-black">Your selected answer</p>
                                   <div className={`inline-block rounded-lg ${answerBg} px-3 py-2 text-[13px] font-medium`}>
-                                    <span className={isCorrect ? "text-[#2E7D32]" : "text-[#E07830]"}>
+                                    <span className="text-black">
                                       {userAnswer ?? "No answer"}
                                     </span>
                                   </div>
@@ -585,16 +585,16 @@ export function TopicPackClient({
 
                                 {!isCorrect ? (
                                   <div className="space-y-1">
-                                    <p className="text-[11px] font-medium text-gray-500">Correct answer</p>
-                                    <div className="inline-block rounded-lg bg-[#DDF0D9] px-3 py-2 text-[13px] font-medium text-[#2E7D32]">
+                                    <p className="text-[13px] font-medium text-black">Correct answer</p>
+                                    <div className="inline-block rounded-lg bg-[#DDF0D9] px-3 py-2 text-[13px] font-medium text-black">
                                       {q.correct_answer}
                                     </div>
                                   </div>
                                 ) : null}
 
                                 <div className="space-y-1">
-                                  <p className="text-[11px] font-medium text-gray-500">Explanation</p>
-                                  <p className="text-[13px] leading-relaxed text-gray-500">{q.explanation}</p>
+                                  <p className="text-[13px] font-medium text-black">Explanation</p>
+                                  <p className="text-[14px] leading-relaxed text-black">{q.explanation}</p>
                                 </div>
                               </div>
 
@@ -724,7 +724,7 @@ export function TopicPackClient({
               <Button
                 type="button"
                 onClick={resetQuizSession}
-                className="h-11 flex-1 rounded-xl bg-[#E8E4F7] text-[13px] font-medium text-[#6B5CE7] hover:bg-[#DDD8F0] border-0 shadow-none sm:w-auto"
+                className="h-11 flex-1 rounded-full border-2 border-black bg-[#E8E4F7] text-[14px] font-medium text-black hover:bg-[#DDD8F0] shadow-none sm:w-auto"
               >
                 Retake Quiz
               </Button>
@@ -733,7 +733,7 @@ export function TopicPackClient({
                 variant="outline"
                 onClick={handleSaveAttempt}
                 disabled={quizSaving || quizSavedOnce}
-                className="h-11 flex-1 rounded-xl border-[1.5px] border-black bg-[#FACC15] text-[13px] font-semibold text-black hover:bg-[#EAB308] shadow-none sm:w-auto"
+                className="h-11 flex-1 rounded-full border-2 border-black bg-[#FACC15] text-[14px] font-semibold text-black hover:bg-[#EAB308] shadow-none sm:w-auto"
               >
                 {quizSavedOnce ? "Attempt Saved ✓" : quizSaving ? "Saving..." : "Save Attempt"}
               </Button>
@@ -741,7 +741,7 @@ export function TopicPackClient({
                 type="button"
                 variant="outline"
                 onClick={() => setActiveTab("learn")}
-                className="h-11 flex-1 rounded-xl bg-[#DDF0D9] text-[13px] font-medium text-[#2E7D32] hover:bg-[#CEE8C9] border-0 shadow-none sm:w-auto"
+                className="h-11 flex-1 rounded-full border-2 border-black bg-[#FCE8D9] text-[14px] font-medium text-black hover:bg-[#F5D5C0] shadow-none sm:w-auto"
               >
                 Back to Topic
               </Button>
