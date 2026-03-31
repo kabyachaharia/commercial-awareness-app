@@ -428,9 +428,7 @@ export default async function DashboardHomePage() {
         {/* Continue Studying - left side */}
         <div className="space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">
-              Continue studying
-            </h2>
+            <h2 className="font-[family-name:var(--font-epilogue)] text-[15px] font-black text-black">Continue studying</h2>
             <Link href="/dashboard/library" className="text-[13px] font-bold text-gray-500 hover:text-gray-700">
               View library →
             </Link>
