@@ -497,7 +497,7 @@ export function TopicPackClient({
 
         <TabsContent value="quiz" className="mt-0">
           <Card className="rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
-            <CardContent className="space-y-6 px-6 py-10">
+            <CardContent className="space-y-6 px-5 py-5">
               {!allSectionsComplete ? (
                 <div className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed border-gray-400 bg-gray-50 px-6 py-12 text-center">
                   <Lock className="size-10 text-gray-600" aria-hidden />
@@ -626,8 +626,8 @@ export function TopicPackClient({
                   ) : null}
                 </div>
               ) : (
-                <div className="mx-auto max-w-xl space-y-6">
-                  <p className="text-sm font-semibold text-gray-600">
+                <div className="mx-auto max-w-xl space-y-4">
+                  <p className="text-xs font-semibold text-gray-600">
                     Question {quizQuestionIndex + 1} of {quizTotal}
                   </p>
                   {(() => {
@@ -636,12 +636,12 @@ export function TopicPackClient({
                     return (
                       <>
                         <h3
-                          className="text-lg font-bold leading-snug text-black"
+                          className="text-base font-bold leading-snug text-black"
                           style={{ textTransform: "none" }}
                         >
                           {q.question}
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2">
                           {q.options.map((opt) => {
                             const picked = quizSelected === opt;
                             const isCorrect = opt === q.correct_answer;
@@ -653,7 +653,7 @@ export function TopicPackClient({
                                   disabled={quizRevealed}
                                   onClick={() => handleSelectAnswer(opt)}
                                   className={cn(
-                                    "w-full rounded-xl border-2 px-4 py-3 text-left text-base font-medium transition-colors",
+                                    "w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm font-medium transition-colors",
                                     !showResult && "border-black bg-white hover:bg-gray-50",
                                     showResult && isCorrect && "border-black bg-[#DDF0D9]",
                                     showResult && picked && !isCorrect && "border-black bg-[#FCE8D9]"
@@ -667,7 +667,7 @@ export function TopicPackClient({
                         </ul>
                         {quizRevealed ? (
                           <>
-                            <div className="rounded-xl border-2 border-black bg-[#FEF9C3] px-4 py-3 text-base text-gray-900">
+                            <div className="rounded-xl border-2 border-black bg-[#FEF9C3] px-3 py-2.5 text-sm text-gray-900">
                               <p className="font-bold text-black">
                                 {quizSelected === q.correct_answer ? "Correct." : "Incorrect."}
                               </p>

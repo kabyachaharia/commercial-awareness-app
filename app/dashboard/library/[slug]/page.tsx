@@ -166,7 +166,7 @@ export default async function TopicPackPage({ params }: PageProps) {
   };
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-8 px-4 pb-16 pt-12 sm:px-6">
+    <section className="mx-auto w-full max-w-3xl space-y-4 px-4 pb-8 pt-6 sm:px-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Button asChild variant="ghost" className="-ml-3 h-auto justify-start px-3 py-1 text-sm text-gray-600 hover:text-black">
@@ -180,7 +180,7 @@ export default async function TopicPackPage({ params }: PageProps) {
             {pack.title?.trim() ? pack.title : "Topic pack"}
           </h1>
           {pack.description?.trim() ? (
-            <p className="max-w-2xl text-base leading-relaxed text-gray-600">{pack.description}</p>
+            <p className="max-w-2xl text-sm leading-relaxed text-gray-600">{pack.description}</p>
           ) : null}
         </div>
       </div>
