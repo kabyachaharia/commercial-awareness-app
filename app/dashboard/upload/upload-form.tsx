@@ -6,7 +6,7 @@ import { DragEvent, FormEvent, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -131,7 +131,7 @@ export function UploadForm() {
 
   if (uploadSuccess) {
     return (
-      <Card className="rounded-xl bg-white">
+      <Card className="rounded-2xl border-[1.5px] border-black bg-white shadow-none">
         <CardContent className="flex flex-col items-center gap-4 px-6 py-10 text-center">
           <div className="flex size-16 items-center justify-center rounded-full bg-[#D1FAE5]">
             <Check className="size-8 text-emerald-600" />
@@ -147,7 +147,7 @@ export function UploadForm() {
                 router.push(`/dashboard/materials/${uploadSuccess.id}`);
                 router.refresh();
               }}
-              className="h-11 px-6"
+              className="h-11 rounded-xl border-[1.5px] border-black bg-[#FACC15] px-6 text-sm font-semibold text-black hover:bg-[#EAB308]"
             >
               Generate Study Materials
             </Button>
@@ -158,7 +158,7 @@ export function UploadForm() {
                 setTitle("");
                 setFile(null);
               }}
-              className="h-11 px-6"
+              className="h-11 rounded-xl border-[1.5px] border-black bg-white px-6 text-sm font-semibold text-black hover:bg-gray-50"
             >
               Upload Another
             </Button>
@@ -169,12 +169,9 @@ export function UploadForm() {
   }
 
   return (
-    <Card className="rounded-xl bg-white">
+    <Card className="rounded-2xl border-[1.5px] border-black bg-white shadow-none">
       <CardHeader className="space-y-1 pb-4">
-        <CardTitle className="text-xl">New material</CardTitle>
-        <CardDescription className="text-gray-600">
-          Supported formats: PDF, DOCX, TXT (max 10MB).
-        </CardDescription>
+        <CardTitle className="text-base font-semibold">New material</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -206,13 +203,15 @@ export function UploadForm() {
               onMouseLeave={() => setIsHoveringDrop(false)}
               className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-7 text-center transition-all duration-300 ${
                 isDragging
-                  ? "border-solid border-black bg-[#FEF08A] shadow-inner"
+                  ? "border-[1.5px] border-solid border-black bg-[#FEF08A] shadow-inner rounded-2xl"
                   : dropZoneInteractive
-                    ? "border-solid border-black bg-[#FEF08A]/70 shadow-sm"
-                    : "border-dashed border-black bg-white hover:border-solid hover:bg-[#FEF08A]/50"
+                    ? "border-[1.5px] border-solid border-black bg-[#FEF08A]/70 shadow-sm rounded-2xl"
+                    : "border-[1.5px] border-dashed border-black bg-white hover:border-solid hover:bg-[#FEF08A]/50 rounded-2xl"
               }`}
             >
-              <UploadCloud className={`mb-3 size-10 ${dropZoneInteractive ? "text-black" : "text-gray-700"}`} />
+              <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-xl bg-[#E8E4F7]">
+                <UploadCloud className="size-5 text-[#6B5CE7]" />
+              </div>
               <p className="text-sm font-bold text-black">{fileLabel}</p>
               <p className="mt-1 text-xs text-gray-500">PDF, DOCX, TXT up to 10MB</p>
               <input
@@ -234,7 +233,11 @@ export function UploadForm() {
 
           {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
 
-          <Button type="submit" className="h-11 w-full text-sm sm:text-base" disabled={isUploading}>
+          <Button
+            type="submit"
+            className="h-11 w-full rounded-xl border-[1.5px] border-black bg-[#FACC15] text-sm font-semibold text-black hover:bg-[#EAB308] sm:text-base"
+            disabled={isUploading}
+          >
             {isUploading ? (
               <>
                 <Loader2 className="mr-2 size-4 animate-spin" />
