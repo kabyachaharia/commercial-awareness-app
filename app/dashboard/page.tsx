@@ -319,38 +319,45 @@ export default async function DashboardHomePage() {
       </div>
 
       <div className="space-y-6">
-        <header className="space-y-2">
-          <h2 className="text-3xl font-black uppercase tracking-tight text-black sm:text-4xl">
-            Continue Studying
-          </h2>
-          <p className="max-w-xl text-base text-gray-600">Pick up where you left off</p>
-        </header>
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-[15px] font-medium text-black">Continue studying</h2>
+          <Link
+            href="/dashboard/library"
+            className="text-[13px] text-gray-500 hover:text-gray-700"
+          >
+            View library →
+          </Link>
+        </div>
 
         {!anyPackStarted ? (
-          <div className="rounded-xl border-2 border-black bg-white px-6 py-12 text-center shadow-[8px_8px_0_0_#000]">
-            <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-xl border-2 border-black bg-[#BBF7D0]">
-              <BookOpen className="size-9 text-black" strokeWidth={1.5} aria-hidden />
+          <div className="rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center">
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-[#E8E4F7]">
+              <BookOpen className="size-6 text-[#6B5CE7]" strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-black uppercase text-black">Start your first topic</h3>
-            <p className="mx-auto mt-3 max-w-md text-gray-600">
+            <h3 className="text-base font-medium text-black">Start your first topic</h3>
+            <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
               Explore guided topic packs in the library — lessons, quizzes, and flashcards in one place.
             </p>
-            <Button asChild className="mt-6">
+            <Button asChild className="mt-5 rounded-xl bg-black px-5 text-sm font-medium text-white hover:bg-gray-800">
               <Link href="/dashboard/library">Browse topic library</Link>
             </Button>
           </div>
         ) : continueCards.length === 0 ? (
-          <div className="rounded-xl border-2 border-black bg-white px-6 py-10 text-center shadow-[8px_8px_0_0_#000]">
-            <p className="text-gray-600">
+          <div className="rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center">
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-[#DDF0D9]">
+              <CheckCircle2 className="size-6 text-[#2E7D32]" strokeWidth={1.5} />
+            </div>
+            <h3 className="text-base font-medium text-black">All caught up</h3>
+            <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
               You&apos;re up to date on your topic packs. Explore the library for more.
             </p>
-            <Button asChild className="mt-5">
+            <Button asChild className="mt-5 rounded-xl bg-black px-5 text-sm font-medium text-white hover:bg-gray-800">
               <Link href="/dashboard/library">Go to topic library</Link>
             </Button>
           </div>
         ) : (
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {continueCards.map(({ pack, variant }) => {
+            {continueCards.map(({ pack, variant }, index) => {
               const title = pack.title ?? "Untitled pack";
               const slug = pack.slug ?? "";
               const progress = progressByPackId.get(pack.id);
@@ -386,39 +393,57 @@ export default async function DashboardHomePage() {
                 completedState = true;
               }
 
+              const iconBgClasses = ["bg-[#FCE8D9]", "bg-[#E8E4F7]", "bg-[#DDF0D9]"];
+              const iconBgClass = iconBgClasses[index % iconBgClasses.length] ?? "bg-[#FCE8D9]";
+
               return (
                 <li key={pack.id}>
-                  <Link
-                    href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"}
-                    className="group block h-full"
-                  >
-                    <Card className="h-full rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000] transition-all duration-200 group-hover:-translate-y-0.5">
-                      <CardHeader className="space-y-2 border-b-2 border-black p-4 pb-3">
-                        <CardTitle className="text-lg font-black uppercase text-black">
-                          {pack.icon ? `${pack.icon} ` : ""}
-                          {title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-3">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            {completedState ? (
-                              <CheckCircle2 className="size-4 shrink-0 text-emerald-600" aria-hidden />
-                            ) : null}
-                            <p className="text-sm font-semibold text-black">{primaryLabel}</p>
-                          </div>
-                          {secondaryLabel ? (
-                            <p className="text-xs font-medium text-gray-700">{secondaryLabel}</p>
-                          ) : null}
-                          <div className="mt-2 h-2 w-full overflow-hidden rounded-full border-2 border-black bg-white">
-                            <div
-                              className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
-                              style={{ width: `${barPercent}%` }}
-                            />
-                          </div>
+                  <Link href={slug ? `/dashboard/library/${slug}` : "/dashboard/library"} className="group block h-full">
+                    <div className="h-full rounded-2xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
+                      <div className="mb-2.5 flex items-center gap-2.5">
+                        <div className={`flex size-9 items-center justify-center rounded-[10px] ${iconBgClass} text-base`}>
+                          {pack.icon ?? "📚"}
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-[13px] font-medium text-black">{title}</p>
+                          <p
+                            className={`text-[11px] ${
+                              completedState
+                                ? "text-[#2E7D32]"
+                                : primaryLabel === "Ready to quiz"
+                                  ? "text-[#E07830]"
+                                  : primaryLabel === "In progress"
+                                    ? "text-[#1565C0]"
+                                    : "text-gray-500"
+                            }`}
+                          >
+                            {primaryLabel}
+                            {secondaryLabel && !completedState ? ` · ${secondaryLabel}` : ""}
+                            {completedState && quizScore != null ? ` · Quiz: ${quizScore}%` : ""}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="h-1 flex-1 overflow-hidden rounded-full bg-gray-100">
+                          <div
+                            className="h-full rounded-full transition-all duration-300"
+                            style={{
+                              width: `${barPercent}%`,
+                              backgroundColor: completedState
+                                ? "#4CAF50"
+                                : primaryLabel === "Ready to quiz"
+                                  ? "#E07830"
+                                  : primaryLabel === "In progress"
+                                    ? "#1565C0"
+                                    : "#E0E0E0",
+                            }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-gray-400">
+                          {clampInt(progress?.sections_completed)}/{totalSections}
+                        </span>
+                      </div>
+                    </div>
                   </Link>
                 </li>
               );
