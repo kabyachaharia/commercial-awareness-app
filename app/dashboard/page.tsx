@@ -165,6 +165,7 @@ export default async function DashboardHomePage() {
   let packsCompleted = 0;
   let quizScoreSum = 0;
   let quizScoreCount = 0;
+  let totalSectionsCompleted = 0;
 
   for (const pack of packs) {
     const progress = progressByPackId.get(pack.id);
@@ -178,6 +179,7 @@ export default async function DashboardHomePage() {
       quizScoreSum += progress!.quiz_best_score as number;
       quizScoreCount += 1;
     }
+    totalSectionsCompleted += clampInt(progressByPackId.get(pack.id)?.sections_completed);
   }
 
   const averageQuizScore = quizScoreCount > 0 ? quizScoreSum / quizScoreCount : null;
@@ -241,27 +243,77 @@ export default async function DashboardHomePage() {
     .slice(0, 3);
 
   return (
-    <section className="mx-auto w-full max-w-5xl space-y-12 pt-16">
+    <section className="mx-auto w-full max-w-5xl space-y-8 pt-10">
       <CheckoutSuccessBanner />
+      <div>
+        <h1 className="text-[22px] font-medium text-black">Welcome back</h1>
+        <p className="text-sm text-gray-500">Here&apos;s your study snapshot</p>
+      </div>
 
-      <div className="space-y-4">
-        <header className="space-y-1">
-          <p className="text-xs font-black uppercase tracking-wide text-gray-600">Study overview</p>
-        </header>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
-            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Packs Started</p>
-            <p className="mt-1 text-2xl font-black text-black">{packsStarted}</p>
+      <div className="grid gap-3.5 sm:grid-cols-3">
+        <div className="rounded-2xl bg-[#E8E4F7] px-5 py-5">
+          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+            <BookOpen className="size-5 text-[#6B5CE7]" strokeWidth={1.5} />
           </div>
-          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
-            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Packs Completed</p>
-            <p className="mt-1 text-2xl font-black text-black">{packsCompleted}</p>
+          <p className="text-[15px] font-medium text-[#2D2459]">{packsStarted} packs started</p>
+          <div className="mt-3 flex items-center gap-3.5 border-t border-[#6B5CE7]/20 pt-2.5">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="size-3.5 text-[#6B5CE7]" />
+              <span className="text-xs text-[#4A3D8F]">{totalSectionsCompleted} sections</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="size-3.5 text-[#6B5CE7]" />
+              <span className="text-xs text-[#4A3D8F]">{quizScoreCount} quizzes</span>
+            </div>
           </div>
-          <div className="rounded-xl border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_0_#000]">
-            <p className="text-xs font-black uppercase tracking-wide text-gray-600">Average Quiz Score</p>
-            <p className="mt-1 text-2xl font-black text-black">
-              {averageQuizScore != null ? `${Math.round(Math.max(0, Math.min(100, averageQuizScore)))}%` : "—"}
-            </p>
+        </div>
+
+        <div className="rounded-2xl bg-[#FCE8D9] px-5 py-5">
+          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+            <CheckCircle2 className="size-5 text-[#E07830]" strokeWidth={1.5} />
+          </div>
+          <p className="text-[15px] font-medium text-[#6B3A14]">{packsCompleted} packs completed</p>
+          <div className="mt-3 flex items-center gap-3.5 border-t border-[#E07830]/20 pt-2.5">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="size-3.5 text-[#E07830]" />
+              <span className="text-xs text-[#8B4D22]">{packsCompleted * 12} sections</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="size-3.5 text-[#E07830]" />
+              <span className="text-xs text-[#8B4D22]">
+                {averageQuizScore != null ? `${Math.round(averageQuizScore)}% avg` : "—"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-[#DDF0D9] px-5 py-5">
+          <div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-white">
+            <svg className="size-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22 12h-4l-3 9L9 3l-3 9H2"
+                stroke="#4CAF50"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <p className="text-[15px] font-medium text-[#1B5E20]">
+            {averageQuizScore != null ? `${Math.round(averageQuizScore)}% avg quiz score` : "No quizzes yet"}
+          </p>
+          <div className="mt-3 flex items-center gap-3.5 border-t border-[#4CAF50]/20 pt-2.5">
+            <div className="flex items-center gap-1.5">
+              <svg className="size-3.5" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M18 20V10M12 20V4M6 20v-6"
+                  stroke="#4CAF50"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="text-xs text-[#2E7D32]">{quizScoreCount > 1 ? "Improving" : "Keep going"}</span>
+            </div>
           </div>
         </div>
       </div>
