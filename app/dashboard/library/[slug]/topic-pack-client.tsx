@@ -388,9 +388,9 @@ export function TopicPackClient({
                         aria-label={label}
                         aria-current={current ? "step" : undefined}
                         className={cn(
-                          "flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full border border-black px-2 text-sm font-bold tabular-nums transition-[box-shadow,opacity,background-color,color]",
+                          "flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full border-2 border-black px-2 text-sm font-bold tabular-nums transition-[box-shadow,opacity,background-color,color]",
                           current
-                            ? "bg-[#FCE8D9] text-[#E07830] border-black"
+                            ? "bg-[#FCE8D9] border-2 border-black text-[#E07830]"
                             : done
                               ? "bg-[#DDF0D9] text-[#2E7D32]"
                               : "bg-gray-200 text-gray-600",
