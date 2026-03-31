@@ -752,19 +752,21 @@ export function TopicPackClient({
 
         <TabsContent value="flashcards" className="mt-0">
           <Card className="rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
-            <CardHeader className="border-b-2 border-black px-6 py-5 text-center">
-              <CardTitle className="text-lg font-black uppercase">Flashcards</CardTitle>
-              <CardDescription className="text-base text-gray-600">Tap a card to flip</CardDescription>
+            <CardHeader className="border-b-2 border-black px-4 py-3 text-center">
+              <CardTitle className="text-base font-bold" style={{ textTransform: "none" }}>
+                Flashcards
+              </CardTitle>
+              <CardDescription className="text-sm text-gray-600">Tap a card to flip</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6 px-6 py-8">
+            <CardContent className="space-y-3 px-4 py-4">
               {flashcards.length === 0 ? (
                 <p className="text-center text-base text-gray-600">No flashcards for this pack yet.</p>
               ) : currentCard ? (
                 <>
-                  <p className="text-center text-sm font-medium text-gray-600">
+                  <p className="text-center text-xs font-medium text-gray-600">
                     Card {cardIndex + 1} of {flashcards.length}
                   </p>
-                  <div className="mx-auto h-2 max-w-xs overflow-hidden rounded-full border-2 border-black bg-white">
+                  <div className="mx-auto h-1.5 max-w-xs overflow-hidden rounded-full border-2 border-black bg-white">
                     <div
                       className="h-full rounded-full bg-[#FACC15] transition-all duration-300"
                       style={{ width: `${((cardIndex + 1) / flashcards.length) * 100}%` }}
@@ -773,7 +775,7 @@ export function TopicPackClient({
                   <div className="mx-auto w-full max-w-lg [perspective:1200px]">
                     <button
                       type="button"
-                      className="relative aspect-[4/3] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
+                      className="relative aspect-[16/9] w-full cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
                       onClick={() => setCardFlipped((f) => !f)}
                       aria-label={cardFlipped ? "Show front" : "Show answer"}
                     >
@@ -783,11 +785,11 @@ export function TopicPackClient({
                           cardFlipped && "[transform:rotateY(180deg)]"
                         )}
                       >
-                        <div className="absolute inset-0 flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] sm:min-h-[260px]">
-                          <p className="text-lg font-black uppercase leading-relaxed text-black sm:text-xl">{currentCard.front}</p>
+                        <div className="absolute inset-0 flex min-h-[140px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] sm:min-h-[160px]">
+                          <p className="text-base font-black uppercase leading-relaxed text-black sm:text-lg">{currentCard.front}</p>
                         </div>
-                        <div className="absolute inset-0 flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[260px]">
-                          <p className="text-base leading-relaxed text-gray-800 sm:text-lg">{currentCard.back}</p>
+                        <div className="absolute inset-0 flex min-h-[140px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-6 py-6 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[160px]">
+                          <p className="text-sm leading-relaxed text-gray-800 sm:text-base">{currentCard.back}</p>
                         </div>
                       </div>
                     </button>
@@ -798,23 +800,23 @@ export function TopicPackClient({
                         type="button"
                         variant="outline"
                         size="icon"
-                        className="size-10 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        className="size-9 rounded-full border-2 border-black bg-white hover:bg-gray-50"
                         onClick={goPrevCard}
                         disabled={cardIndex === 0}
                         aria-label="Previous card"
                       >
-                        <ChevronLeft className="size-5" />
+                        <ChevronLeft className="size-4" />
                       </Button>
                       <Button
                         type="button"
                         variant="outline"
                         size="icon"
-                        className="size-10 rounded-full border-2 border-black bg-white hover:bg-gray-50"
+                        className="size-9 rounded-full border-2 border-black bg-white hover:bg-gray-50"
                         onClick={goNextCard}
                         disabled={cardIndex >= flashcards.length - 1}
                         aria-label="Next card"
                       >
-                        <ChevronRight className="size-5" />
+                        <ChevronRight className="size-4" />
                       </Button>
                     </div>
                     <button
