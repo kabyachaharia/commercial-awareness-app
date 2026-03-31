@@ -678,7 +678,7 @@ export function TopicPackClient({
                             <div className="mt-4 flex items-center justify-between">
                               <button
                                 type="button"
-                                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black disabled:opacity-30"
+                                className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black disabled:opacity-30"
                                 onClick={() => setQuizQuestionIndex((i) => Math.max(0, i - 1))}
                                 disabled={quizQuestionIndex === 0}
                               >
@@ -687,7 +687,7 @@ export function TopicPackClient({
                               </button>
                               <button
                                 type="button"
-                                className="rounded-full border-2 border-black bg-[#FACC15] px-5 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#EAB308]"
+                                className="cursor-pointer rounded-full border-2 border-black bg-[#FACC15] px-5 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#EAB308]"
                                 onClick={() => {
                                   try {
                                     const quizState = {
@@ -708,7 +708,7 @@ export function TopicPackClient({
                               </button>
                               <button
                                 type="button"
-                                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black"
+                                className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black"
                                 onClick={handleQuizNext}
                               >
                                 {quizQuestionIndex + 1 >= quizTotal ? "See results" : "Next"}
