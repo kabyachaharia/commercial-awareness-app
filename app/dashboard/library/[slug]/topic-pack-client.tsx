@@ -328,7 +328,7 @@ export function TopicPackClient({
             onClick={() => setActiveTab("learn")}
             className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "learn"
-                ? "border-[#E07830] bg-[#FCE8D9] text-[#E07830]"
+                ? "border-black bg-[#FCE8D9] text-[#E07830]"
                 : "border-black bg-white text-gray-400"
             }`}
           >
@@ -340,7 +340,7 @@ export function TopicPackClient({
             disabled={!allSectionsComplete}
             className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "quiz"
-                ? "border-[#6B5CE7] bg-[#E8E4F7] text-[#6B5CE7]"
+                ? "border-black bg-[#E8E4F7] text-[#6B5CE7]"
                 : "border-black bg-white text-gray-400"
             } ${!allSectionsComplete ? "cursor-not-allowed opacity-50" : ""}`}
           >
@@ -351,7 +351,7 @@ export function TopicPackClient({
             onClick={() => setActiveTab("flashcards")}
             className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
               activeTab === "flashcards"
-                ? "border-[#4CAF50] bg-[#DDF0D9] text-[#2E7D32]"
+                ? "border-black bg-[#DDF0D9] text-[#2E7D32]"
                 : "border-black bg-white text-gray-400"
             }`}
           >
@@ -389,10 +389,10 @@ export function TopicPackClient({
                         aria-current={current ? "step" : undefined}
                         className={cn(
                           "flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full border border-black px-2 text-sm font-bold tabular-nums transition-[box-shadow,opacity,background-color,color]",
-                          done && !current
-                            ? "bg-[#DDF0D9] text-[#2E7D32]"
+                          current
+                            ? "bg-[#FCE8D9] text-[#E07830] border-black"
                             : done
-                              ? "bg-emerald-200 text-emerald-950"
+                              ? "bg-[#DDF0D9] text-[#2E7D32]"
                               : "bg-gray-200 text-gray-600",
                           current && "ring-2 ring-black ring-offset-2 ring-offset-white",
                           !navigable && "cursor-not-allowed opacity-40"
