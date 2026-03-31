@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpCircle, BookOpen, Home, LogOut, Upload } from "lucide-react";
+import { BookOpen, FileText, Home, LogOut, UploadCloud } from "lucide-react";
+import { ArrowUpCircle } from "lucide-react";
 
 import { signOut } from "./actions";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
   { href: "/dashboard/library", label: "Library", icon: BookOpen },
-  { href: "/dashboard/upload", label: "My Documents", icon: Upload },
+  { href: "/dashboard/upload", label: "Upload", icon: UploadCloud },
+  { href: "/dashboard/documents", label: "My Documents", icon: FileText },
 ] as const;
 
 export function DashboardSidebarContent({
