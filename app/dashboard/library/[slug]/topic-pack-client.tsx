@@ -547,52 +547,56 @@ export function TopicPackClient({
                         const isCorrect = userAnswer === q.correct_answer;
 
                         const icon = isCorrect ? (
-                          <Check className="size-5 text-emerald-700" aria-hidden />
+                          <Check className="size-3 text-[#2E7D32]" aria-hidden />
                         ) : (
-                          <X className="size-5 text-red-700" aria-hidden />
+                          <X className="size-3 text-[#E07830]" aria-hidden />
                         );
 
                         const answerBg = isCorrect ? "bg-[#DDF0D9]" : "bg-[#FCE8D9]";
 
                         return (
                           <div className="flex items-stretch gap-4">
-                            <article className="flex-1 rounded-xl border-2 border-black bg-white px-5 py-4">
+                            <article className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-start gap-3">
-                                  <div className="flex size-9 items-center justify-center rounded-lg border-2 border-black bg-white">
+                                  <div
+                                    className={`flex size-6 items-center justify-center rounded-full ${
+                                      isCorrect ? "bg-[#DDF0D9]" : "bg-[#FCE8D9]"
+                                    }`}
+                                  >
                                     {icon}
                                   </div>
                                   <div className="min-w-0">
-                                    <p className="text-sm font-black uppercase tracking-wide text-gray-600">
-                                      Question {index + 1}
-                                    </p>
-                                    <p className="mt-1 text-base font-bold leading-relaxed text-black">{q.question}</p>
+                                    <p className="text-[12px] font-medium text-gray-500">Question {index + 1}</p>
+                                    <p className="mt-1 text-[14px] font-medium leading-relaxed text-black">{q.question}</p>
                                   </div>
                                 </div>
                               </div>
 
                               <div className="mt-4 space-y-3">
                                 <div className="space-y-1">
-                                  <p className="text-sm font-semibold text-gray-700">Your selected answer</p>
+                                  <p className="text-[11px] font-medium text-gray-500">Your selected answer</p>
                                   <div
-                                    className={`inline-block rounded-lg border-2 border-black ${answerBg} px-3 py-2 text-sm font-bold text-black`}
+                                    className={`inline-block rounded-lg ${answerBg} px-3 py-2 text-[13px] font-medium ${
+                                      isCorrect ? "text-[#2E7D32]" : "text-[#E07830]"
+                                    }`}
                                   >
-                                    {userAnswer ?? "—"}
+                                    {userAnswer ?? "No answer"}
                                   </div>
                                 </div>
 
                                 {!isCorrect ? (
                                   <div className="space-y-1">
-                                    <p className="text-sm font-semibold text-gray-700">Correct answer</p>
-                                    <div className="inline-block rounded-lg border-2 border-black bg-[#DDF0D9] px-3 py-2 text-sm font-bold text-black">
+                                    <p className="text-[11px] font-medium text-gray-500">Correct answer</p>
+                                    <div className="inline-block rounded-lg bg-[#DDF0D9] px-3 py-2 text-[13px] font-medium text-[#2E7D32]">
                                       {q.correct_answer}
                                     </div>
                                   </div>
                                 ) : null}
 
                                 <div className="space-y-1">
-                                  <p className="text-sm font-semibold text-gray-700">Explanation</p>
-                                  <p className="text-sm leading-relaxed text-gray-700">{q.explanation}</p>
+                                  <p className="text-[11px] font-medium text-gray-500">Explanation</p>
+                                  <p className="text-[13px] leading-relaxed text-gray-500">{q.explanation}</p>
                                 </div>
                               </div>
 
