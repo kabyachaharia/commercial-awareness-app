@@ -730,7 +730,6 @@ export function TopicPackClient({
               </Button>
               <Button
                 type="button"
-                variant="outline"
                 onClick={handleSaveAttempt}
                 disabled={quizSaving || quizSavedOnce}
                 className="h-11 flex-1 rounded-full border-2 border-black bg-[#FACC15] text-[14px] font-semibold text-black hover:bg-[#EAB308] shadow-none sm:w-auto"
@@ -739,7 +738,6 @@ export function TopicPackClient({
               </Button>
               <Button
                 type="button"
-                variant="outline"
                 onClick={() => setActiveTab("learn")}
                 className="h-11 flex-1 rounded-full border-2 border-black bg-[#FCE8D9] text-[14px] font-medium text-black hover:bg-[#F5D5C0] shadow-none sm:w-auto"
               >
