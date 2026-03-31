@@ -310,7 +310,7 @@ export function TopicPackClient({
   return (
     <div className="space-y-2">
       {allSectionsComplete && keyTakeaways.length > 0 ? (
-        <Card className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
+        <Card className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-none">
           <button
             type="button"
             onClick={() => setTakeawaysOpen((o) => !o)}
