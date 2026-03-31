@@ -322,17 +322,42 @@ export function TopicPackClient({
         onValueChange={(v) => setActiveTab(v as "learn" | "quiz" | "flashcards")}
         className="w-full gap-6"
       >
-        <TabsList variant="line" className="h-auto w-full flex-wrap justify-start gap-1 border-b-2 border-black bg-transparent p-0 pb-0">
-          <TabsTrigger value="learn" className="rounded-t-lg border-2 border-b-0 border-black px-5 py-2.5 text-base data-active:bg-white">
+        <div className="flex gap-1.5">
+          <button
+            type="button"
+            onClick={() => setActiveTab("learn")}
+            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+              activeTab === "learn"
+                ? "border-[#E07830] bg-[#FCE8D9] text-[#E07830]"
+                : "border-black bg-white text-gray-400"
+            }`}
+          >
             Learn
-          </TabsTrigger>
-          <TabsTrigger value="quiz" className="rounded-t-lg border-2 border-b-0 border-black px-5 py-2.5 text-base data-active:bg-white">
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("quiz")}
+            disabled={!allSectionsComplete}
+            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+              activeTab === "quiz"
+                ? "border-[#6B5CE7] bg-[#E8E4F7] text-[#6B5CE7]"
+                : "border-black bg-white text-gray-400"
+            } ${!allSectionsComplete ? "cursor-not-allowed opacity-50" : ""}`}
+          >
             Quiz
-          </TabsTrigger>
-          <TabsTrigger value="flashcards" className="rounded-t-lg border-2 border-b-0 border-black px-5 py-2.5 text-base data-active:bg-white">
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("flashcards")}
+            className={`flex-1 rounded-full border-2 px-4 py-2.5 text-[15px] font-medium transition-colors ${
+              activeTab === "flashcards"
+                ? "border-[#4CAF50] bg-[#DDF0D9] text-[#2E7D32]"
+                : "border-black bg-white text-gray-400"
+            }`}
+          >
             Flashcards
-          </TabsTrigger>
-        </TabsList>
+          </button>
+        </div>
 
         <TabsContent value="learn" className="mt-0 text-base">
           <Card className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
