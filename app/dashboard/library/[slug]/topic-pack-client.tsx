@@ -555,7 +555,7 @@ export function TopicPackClient({
                         const answerBg = isCorrect ? "bg-[#DDF0D9]" : "bg-[#FCE8D9]";
 
                         return (
-                          <div className="flex items-stretch gap-4">
+                          <div>
                             <article className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-start gap-3">
