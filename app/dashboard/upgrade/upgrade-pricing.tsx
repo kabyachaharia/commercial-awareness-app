@@ -189,7 +189,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
     <section className="mx-auto w-full max-w-5xl space-y-6 pt-6">
       <header className="text-center">
         <h1
-          className="font-[family-name:var(--font-epilogue)] text-xl font-black text-black"
+          className="font-[family-name:var(--font-epilogue)] text-2xl font-black text-black"
           style={{ textTransform: "none" }}
         >
           Upgrade your plan
@@ -200,17 +200,17 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
       </header>
 
       <div className="flex justify-center">
-        <div className="inline-flex items-center gap-3 rounded-full bg-gray-100 p-1">
+        <div className="inline-flex items-center gap-3 rounded-full border-2 border-black p-1">
           <button
             type="button"
-            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "monthly" ? "bg-white text-black shadow-sm" : "text-gray-500 hover:text-black"}`}
+            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "monthly" ? "bg-black text-white" : "bg-white text-black"}`}
             onClick={() => setBillingPeriod("monthly")}
           >
             Monthly
           </button>
           <button
             type="button"
-            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "yearly" ? "bg-white text-black shadow-sm" : "text-gray-500 hover:text-black"}`}
+            className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors ${billingPeriod === "yearly" ? "bg-black text-white" : "bg-white text-black"}`}
             onClick={() => setBillingPeriod("yearly")}
           >
             Yearly
@@ -246,38 +246,38 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           const isStudent = plan.key === "student";
           const isPro = plan.key === "pro";
 
-          const cardBg = isStudent ? "bg-[#E8E4F7]" : isPro ? "bg-[#FFF8E1]" : "bg-white";
-          const cardBorder = isStudent ? "border-2 border-[#6B5CE7]" : "border border-gray-200";
-          const labelColor = isStudent ? "text-[#4A3D8F]" : isPro ? "text-[#854F0B]" : "text-gray-500";
-          const priceColor = isStudent ? "text-[#2D2459]" : isPro ? "text-[#633806]" : "text-black";
-          const subColor = isStudent ? "text-[#6B5CE7]" : isPro ? "text-[#854F0B]" : "text-gray-500";
-          const checkColor = isStudent ? "#6B5CE7" : isPro ? "#E07830" : "#4CAF50";
-          const featureColor = isStudent ? "text-[#4A3D8F]" : isPro ? "text-[#854F0B]" : "text-gray-500";
+          const cardBg = isStudent ? "bg-[#DBEAFE]" : "bg-white";
+          const checkColor = "#000000";
 
           return (
-            <div key={plan.key} className={`relative flex flex-col rounded-2xl ${cardBg} ${cardBorder} p-6`}>
+            <div
+              key={plan.key}
+              className={`relative flex flex-col rounded-2xl border-2 border-black ${cardBg} p-6`}
+            >
               {isStudent ? (
-                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-[#6B5CE7] px-3 py-0.5 text-[10px] font-semibold text-white whitespace-nowrap">
+                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black px-3 py-0.5 text-[11px] font-semibold text-white">
                   Most popular
                 </span>
               ) : null}
 
-              <p className={`text-[11px] font-semibold uppercase tracking-wider ${labelColor}`}>{plan.name}</p>
+              <p className="text-sm font-bold uppercase tracking-wider text-black">{plan.name}</p>
 
               <div className="mt-1 mb-1">
                 <span
-                  className={`font-[family-name:var(--font-epilogue)] text-[32px] font-black ${priceColor}`}
+                  className="font-[family-name:var(--font-epilogue)] text-4xl font-black text-black"
                   style={{ textTransform: "none" }}
                 >
                   {isPaidPlan && isYearly && plan.yearlyLabel
                     ? plan.yearlyLabel.split("/")[0]
                     : plan.monthlyLabel.split("/")[0]}
                 </span>
-                {isPaidPlan ? <span className={`text-sm ${subColor}`}>/{isYearly ? "year" : "mo"}</span> : null}
+                {isPaidPlan ? (
+                  <span className="text-sm text-black">/{isYearly ? "year" : "mo"}</span>
+                ) : null}
               </div>
 
               {isPaidPlan ? (
-                <p className={`text-[12px] font-medium ${subColor} mb-4`}>
+                <p className="mb-4 text-[12px] font-medium text-gray-600">
                   {isYearly ? `${plan.monthlyLabel} equivalent` : `${plan.yearlyLabel} (${plan.yearlySavings})`}
                 </p>
               ) : (
@@ -296,7 +296,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span className={`text-[13px] ${featureColor}`}>{feature}</span>
+                    <span className="text-[13px] text-gray-700">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -305,16 +305,10 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
                 type="button"
                 disabled={actionDisabled || isLoading || pricesLoading}
                 onClick={onClick}
-                className={`mt-5 w-full rounded-[10px] px-4 py-2.5 text-[13px] font-medium transition-colors ${
-                  isStudent && !actionDisabled
-                    ? "bg-[#6B5CE7] text-white hover:bg-[#534AB7]"
-                    : isPro && !actionDisabled
-                      ? "bg-[#FACC15] border-[1.5px] border-black text-black hover:bg-[#EAB308]"
-                      : isStudent && actionDisabled
-                        ? "bg-[#6B5CE7] text-white opacity-80"
-                        : actionDisabled
-                          ? "border border-gray-200 bg-white text-gray-500"
-                          : "bg-black text-white hover:bg-gray-800"
+                className={`mt-5 w-full px-4 text-[13px] transition-colors ${
+                  actionDisabled
+                    ? "rounded-full border-2 border-gray-200 bg-gray-100 py-3 font-medium text-gray-400"
+                    : "rounded-full border-2 border-black bg-[#FACC15] py-3 font-bold text-black hover:bg-[#EAB308]"
                 }`}
               >
                 {isLoading ? "Redirecting..." : actionLabel}
