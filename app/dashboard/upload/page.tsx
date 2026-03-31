@@ -23,7 +23,7 @@ export default async function UploadPage() {
   const canUpload = userTier === "pro";
 
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-6 pt-6">
+    <section className="mx-auto flex w-full max-w-2xl flex-col justify-center space-y-6 pt-6" style={{ minHeight: "calc(100vh - 120px)" }}>
       <div className="space-y-6">
         <div className="text-center">
           <h1
