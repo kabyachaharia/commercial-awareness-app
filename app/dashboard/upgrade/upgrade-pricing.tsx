@@ -314,7 +314,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
                 onClick={onClick}
                 className={`mt-5 w-full px-4 text-[13px] transition-colors ${
                   actionDisabled
-                    ? "rounded-full border-2 border-gray-200 bg-gray-100 py-3 font-medium text-gray-400"
+                    ? "rounded-full border-2 border-black bg-[#FACC15] py-3 font-medium text-black"
                     : "rounded-full border-2 border-black bg-[#FACC15] py-3 font-bold text-black hover:bg-[#EAB308]"
                 }`}
               >
