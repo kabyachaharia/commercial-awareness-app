@@ -179,6 +179,27 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
               </button>
               <button
                 type="button"
+                className="cursor-pointer rounded-full border-2 border-black bg-[#FACC15] px-5 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#EAB308]"
+                onClick={() => {
+                  try {
+                    const quizState = {
+                      materialId,
+                      questionIndex: currentIndex,
+                      selectedAnswers,
+                      score,
+                      timestamp: Date.now(),
+                    };
+                    localStorage.setItem(`quiz-progress-material-${materialId}`, JSON.stringify(quizState));
+                    alert("Quiz progress saved! You can resume later.");
+                  } catch {
+                    alert("Could not save progress.");
+                  }
+                }}
+              >
+                Save quiz
+              </button>
+              <button
+                type="button"
                 className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-black"
                 onClick={goNext}
               >
