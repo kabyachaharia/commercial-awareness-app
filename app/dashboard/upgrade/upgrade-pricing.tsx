@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { DeleteAccountButton } from "./delete-account-button";
 
 type SubscriptionTier = "free" | "student" | "pro";
 type PaidSubscriptionTier = Exclude<SubscriptionTier, "free">;
@@ -344,6 +345,7 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           </Button>
         </div>
       ) : null}
+      <DeleteAccountButton />
     </section>
   );
 }
