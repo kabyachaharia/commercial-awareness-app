@@ -62,7 +62,7 @@ function isPackStudyingFinished(pack: TopicPackRow, progress: UserProgressRow | 
   const completed = clampInt(progress.sections_completed);
   if (total <= 0 || completed < total) return false;
   const q = progress.quiz_best_score;
-  return typeof q === "number" && Number.isFinite(q) && Math.round(q) >= 100;
+  return typeof q === "number" && Number.isFinite(q);
 }
 
 function continueCardStatus(
