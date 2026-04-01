@@ -185,8 +185,6 @@ export function TopicPackClient({
       last_studied_at: new Date().toISOString(),
     };
 
-    console.log("persistProgress: Attempting save with payload:", JSON.stringify(payload));
-
     let res = await supabase.from("user_progress").upsert(payload, { onConflict: "user_id,topic_pack_id" });
     if (res.error) {
       console.error("persistProgress: First upsert failed:", res.error.message, res.error.details, res.error.hint);
@@ -203,7 +201,6 @@ export function TopicPackClient({
         throw res.error;
       }
     }
-    console.log("persistProgress: Save successful");
   }
 
   async function handleContinueSection() {
@@ -274,9 +271,7 @@ export function TopicPackClient({
   }
 
   async function handleSaveAttempt() {
-    console.log("handleSaveAttempt called:", { quizFinished, quizFinishedScorePct });
     if (!quizFinished || quizFinishedScorePct == null) {
-      console.log("handleSaveAttempt: early return");
       return;
     }
     setQuizSaveError(null);
@@ -291,8 +286,6 @@ export function TopicPackClient({
 
     setProgress(committed);
 
-    console.log("handleSaveAttempt: committed value:", committed);
-    
     try {
       await persistProgress(committed);
       setQuizSavedOnce(true);
