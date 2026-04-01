@@ -460,8 +460,10 @@ export default async function DashboardHomePage() {
               <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-[#E8E4F7]">
                 <BookOpen className="size-6 text-[#6B5CE7]" strokeWidth={1.5} />
               </div>
-              <h3 className="text-base font-medium text-black">Start your first topic</h3>
-              <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+              <h3 className="text-base font-[family-name:var(--font-epilogue)] font-black text-black">
+                Start your first topic
+              </h3>
+              <p className="mx-auto mt-2 max-w-md text-[13px] text-gray-500">
                 Explore guided topic packs in the library — lessons, quizzes, and flashcards in one place.
               </p>
               <Button
