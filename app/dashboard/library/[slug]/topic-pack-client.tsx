@@ -51,9 +51,9 @@ const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components
   h1: ({ children }) => <h1 className="mt-6 mb-3 text-lg font-bold text-black first:mt-0">{children}</h1>,
   h2: ({ children }) => <h2 className="mt-5 mb-2 text-base font-bold text-black first:mt-0">{children}</h2>,
   h3: ({ children }) => <h3 className="mt-4 mb-2 text-lg font-semibold text-black first:mt-0">{children}</h3>,
-  p: ({ children }) => <p className="mb-3 text-base leading-relaxed text-gray-800 last:mb-0">{children}</p>,
-  ul: ({ children }) => <ul className="mb-3 list-disc space-y-1 pl-5 text-base text-gray-800">{children}</ul>,
-  ol: ({ children }) => <ol className="mb-3 list-decimal space-y-1 pl-5 text-base text-gray-800">{children}</ol>,
+  p: ({ children }) => <p className="mb-3 text-base leading-loose text-gray-600 last:mb-0">{children}</p>,
+  ul: ({ children }) => <ul className="mb-3 list-disc space-y-1 pl-5 text-base text-gray-600">{children}</ul>,
+  ol: ({ children }) => <ol className="mb-3 list-decimal space-y-1 pl-5 text-base text-gray-600">{children}</ol>,
   li: ({ children }) => <li className="leading-relaxed">{children}</li>,
   a: ({ href, children }) => (
     <a href={href} className="font-medium text-[#4F46E5] underline-offset-2 hover:underline">
@@ -450,7 +450,7 @@ export function TopicPackClient({
                           {(viewingSection.title ?? "Section").charAt(0).toUpperCase() +
                             (viewingSection.title ?? "Section").slice(1).toLowerCase()}
                         </CardTitle>
-                        <article className="rounded-xl border-2 border-gray-200 bg-gray-50/50 px-5 py-6">
+                        <article className="px-0 py-2">
                           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
                             {viewingSection.content ?? ""}
                           </ReactMarkdown>
@@ -458,13 +458,15 @@ export function TopicPackClient({
                       </div>
                       {allSectionsComplete && learnViewIndex === totalSections - 1 ? (
                         <div className="space-y-4 rounded-xl border-2 border-dashed border-black bg-[#D1FAE5]/40 px-5 py-8 text-center">
-                          <p className="text-lg font-black uppercase text-black">Congratulations</p>
-                          <p className="text-base text-gray-700">You have completed every section in this topic pack.</p>
-                          <p className="text-sm text-gray-600">Try the quiz when you are ready, or revisit any tab above.</p>
+                          <p className="text-[15px] font-black text-black" style={{ textTransform: "none" }}>
+                            Well done!
+                          </p>
+                          <p className="text-[13px] text-gray-600">You've completed every section in this topic pack.</p>
+                          <p className="text-[12px] text-gray-500">Try the quiz when you're ready, or revisit any tab above.</p>
                           <Button
                             type="button"
                             variant="outline"
-                            className="h-12 rounded-xl border-2 border-black bg-white px-6 text-base font-bold text-black shadow-[4px_4px_0_0_#000] hover:bg-gray-50"
+                            className="h-11 rounded-full border-2 border-black bg-[#FACC15] px-6 text-sm font-bold text-black shadow-none hover:bg-[#EAB308]"
                             onClick={() => setLearnViewIndex(0)}
                           >
                             Review Sections
