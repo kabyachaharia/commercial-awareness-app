@@ -11,6 +11,7 @@ type SubscriptionTier = "free" | "student" | "pro";
 type UserSubscriptionRow = {
   tier: SubscriptionTier | null;
   status: string | null;
+  cancel_at: string | null;
 };
 
 function normalizeTier(value: string | null | undefined): SubscriptionTier {
@@ -30,7 +31,7 @@ export default async function UpgradePage() {
 
   const { data: subscriptionRow } = await supabase
     .from("user_subscriptions")
-    .select("tier,status")
+    .select("tier,status,cancel_at")
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -43,6 +44,7 @@ export default async function UpgradePage() {
     <UpgradePricing
       currentTier={currentTier}
       hasActivePaidSubscription={hasActivePaidSubscription}
+      cancelAt={subscription?.cancel_at ?? null}
     />
   );
 }

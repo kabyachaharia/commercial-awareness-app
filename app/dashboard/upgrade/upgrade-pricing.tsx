@@ -1,5 +1,6 @@
 "use client";
 
+import { Calendar } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { DeleteAccountButton } from "./delete-account-button";
@@ -11,6 +12,7 @@ type BillingPeriod = "monthly" | "yearly";
 type UpgradePricingProps = {
   currentTier: SubscriptionTier;
   hasActivePaidSubscription: boolean;
+  cancelAt: string | null;
 };
 
 type PlanConfig = {
@@ -65,7 +67,22 @@ function compareTier(plan: SubscriptionTier, currentTier: SubscriptionTier) {
   return PLAN_ORDER.indexOf(plan) - PLAN_ORDER.indexOf(currentTier);
 }
 
-export function UpgradePricing({ currentTier, hasActivePaidSubscription }: UpgradePricingProps) {
+function formatCancellationAccessUntil(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const day = d.getDate();
+  const month = d.toLocaleString("en-GB", { month: "long" });
+  const year = d.getFullYear();
+  return `${day} ${month} ${year}`;
+}
+
+function isFutureCancellation(iso: string | null): boolean {
+  if (!iso) return false;
+  const end = new Date(iso);
+  return !Number.isNaN(end.getTime()) && end.getTime() > Date.now();
+}
+
+export function UpgradePricing({ currentTier, hasActivePaidSubscription, cancelAt }: UpgradePricingProps) {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>("monthly");
   const [loadingPlan, setLoadingPlan] = useState<SubscriptionTier | null>(null);
   const [portalLoading, setPortalLoading] = useState(false);
@@ -217,6 +234,19 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
           </button>
         </div>
       </div>
+
+      {isFutureCancellation(cancelAt) && cancelAt ? (
+        <div
+          className="flex items-center gap-3 rounded-xl bg-[#FEF3C7] px-4 py-3 text-sm font-medium text-[#92400E]"
+          role="status"
+        >
+          <Calendar className="h-5 w-5 shrink-0" aria-hidden />
+          <p>
+            Your subscription has been cancelled. You&apos;ll continue to have access until{" "}
+            {formatCancellationAccessUntil(cancelAt)}.
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-3.5 lg:grid-cols-3">
         {PLANS.map((plan) => {
