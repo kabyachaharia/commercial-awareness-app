@@ -33,7 +33,7 @@ export function MaterialDetailClient({
         <Button asChild variant="ghost" className="-ml-3 h-auto justify-start px-3 py-1 text-sm text-gray-600 hover:text-black">
           <Link href="/dashboard/documents">← My Documents</Link>
         </Button>
-        <h1 className="text-xl font-black tracking-tight text-black sm:text-2xl" style={{ textTransform: "none" }}>
+        <h1 className="font-[family-name:var(--font-epilogue)] text-xl font-black tracking-tight text-black sm:text-2xl" style={{ textTransform: "none" }}>
           📄 {title}
         </h1>
         <p className="text-sm text-gray-500">Uploaded {uploadDate}</p>
