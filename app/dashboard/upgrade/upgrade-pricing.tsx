@@ -331,13 +331,13 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
         </div>
       ) : null}
 
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-2 mt-10">
         {hasActivePaidSubscription ? (
           <button
             type="button"
             disabled={portalLoading}
             onClick={openPortal}
-            className="cursor-pointer rounded-full border-2 border-black bg-[#FACC15] px-7 py-2.5 text-[13px] font-bold text-black transition-colors hover:bg-[#EAB308]"
+            className="cursor-pointer rounded-full border-2 border-black bg-[#6B5CE7] px-7 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-[#534AB7]"
           >
             {portalLoading ? "Opening..." : "Manage Subscription"}
           </button>
