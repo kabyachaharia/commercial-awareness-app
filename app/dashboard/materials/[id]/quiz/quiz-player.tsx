@@ -134,7 +134,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-4 text-sm text-gray-600">
           <span>
-            Question <span className="font-semibold text-black">{currentIndex + 1}</span> of {total}
+            Question {currentIndex + 1} of {total}
           </span>
           <span className="tabular-nums text-gray-500">Score {score}/{total}</span>
         </div>
@@ -149,7 +149,9 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
       <div className="overflow-hidden rounded-xl border-2 border-black bg-white shadow-[6px_6px_0_0_#000]">
         <div className="space-y-4 p-5">
           <p className="text-xs font-medium text-gray-500">Question {currentIndex + 1} of {total}</p>
-          <h3 className="text-base font-black uppercase leading-snug text-black">{currentQuestion.question}</h3>
+          <h3 className="text-base font-black leading-snug text-black" style={{ textTransform: "none" }}>
+            {currentQuestion.question}
+          </h3>
           <ul className="space-y-2">
             {currentQuestion.options.map((option) => {
               const isCorrect = option === currentQuestion.correct_answer;
@@ -170,7 +172,7 @@ export function QuizPlayer({ materialId, questions }: QuizPlayerProps) {
                       showResult && !isCorrect && !isSelected ? "border-black/50 bg-gray-100 text-gray-500" : "",
                     ].join(" ")}
                   >
-                    {option}
+                    {String.fromCharCode(65 + currentQuestion.options.indexOf(option))}. {option}
                   </button>
                 </li>
               );
