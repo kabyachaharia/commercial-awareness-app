@@ -189,7 +189,12 @@ export default async function DashboardHomePage() {
 
   const barChartPacks = packs
     .filter((p) => !isNotStarted(progressByPackId.get(p.id)))
-    .slice(0, 5)
+    .sort((a, b) => {
+      const aScore = hasQuizScore(progressByPackId.get(a.id)) ? 1 : 0;
+      const bScore = hasQuizScore(progressByPackId.get(b.id)) ? 1 : 0;
+      return bScore - aScore;
+    })
+    .slice(0, 8)
     .map((p) => {
       const pr = progressByPackId.get(p.id);
       const completed = clampInt(pr?.sections_completed);
@@ -199,7 +204,7 @@ export default async function DashboardHomePage() {
       return { shortName, completed, total, score };
     });
 
-  const maxBarValue = Math.max(1, ...barChartPacks.map((b) => b.completed));
+  const maxBarValue = Math.max(1, ...barChartPacks.map((b) => b.total));
 
   const list = materials ?? [];
   const ids = list.map((m) => m.id);
@@ -355,7 +360,7 @@ export default async function DashboardHomePage() {
                 <span className="text-[11px] text-gray-500">Sections</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="size-2 rounded-sm bg-[#FCE8D9]" />
+                <div className="size-2 rounded-sm bg-[#6B5CE7]" />
                 <span className="text-[11px] text-gray-500">Quizzes</span>
               </div>
             </div>
@@ -368,7 +373,7 @@ export default async function DashboardHomePage() {
             <div className="flex items-end gap-3 pt-4" style={{ height: "120px" }}>
               {barChartPacks.map((bar, i) => {
                 const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 80);
-                const quizHeight = bar.score > 0 ? Math.max(6, (bar.score / 100) * 40) : 0;
+                const quizHeight = bar.score > 0 ? Math.max(12, (bar.score / 100) * 80) : 0;
                 return (
                   <div
                     key={i}
@@ -378,7 +383,7 @@ export default async function DashboardHomePage() {
                     <div className="flex w-[60%] flex-col items-stretch gap-px">
                       <div className="rounded-t bg-[#E07830]" style={{ height: `${sectionHeight}px` }} />
                       {quizHeight > 0 ? (
-                        <div className="rounded-b bg-[#FCE8D9]" style={{ height: `${quizHeight}px` }} />
+                        <div className="rounded-b bg-[#6B5CE7]" style={{ height: `${quizHeight}px` }} />
                       ) : null}
                     </div>
                     <span className="absolute bottom-0 text-[10px] text-gray-400">{bar.shortName}</span>
