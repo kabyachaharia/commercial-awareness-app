@@ -790,7 +790,7 @@ export function TopicPackClient({
                         )}
                       >
                         <div className="absolute inset-0 flex min-h-[100px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-[#FACC15] px-4 py-4 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] sm:min-h-[110px]">
-                          <p className="text-base font-black uppercase leading-relaxed text-black sm:text-lg">{currentCard.front}</p>
+                          <p className="text-base font-black leading-relaxed text-black sm:text-lg" style={{ textTransform: "none" }}>{currentCard.front}</p>
                         </div>
                         <div className="absolute inset-0 flex min-h-[100px] items-center justify-center overflow-hidden rounded-xl border-2 border-black bg-white px-4 py-4 text-center shadow-[6px_6px_0_0_#000] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:min-h-[110px]">
                           <p className="text-sm leading-relaxed text-gray-800 sm:text-base">{currentCard.back}</p>
