@@ -274,7 +274,12 @@ export function TopicPackClient({
   }
 
   async function handleSaveAttempt() {
-    if (!quizFinished || quizFinishedScorePct == null) return;
+    console.log("handleSaveAttempt called:", { quizFinished, quizFinishedScorePct });
+    if (!quizFinished || quizFinishedScorePct == null) {
+      console.log("handleSaveAttempt: early return - quiz not finished or no score");
+      return;
+    }
+    console.log("handleSaveAttempt: proceeding with save");
     setQuizSaveError(null);
     setQuizSaveConfirmation(null);
     setQuizSaving(true);
