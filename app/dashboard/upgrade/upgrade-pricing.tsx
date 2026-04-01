@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { DeleteAccountButton } from "./delete-account-button";
 
 type SubscriptionTier = "free" | "student" | "pro";
@@ -332,20 +331,19 @@ export function UpgradePricing({ currentTier, hasActivePaidSubscription }: Upgra
         </div>
       ) : null}
 
-      {hasActivePaidSubscription ? (
-        <div className="text-center">
-          <Button
+      <div className="flex flex-col items-center gap-2">
+        {hasActivePaidSubscription ? (
+          <button
             type="button"
-            variant="link"
             disabled={portalLoading}
             onClick={openPortal}
-            className="h-auto text-sm font-medium underline underline-offset-2"
+            className="cursor-pointer rounded-full border-2 border-black bg-[#FACC15] px-7 py-2.5 text-[13px] font-bold text-black transition-colors hover:bg-[#EAB308]"
           >
             {portalLoading ? "Opening..." : "Manage Subscription"}
-          </Button>
-        </div>
-      ) : null}
-      <DeleteAccountButton />
+          </button>
+        ) : null}
+        <DeleteAccountButton />
+      </div>
     </section>
   );
 }
