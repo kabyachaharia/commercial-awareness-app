@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
+import { DeleteDocumentButton } from "./delete-document-button";
 
 export const dynamic = "force-dynamic";
 
@@ -90,7 +91,8 @@ export default async function DocumentsPage() {
             return (
               <li key={material.id}>
                 <Link href={`/dashboard/materials/${material.id}`} className="group block h-full">
-                  <div className="h-full rounded-2xl border-2 border-black bg-white p-4 transition-all duration-200 hover:shadow-[4px_4px_0_0_#000]">
+                  <div className="relative h-full rounded-2xl border-2 border-black bg-white p-4 transition-all duration-200 hover:shadow-[4px_4px_0_0_#000]">
+                    <DeleteDocumentButton materialId={material.id} materialTitle={material.title} />
                     <div className="mb-2.5 flex items-center gap-2.5">
                       <div className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-[#E8E4F7]">
                         <svg
