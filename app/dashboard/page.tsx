@@ -370,7 +370,7 @@ export default async function DashboardHomePage() {
               <p className="text-sm text-gray-400">Complete your first pack to see activity</p>
             </div>
           ) : (
-            <div className="flex items-end gap-3 pt-4" style={{ height: "120px" }}>
+            <div className="flex items-end gap-2 pt-8 pb-6" style={{ height: "160px" }}>
               {barChartPacks.map((bar, i) => {
                 const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 80);
                 const quizHeight = bar.score > 0 ? Math.max(12, (bar.score / 100) * 80) : 0;
@@ -386,7 +386,9 @@ export default async function DashboardHomePage() {
                         <div className="rounded-b bg-[#6B5CE7]" style={{ height: `${quizHeight}px` }} />
                       ) : null}
                     </div>
-                    <span className="absolute bottom-0 text-[10px] text-gray-400">{bar.shortName}</span>
+                    <span className="absolute -bottom-5 left-0 right-0 truncate text-center text-[9px] text-gray-400">
+                      {bar.shortName}
+                    </span>
                   </div>
                 );
               })}
