@@ -147,7 +147,7 @@ export function UploadForm() {
                 router.push(`/dashboard/materials/${uploadSuccess.id}`);
                 router.refresh();
               }}
-              className="h-11 rounded-xl border-[1.5px] border-black bg-[#FACC15] px-6 text-sm font-semibold text-black hover:bg-[#EAB308]"
+              className="h-11 cursor-pointer rounded-xl border-[1.5px] border-black bg-[#FACC15] px-6 text-sm font-semibold text-black hover:bg-[#EAB308]"
             >
               Generate Study Materials
             </Button>
@@ -158,7 +158,7 @@ export function UploadForm() {
                 setTitle("");
                 setFile(null);
               }}
-              className="h-11 rounded-xl border-[1.5px] border-black bg-white px-6 text-sm font-semibold text-black hover:bg-gray-50"
+              className="h-11 cursor-pointer rounded-xl border-[1.5px] border-black bg-white px-6 text-sm font-semibold text-black hover:bg-gray-50"
             >
               Upload Another
             </Button>
