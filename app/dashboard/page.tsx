@@ -370,15 +370,15 @@ export default async function DashboardHomePage() {
               <p className="text-sm text-gray-400">Complete your first pack to see activity</p>
             </div>
           ) : (
-            <div className="flex items-end gap-2 pt-8 pb-6" style={{ height: "160px" }}>
+            <div className="flex items-end gap-2 overflow-hidden" style={{ height: "130px" }}>
               {barChartPacks.map((bar, i) => {
-                const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 80);
-                const quizHeight = bar.score > 0 ? Math.max(12, (bar.score / 100) * 80) : 0;
+                const sectionHeight = Math.max(8, (bar.completed / maxBarValue) * 60);
+                const quizHeight = bar.score > 0 ? Math.max(8, (bar.score / 100) * 25) : 0;
                 return (
                   <div
                     key={i}
                     className="flex flex-1 flex-col items-center gap-0.5"
-                    style={{ paddingBottom: "24px", position: "relative" }}
+                    style={{ paddingBottom: "16px", position: "relative" }}
                   >
                     <div className="flex w-[60%] flex-col items-stretch gap-px">
                       <div className="rounded-t bg-[#E07830]" style={{ height: `${sectionHeight}px` }} />
@@ -386,7 +386,7 @@ export default async function DashboardHomePage() {
                         <div className="rounded-b bg-[#6B5CE7]" style={{ height: `${quizHeight}px` }} />
                       ) : null}
                     </div>
-                    <span className="absolute -bottom-5 left-0 right-0 truncate text-center text-[9px] text-gray-400">
+                    <span className="absolute bottom-0 left-0 right-0 truncate text-center text-[9px] text-gray-400">
                       {bar.shortName}
                     </span>
                   </div>
