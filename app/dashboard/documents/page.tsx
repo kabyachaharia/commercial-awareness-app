@@ -90,7 +90,7 @@ export default async function DocumentsPage() {
             return (
               <li key={material.id}>
                 <Link href={`/dashboard/materials/${material.id}`} className="group block h-full">
-                  <div className="h-full rounded-2xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
+                  <div className="h-full rounded-2xl border-2 border-black bg-white p-4 transition-all duration-200 hover:shadow-[4px_4px_0_0_#000]">
                     <div className="mb-2.5 flex items-center gap-2.5">
                       <div className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-[#E8E4F7]">
                         <svg
@@ -113,7 +113,7 @@ export default async function DocumentsPage() {
                         </svg>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[13px] font-semibold text-black">
+                        <p className="truncate text-[13px] font-black text-black">
                           {material.title}
                         </p>
                         <p className="text-[11px] text-gray-500">
@@ -158,7 +158,7 @@ export default async function DocumentsPage() {
           <li>
             <Link href="/dashboard/upload" className="group block h-full">
               <div
-                className="flex h-full items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white p-4 transition-all duration-200 hover:border-gray-400 hover:shadow-sm"
+                className="flex h-full items-center justify-center rounded-2xl border-2 border-dashed border-black bg-white p-4 transition-all duration-200 hover:shadow-[4px_4px_0_0_#000]"
                 style={{ minHeight: "100px" }}
               >
                 <div className="text-center">
