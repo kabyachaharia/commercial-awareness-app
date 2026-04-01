@@ -292,6 +292,7 @@ export function TopicPackClient({
       return committed;
     });
 
+    console.log("handleSaveAttempt: committed value:", committed);
     if (committed) {
       try {
         await persistProgress(committed);
