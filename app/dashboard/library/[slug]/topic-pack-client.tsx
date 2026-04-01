@@ -171,7 +171,10 @@ export function TopicPackClient({
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      console.error("persistProgress: No user found");
+      return;
+    }
 
     const payload = {
       user_id: user.id,
@@ -182,13 +185,25 @@ export function TopicPackClient({
       last_studied_at: new Date().toISOString(),
     };
 
+    console.log("persistProgress: Attempting save with payload:", JSON.stringify(payload));
+
     let res = await supabase.from("user_progress").upsert(payload, { onConflict: "user_id,topic_pack_id" });
     if (res.error) {
+      console.error("persistProgress: First upsert failed:", res.error.message, res.error.details, res.error.hint);
       const { quiz_attempts: _qa, ...withoutAttempts } = payload;
       void _qa;
       res = await supabase.from("user_progress").upsert(withoutAttempts, { onConflict: "user_id,topic_pack_id" });
-      if (res.error) throw res.error;
+      if (res.error) {
+        console.error(
+          "persistProgress: Second upsert also failed:",
+          res.error.message,
+          res.error.details,
+          res.error.hint
+        );
+        throw res.error;
+      }
     }
+    console.log("persistProgress: Save successful");
   }
 
   async function handleContinueSection() {
