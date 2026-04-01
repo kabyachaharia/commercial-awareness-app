@@ -156,6 +156,10 @@ export function TopicPackClient({
         if (parsed && typeof parsed.correctCount === "number") {
           setQuizCorrectCount(parsed.correctCount);
         }
+        if (parsed && parsed.quizFinished === true) {
+          setQuizFinished(true);
+          setQuizFinishedScorePct(parsed.quizFinishedScorePct);
+        }
       }
     } catch {
       // ignore
@@ -268,6 +272,20 @@ export function TopicPackClient({
     setQuizFinishedScorePct(pct);
     setQuizSaveError(null);
     setQuizSaveConfirmation(null);
+    try {
+      const quizState = {
+        packId,
+        questionIndex: quizQuestionIndex,
+        selectedByIndex: quizSelectedByIndex,
+        correctCount: quizCorrectCount,
+        quizFinished: true,
+        quizFinishedScorePct: pct,
+        timestamp: Date.now(),
+      };
+      localStorage.setItem(`quiz-progress-${packId}`, JSON.stringify(quizState));
+    } catch {
+      // ignore
+    }
   }
 
   async function handleSaveAttempt() {
@@ -715,6 +733,8 @@ export function TopicPackClient({
                                       questionIndex: quizQuestionIndex,
                                       selectedByIndex: quizSelectedByIndex,
                                       correctCount: quizCorrectCount,
+                                      quizFinished: quizFinished,
+                                      quizFinishedScorePct: quizFinishedScorePct,
                                       timestamp: Date.now(),
                                     };
                                     localStorage.setItem(`quiz-progress-${packId}`, JSON.stringify(quizState));
