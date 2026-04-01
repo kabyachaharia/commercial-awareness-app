@@ -518,7 +518,7 @@ export default async function DashboardHomePage() {
                   secondaryLabel = `Section ${currentSection} of ${totalSections}`;
                 } else if (totalSections > 0 && completedSections >= totalSections && !hasQuizScore(progress)) {
                   primaryLabel = "Ready to quiz";
-                  secondaryLabel = "All sections complete — take the quiz!";
+                  secondaryLabel = "All sections complete";
                 } else if (quizScore != null) {
                   primaryLabel = "Completed";
                   secondaryLabel = `Quiz: ${quizScore}%`;
