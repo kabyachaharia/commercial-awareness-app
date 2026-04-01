@@ -276,31 +276,29 @@ export function TopicPackClient({
   async function handleSaveAttempt() {
     console.log("handleSaveAttempt called:", { quizFinished, quizFinishedScorePct });
     if (!quizFinished || quizFinishedScorePct == null) {
-      console.log("handleSaveAttempt: early return - quiz not finished or no score");
+      console.log("handleSaveAttempt: early return");
       return;
     }
-    console.log("handleSaveAttempt: proceeding with save");
     setQuizSaveError(null);
     setQuizSaveConfirmation(null);
     setQuizSaving(true);
 
-    let committed: ProgressState | null = null;
-    setProgress((prev) => {
-      const attempts = prev.quiz_attempts + 1;
-      const best = Math.max(prev.quiz_best_score ?? 0, quizFinishedScorePct);
-      committed = { ...prev, quiz_best_score: best, quiz_attempts: attempts };
-      return committed;
-    });
+    const committed: ProgressState = {
+      ...progress,
+      quiz_best_score: Math.max(progress.quiz_best_score ?? 0, quizFinishedScorePct),
+      quiz_attempts: progress.quiz_attempts + 1,
+    };
+
+    setProgress(committed);
 
     console.log("handleSaveAttempt: committed value:", committed);
-    if (committed) {
-      try {
-        await persistProgress(committed);
-        setQuizSavedOnce(true);
-        setQuizSaveConfirmation("Score saved!");
-      } catch {
-        setQuizSaveError("Could not save your score. You can try again in a moment.");
-      }
+    
+    try {
+      await persistProgress(committed);
+      setQuizSavedOnce(true);
+      setQuizSaveConfirmation("Score saved!");
+    } catch {
+      setQuizSaveError("Could not save your score. You can try again in a moment.");
     }
 
     setQuizSaving(false);
