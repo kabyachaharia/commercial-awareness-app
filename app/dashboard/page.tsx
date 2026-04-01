@@ -181,6 +181,10 @@ export default async function DashboardHomePage() {
     totalSectionsCompleted += clampInt(progressByPackId.get(pack.id)?.sections_completed);
   }
 
+  const completedPackSections = packs
+    .filter((pack) => isAllSectionsComplete(pack, progressByPackId.get(pack.id)))
+    .reduce((sum, pack) => sum + clampInt(pack.total_sections), 0);
+
   const averageQuizScore = quizScoreCount > 0 ? quizScoreSum / quizScoreCount : null;
 
   const barChartPacks = packs
@@ -298,7 +302,7 @@ export default async function DashboardHomePage() {
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#E07830]/20 pt-2.5">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-[#E07830]" />
-              <span className="text-xs text-[#8B4D22]">{packsCompleted * 12} sections</span>
+              <span className="text-xs text-[#8B4D22]">{completedPackSections} sections</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BookOpen className="size-3.5 text-[#E07830]" />
