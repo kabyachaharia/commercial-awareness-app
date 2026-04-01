@@ -48,8 +48,8 @@ type TopicPackClientProps = {
 };
 
 const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components"] = {
-  h1: ({ children }) => <h1 className="mt-6 mb-3 text-2xl font-bold text-black first:mt-0">{children}</h1>,
-  h2: ({ children }) => <h2 className="mt-5 mb-2 text-xl font-bold text-black first:mt-0">{children}</h2>,
+  h1: ({ children }) => <h1 className="mt-6 mb-3 text-lg font-bold text-black first:mt-0">{children}</h1>,
+  h2: ({ children }) => <h2 className="mt-5 mb-2 text-base font-bold text-black first:mt-0">{children}</h2>,
   h3: ({ children }) => <h3 className="mt-4 mb-2 text-lg font-semibold text-black first:mt-0">{children}</h3>,
   p: ({ children }) => <p className="mb-3 text-base leading-relaxed text-gray-800 last:mb-0">{children}</p>,
   ul: ({ children }) => <ul className="mb-3 list-disc space-y-1 pl-5 text-base text-gray-800">{children}</ul>,
@@ -446,7 +446,10 @@ export function TopicPackClient({
                   {viewingSection ? (
                     <CardContent className="space-y-6 px-6 py-8">
                       <div className="space-y-4">
-                        <CardTitle className="text-2xl font-bold text-black">{viewingSection.title ?? "Section"}</CardTitle>
+                        <CardTitle className="text-lg font-black text-black" style={{ textTransform: "none" }}>
+                          {(viewingSection.title ?? "Section").charAt(0).toUpperCase() +
+                            (viewingSection.title ?? "Section").slice(1).toLowerCase()}
+                        </CardTitle>
                         <article className="rounded-xl border-2 border-gray-200 bg-gray-50/50 px-5 py-6">
                           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
                             {viewingSection.content ?? ""}
