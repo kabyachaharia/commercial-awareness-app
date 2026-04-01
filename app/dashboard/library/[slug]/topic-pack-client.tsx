@@ -51,7 +51,7 @@ const markdownComponents: React.ComponentProps<typeof ReactMarkdown>["components
   h1: ({ children }) => <h1 className="mt-6 mb-3 text-lg font-bold text-black first:mt-0">{children}</h1>,
   h2: ({ children }) => <h2 className="mt-5 mb-2 text-base font-bold text-black first:mt-0">{children}</h2>,
   h3: ({ children }) => <h3 className="mt-4 mb-2 text-lg font-semibold text-black first:mt-0">{children}</h3>,
-  p: ({ children }) => <p className="mb-3 text-base leading-loose text-gray-600 last:mb-0">{children}</p>,
+  p: ({ children }) => <p className="mb-3 text-base text-gray-600 last:mb-0" style={{ lineHeight: "1.75" }}>{children}</p>,
   ul: ({ children }) => <ul className="mb-3 list-disc space-y-1 pl-5 text-base text-gray-600">{children}</ul>,
   ol: ({ children }) => <ol className="mb-3 list-decimal space-y-1 pl-5 text-base text-gray-600">{children}</ol>,
   li: ({ children }) => <li className="leading-relaxed">{children}</li>,
