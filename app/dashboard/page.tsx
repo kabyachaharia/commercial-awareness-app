@@ -282,17 +282,17 @@ export default async function DashboardHomePage() {
           <div className="mb-6 flex size-11 items-center justify-center rounded-xl bg-white">
             <BookOpen className="size-5 text-[#6B5CE7]" strokeWidth={1.5} />
           </div>
-          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-medium text-[#2D2459]">
+          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-bold text-[#2D2459]">
             {packsStarted} packs started
           </p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#6B5CE7]/20 pt-2.5">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-[#6B5CE7]" />
-              <span className="text-xs text-[#4A3D8F]">{totalSectionsCompleted} sections</span>
+              <span className="text-xs font-semibold text-[#4A3D8F]">{totalSectionsCompleted} sections</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BookOpen className="size-3.5 text-[#6B5CE7]" />
-              <span className="text-xs text-[#4A3D8F]">{quizScoreCount} quizzes</span>
+              <span className="text-xs font-semibold text-[#4A3D8F]">{quizScoreCount} quizzes</span>
             </div>
           </div>
         </div>
@@ -301,17 +301,17 @@ export default async function DashboardHomePage() {
           <div className="mb-6 flex size-11 items-center justify-center rounded-xl bg-white">
             <CheckCircle2 className="size-5 text-[#E07830]" strokeWidth={1.5} />
           </div>
-          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-medium text-[#6B3A14]">
+          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-bold text-[#6B3A14]">
             {packsCompleted} packs completed
           </p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#E07830]/20 pt-2.5">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-[#E07830]" />
-              <span className="text-xs text-[#8B4D22]">{completedPackSections} sections</span>
+              <span className="text-xs font-semibold text-[#8B4D22]">{completedPackSections} sections</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BookOpen className="size-3.5 text-[#E07830]" />
-              <span className="text-xs text-[#8B4D22]">
+              <span className="text-xs font-semibold text-[#8B4D22]">
                 {averageQuizScore != null ? `${Math.round(averageQuizScore)}% avg` : "—"}
               </span>
             </div>
@@ -330,7 +330,7 @@ export default async function DashboardHomePage() {
               />
             </svg>
           </div>
-          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-medium text-[#1B5E20]">
+          <p className="font-[family-name:var(--font-epilogue)] text-[13px] font-bold text-[#1B5E20]">
             {averageQuizScore != null ? `${Math.round(averageQuizScore)}% avg quiz score` : "No quizzes yet"}
           </p>
           <div className="mt-3 flex items-center gap-3.5 border-t border-[#4CAF50]/20 pt-2.5">
@@ -343,7 +343,7 @@ export default async function DashboardHomePage() {
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="text-xs text-[#2E7D32]">{quizScoreCount > 1 ? "Improving" : "Keep going"}</span>
+              <span className="text-xs font-semibold text-[#2E7D32]">{quizScoreCount > 1 ? "Improving" : "Keep going"}</span>
             </div>
           </div>
         </div>
