@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "./generate-actions";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type MaterialDetailClientProps = {
   materialId: string;
@@ -78,9 +80,24 @@ export function MaterialDetailClient({
           <div className="space-y-4 p-6">
             {summary ? (
               <>
-                <p className="text-base leading-relaxed text-gray-800 whitespace-pre-line">
-                  {showFullSummary || summary.length <= 500 ? summary : summary.slice(0, 500) + "..."}
-                </p>
+                <article className="px-0 py-2">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      h1: ({ children }) => <h1 className="mt-6 mb-3 text-lg font-bold text-black first:mt-0">{children}</h1>,
+                      h2: ({ children }) => <h2 className="mt-5 mb-2 text-base font-bold text-black first:mt-0">{children}</h2>,
+                      h3: ({ children }) => <h3 className="mt-4 mb-2 text-base font-semibold text-black first:mt-0">{children}</h3>,
+                      h4: ({ children }) => <h4 className="mt-3 mb-2 text-sm font-semibold text-black first:mt-0">{children}</h4>,
+                      p: ({ children }) => <p className="mb-3 text-base text-gray-600 last:mb-0" style={{ lineHeight: "1.75" }}>{children}</p>,
+                      ul: ({ children }) => <ul className="mb-3 list-disc space-y-1 pl-5 text-base text-gray-600">{children}</ul>,
+                      ol: ({ children }) => <ol className="mb-3 list-decimal space-y-1 pl-5 text-base text-gray-600">{children}</ol>,
+                      li: ({ children }) => <li style={{ lineHeight: "1.75" }}>{children}</li>,
+                      strong: ({ children }) => <strong className="font-semibold text-gray-800">{children}</strong>,
+                    }}
+                  >
+                    {showFullSummary || summary.length <= 500 ? summary : summary.slice(0, 500) + "..."}
+                  </ReactMarkdown>
+                </article>
                 {summary.length > 500 && (
                   <div className="flex justify-end border-t border-gray-100 pt-4">
                     <button
