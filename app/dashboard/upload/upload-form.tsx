@@ -235,7 +235,7 @@ export function UploadForm() {
 
           <Button
             type="submit"
-            className="h-11 w-full rounded-xl border-[1.5px] border-black bg-[#FACC15] text-sm font-semibold text-black hover:bg-[#EAB308] sm:text-base"
+            className="h-11 w-full cursor-pointer rounded-xl border-[1.5px] border-black bg-[#FACC15] text-sm font-semibold text-black hover:bg-[#EAB308] sm:text-base"
             disabled={isUploading}
           >
             {isUploading ? (
