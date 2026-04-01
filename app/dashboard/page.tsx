@@ -539,7 +539,7 @@ export default async function DashboardHomePage() {
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-[13px] font-medium text-black">{title}</p>
                           <p
-                            className={`text-[11px] ${
+                            className={`text-[11px] font-medium ${
                               completedState
                                 ? "text-[#2E7D32]"
                                 : primaryLabel === "Ready to quiz"
@@ -653,8 +653,8 @@ export default async function DashboardHomePage() {
                       </svg>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[14px] font-medium text-black">{material.title}</p>
-                      <p className="text-[12px] text-gray-500">{formatDate(material.created_at)}</p>
+                      <p className="truncate text-[14px] font-bold text-black">{material.title}</p>
+                      <p className="text-[12px] font-medium text-gray-500">{formatDate(material.created_at)}</p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {hasSummary ? (
                           <span className="rounded-md bg-[#DDF0D9] px-2 py-0.5 text-[10px] font-medium text-[#2E7D32]">
@@ -726,7 +726,7 @@ export default async function DashboardHomePage() {
                       {pack.icon ?? "📚"}
                     </div>
                     <div>
-                      <p className="text-[14px] font-medium text-black">{title}</p>
+                      <p className="text-[14px] font-bold text-black">{title}</p>
                       <p className="text-[12px] text-[#854F0B]">
                         Studied {daysSinceStudy} days ago · Quiz: {quizScore}%
                       </p>
