@@ -123,7 +123,7 @@ export function MaterialDetailClient({
           <div className="space-y-4 p-6">
             {hasQuiz ? (
               <div className="flex flex-col items-center gap-4 py-4">
-                <p className="text-base text-gray-600">Test your understanding with AI-generated questions.</p>
+                <p className="text-base text-gray-600">Test your understanding with scenario-based questions.</p>
                 <Link
                   href={`/dashboard/materials/${materialId}/quiz`}
                   className="rounded-full border-2 border-black bg-[#FACC15] px-6 py-2.5 text-sm font-bold text-black transition-colors hover:bg-[#EAB308]"
