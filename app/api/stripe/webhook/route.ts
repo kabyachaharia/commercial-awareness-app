@@ -123,6 +123,9 @@ async function updateSubscriptionFromEvent(
       current_period_end: currentPeriodEnd,
       tier,
       updated_at: updatedAt,
+      cancel_at: subscription.cancel_at
+        ? new Date(subscription.cancel_at * 1000).toISOString()
+        : null,
     })
     .eq("stripe_subscription_id", stripeSubscriptionId);
 
