@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024;
 const ACCEPTED_MIME_TYPES = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -49,7 +49,7 @@ export function UploadForm() {
     }
 
     if (nextFile.size > MAX_FILE_SIZE_BYTES) {
-      return "File exceeds 10MB limit.";
+      return "File is too large. Please upload a file under 4MB.";
     }
 
     return null;
@@ -99,6 +99,11 @@ export function UploadForm() {
 
     if (!title.trim()) {
       setErrorMessage("Please enter a title.");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      setErrorMessage("File is too large. Please upload a file under 4MB.");
       return;
     }
 
@@ -213,7 +218,7 @@ export function UploadForm() {
                 <UploadCloud className="size-5 text-[#6B5CE7]" />
               </div>
               <p className="text-sm font-bold text-black">{fileLabel}</p>
-              <p className="mt-1 text-xs text-gray-500">PDF, DOCX, TXT up to 10MB</p>
+              <p className="mt-1 text-xs text-gray-500">PDF, DOCX, TXT up to 4MB</p>
               <input
                 id="file-upload"
                 type="file"
