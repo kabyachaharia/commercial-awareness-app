@@ -477,8 +477,7 @@ export function TopicPackClient({
                     <CardContent className="space-y-6 px-6 py-8">
                       <div className="space-y-4">
                         <CardTitle className="text-lg font-black text-black" style={{ textTransform: "none" }}>
-                          {(viewingSection.title ?? "Section").charAt(0).toUpperCase() +
-                            (viewingSection.title ?? "Section").slice(1).toLowerCase()}
+                          {viewingSection.title ?? "Section"}
                         </CardTitle>
                         <article className="px-0 py-2">
                           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
