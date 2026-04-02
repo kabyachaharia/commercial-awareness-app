@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Loader2, UploadCloud } from "lucide-react";
+import { Check, UploadCloud } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DragEvent, FormEvent, useMemo, useState } from "react";
 
@@ -244,10 +244,19 @@ export function UploadForm() {
             disabled={isUploading}
           >
             {isUploading ? (
-              <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
-                Uploading & Processing...
-              </>
+              <span className="flex items-center justify-center gap-2.5">
+                <svg className="size-[18px] animate-spin" viewBox="0 0 18 18">
+                  <circle cx="9" cy="9" r="7" fill="none" stroke="#D4D4D8" strokeWidth="3" />
+                  <path
+                    d="M9 2a7 7 0 0 1 7 7"
+                    fill="none"
+                    stroke="#000"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <span>Uploading file...</span>
+              </span>
             ) : (
               "Upload & Process"
             )}
